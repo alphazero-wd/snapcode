@@ -1,12 +1,15 @@
 {% extends 'base.html' %} {% from 'lang_logo.html' import render_lang_logo %} {%
-block content %}
+from 'remove_snippet_modal.html' import render_remove_snippet_modal %} {% block
+content %}
 <!-- sidebar -->
 <aside
   id="sidebar"
-  class="fixed top-16 h-[calc(100vh-4rem)] left-0 z-40 w-64 transition-transform -translate-x-[200%] lg:translate-x-0"
+  class="fixed top-16 flex h-[calc(100vh-4rem)] left-0 z-40 w-[32rem] md:w-[36rem] transition-transform -translate-x-[200%] lg:translate-x-0"
   aria-label="Sidebar"
 >
-  <div class="h-full px-3 shadow py-4 overflow-y-auto dark:bg-gray-800">
+  <div
+    class="h-full min-w-64 px-3 shadow py-4 overflow-y-auto dark:bg-gray-800"
+  >
     <!-- tags -->
     <ul class="space-y-1">
       <li>
@@ -38,9 +41,6 @@ block content %}
         <a
           href="{{ url_for('index', tag=tag) }}"
           class="flex rounded-lg items-center p-2 {% if tag != current_tag %} text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {% else %} text-white bg-blue-700 {% endif %}"
-          data-drawer-target="sub-sidebar"
-          data-drawer-toggle="sub-sidebar"
-          aria-controls="sub-sidebar"
         >
           <span class="flex-1 whitespace-nowrap font-medium">#{{ tag }}</span>
           <span
@@ -90,9 +90,6 @@ block content %}
         <a
           href="{{ url_for('index', lang=lang) }}"
           class="flex rounded-lg items-center p-2 {% if lang != current_lang %} text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {% else %} text-white bg-blue-700 {% endif %}"
-          data-drawer-target="sub-sidebar"
-          data-drawer-toggle="sub-sidebar"
-          aria-controls="sub-sidebar"
         >
           <div class="flex-1 flex gap-x-2">
             {{render_lang_logo(convert_to_lang_logo(lang), 24)}}
@@ -110,41 +107,41 @@ block content %}
   </div>
 
   <!-- snippets menu -->
-  {% if snippets|length > 0 %}
-  <div
-    class="top-0 h-[calc(100vh-4rem)] absolute left-[32rem] border-l border-gray-700 lg:left-64 z-40 w-64 lg:w-80 transition-transform -translate-x-full lg:translate-x-0"
-    aria-label="Sidebar"
-  >
+  <div class="border-l w-screen sm:min-w-80 border-gray-700">
     <div class="h-full px-3 py-4 overflow-y-auto dark:bg-gray-800">
-      <ul class="space-y-1">
-        <li>
-          <span
-            class="flex text-sm p-2 items-center text-gray-600 rounded-lg dark:text-white"
+      <ul class="space-y-2">
+        <span
+          class="flex text-sm p-2 items-center text-gray-600 rounded-lg dark:text-white"
+        >
+          <svg
+            class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 16 20"
           >
-            <svg
-              class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 16 20"
-            >
-              <path
-                d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z"
-              />
-              <path
-                d="M14.067 0H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.933-2ZM6.709 13.809a1 1 0 1 1-1.418 1.409l-2-2.013a1 1 0 0 1 0-1.412l2-2a1 1 0 0 1 1.414 1.414L5.412 12.5l1.297 1.309Zm6-.6-2 2.013a1 1 0 1 1-1.418-1.409l1.3-1.307-1.295-1.295a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1-.001 1.408v.004Z"
-              />
-            </svg>
-            <span class="flex-1 ms-3 whitespace-nowrap uppercase font-semibold"
-              >Snippets</span
-            >
-            <span
-              class="inline-flex items-center justify-center px-2 ms-3 text-sm text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"
-              >{{ snippets|length }}</span
-            >
-          </span>
+            <path
+              d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z"
+            />
+            <path
+              d="M14.067 0H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.933-2ZM6.709 13.809a1 1 0 1 1-1.418 1.409l-2-2.013a1 1 0 0 1 0-1.412l2-2a1 1 0 0 1 1.414 1.414L5.412 12.5l1.297 1.309Zm6-.6-2 2.013a1 1 0 1 1-1.418-1.409l1.3-1.307-1.295-1.295a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1-.001 1.408v.004Z"
+            />
+          </svg>
+          <span class="flex-1 ms-3 whitespace-nowrap uppercase font-semibold"
+            >Snippets</span
+          >
+          <span
+            class="inline-flex items-center justify-center px-2 ms-3 text-sm text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"
+            >{{ snippets|length }}</span
+          >
+        </span>
+        {% if snippets|length == 0 %}
+        <li class="dark:text-gray-300 p-2 text-gray-600">
+          No snippets found. Select one of the tags or languages on the left to
+          get started
         </li>
-        {% for snippet in snippets %}
+        {% else %} {% for snippet in snippets %}
+
         <li>
           <a
             href="{{url_for('index', snippet_id=snippet.id, lang=current_lang, tag=current_tag)}}"
@@ -156,12 +153,11 @@ block content %}
             </div>
           </a>
         </li>
-        {% endfor %}
+        {% endfor %} {% endif %}
       </ul>
     </div>
     <!-- end snippets menu -->
   </div>
-  {% endif %}
 </aside>
 <!-- end sidebar -->
 
@@ -173,7 +169,11 @@ block content %}
   <h2 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
     {{snippet.title}}
   </h2>
-  <p class="text-gray-600 mt-3 dark:text-gray-200">{{snippet.description}}</p>
+  <p class="text-gray-600 dark:text-gray-200 whitespace-pre-line">
+    {% if snippet.description %} {{snippet.description }} {% else %}
+    <i>No description provided</i>
+    {% endif %}
+  </p>
 
   <div class="mt-3 flex text-gray-500 dark:text-white items-center gap-x-3">
     {{ render_lang_logo(convert_to_lang_logo(snippet.lang), 24) }} {{
@@ -196,39 +196,32 @@ block content %}
       datetime.fromtimestamp(snippet.createdAt).strftime("%d/%m/%Y, %I:%M %p")
       }}
     </div>
-    <div class="flex text-gray-500 dark:text-white items-center gap-x-3">
-      <svg
-        class="flex-shrink-0 w-4 h-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="currentColor"
-        viewBox="0 0 18 18"
-      >
-        <path
-          d="M15.045.007 9.31 0a1.965 1.965 0 0 0-1.4.585L.58 7.979a2 2 0 0 0 0 2.805l6.573 6.631a1.956 1.956 0 0 0 1.4.585 1.965 1.965 0 0 0 1.4-.585l7.409-7.477A2 2 0 0 0 18 8.479v-5.5A2.972 2.972 0 0 0 15.045.007Zm-2.452 6.438a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"
-        />
-      </svg>
-      Tags
-      <div class="gap-x-1 flex items-center">
-        {% for t in snippet.tags %}
+    <div class="gap-x-1 gap-y-2 flex flex-wrap items-center">
+      {% for t in snippet.tags %}
 
-        <a
-          href="{{url_for('index', tag=t)}}"
-          class="bg-sky-100 hover:bg-sky-200 dark:hover:bg-sky-800 text-sky-800 font-medium text-sm me-2 px-2.5 py-0.5 rounded dark:bg-sky-900 dark:text-sky-300"
-          >#{{t}}</a
-        >
-        {% endfor %}
-      </div>
+      <a
+        href="{{url_for('index', tag=t)}}"
+        class="bg-sky-100 hover:bg-sky-200 dark:hover:bg-sky-800 text-sky-800 font-medium text-sm me-2 px-2.5 py-0.5 rounded dark:bg-sky-900 dark:text-sky-300"
+        >#{{t}}</a
+      >
+      {% endfor %}
     </div>
   </div>
-  <div class="mt-8 block">
-    <pre><code class="language-{{ convert_to_prism_lang(snippet.lang) }}">{{ snippet.content }}</code></pre>
+  <div class="mt-8 block dark:text-gray-300 text-gray-600">
+    {% if snippet.content %}
+    <pre
+      class="py-8"
+    ><code class="language-{{ convert_to_prism_lang(snippet.lang) }}">{{ snippet.content }}</code></pre>
+    {% else %}
+    <i>No code provided</i>
+    {% endif %}
   </div>
+
   <div
     class="mt-4 justify-end gap-x-4 flex items-center bottom-0 w-full border-t border-gray-800 px-3 py-4"
   >
-    <button
-      type="button"
+    <a
+      href="{{url_for('edit_snippet', id=snippet.id)}}"
       class="text-white flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm px-3 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
     >
       <svg
@@ -246,9 +239,11 @@ block content %}
         />
       </svg>
       Edit
-    </button>
+    </a>
     <button
       type="button"
+      data-modal-target="remove-snippet-modal"
+      data-modal-toggle="remove-snippet-modal"
       class="focus:outline-none flex items-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm px-3 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
     >
       <svg
@@ -269,8 +264,15 @@ block content %}
       Delete
     </button>
   </div>
-  {% else %}
-  <div class="flex items-center"></div>
+  {{ render_remove_snippet_modal(snippet.id) }} {% else %}
+
+  <div class="flex h-full w-full items-center justify-center flex-col gap-y-8">
+    <img src="{{url_for('static', filename='icon.svg')}}" alt="Icon" />
+    <h3 class="text-lg text-center dark:text-white">
+      No code snippet opened right now. <br />Select one of the code snippets on
+      the left to get started.
+    </h3>
+  </div>
   {% endif %}
 </div>
 <!-- end code snippet -->

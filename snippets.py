@@ -13,13 +13,25 @@ class Snippets:
 
   def add_snippet(self, payload):
     tags = [tag.strip() for tag in payload['tags'].split(',')
-            ] if len(payload['tags']) > 0 else 0
+            ] if len(payload['tags']) > 0 else []
     self.__snippets.append({
       **payload,
       "id": str(uuid4()),
-      'tags': tags,
+      "tags": tags,
       "createdAt": round(time())
     })
+    return self.snippets[-1]
+
+  def edit_snippet(self, snippet, index, payload):
+    tags = [tag.strip() for tag in payload['tags'].split(',')
+            ] if len(payload['tags']) > 0 else []
+    if snippet and index > -1:
+      self.snippets[index] = {**snippet, **payload, "tags": tags, "updatedAt": round(time())}
+      return snippet
+
+  def remove_snippet(self, index):
+    snippet = self.snippets.pop(index)
+    return snippet
 
   def group_by_tags(self):
     tags = defaultdict(int)
@@ -44,6 +56,7 @@ class Snippets:
       snippet for snippet in self.snippets if snippet['lang'] == lang]
 
   def find_snippet_by_id(self, id):
-    for snippet in self.snippets:
+    for index, snippet in enumerate(self.snippets):
       if snippet['id'] == id:
-        return snippet
+        return snippet, index
+    return None, -1

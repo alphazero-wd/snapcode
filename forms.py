@@ -11,3 +11,11 @@ class CreateSnippetForm(FlaskForm):
   tags = StringField('Tags (separated by commas)')
   content = TextAreaField('Paste your snippet here')
   submit = SubmitField('Add snippet')
+
+class EditSnippetForm(FlaskForm):
+  title = StringField('Title', validators=[DataRequired(), Length(max=64)])
+  description = TextAreaField('Description')
+  lang = SelectField('Language', choices=langs)
+  tags = StringField('Tags (separated by commas)')
+  content = TextAreaField('Paste your snippet here')
+  submit = SubmitField('Edit snippet')

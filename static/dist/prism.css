@@ -45,8 +45,8 @@ div.code-toolbar {
 div.code-toolbar > .toolbar {
   position: absolute;
   z-index: 10;
-  top: 0.3rem;
-  right: 0.6rem;
+  top: 1rem;
+  right: 0.8rem;
 }
 
 div.code-toolbar:hover > .toolbar {
@@ -152,7 +152,7 @@ pre[class*="language-"] *::selection {
 
 /* Code blocks */
 pre[class*="language-"] {
-  padding: 1em;
+  padding: 1.5rem;
   margin: 0.5em 0;
   overflow: auto;
   border-radius: 0.3em;

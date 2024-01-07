@@ -25,6 +25,7 @@ def convert_to_prism_lang(lang: str):
     'Javascript React': "jsx",
     "Typescript React": 'tsx',
     'C#': 'cs',
+    'Text File': 'txt'
   }
   return langs_map.get(lang, lang.lower())
 
