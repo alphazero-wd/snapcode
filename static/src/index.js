@@ -1,13 +1,16 @@
-document.documentElement.classList.add("dark");
 const hiddenEditorEl = document.getElementById("hidden-editor");
 const sidebar = document.getElementById("sidebar");
 if (!sidebar) document.getElementById("sidebar-btn").remove();
 const editorEl = document.getElementById("editor");
 const langSelect = document.getElementById("lang-select");
+
+const descriptionData = document.getElementById("description-data");
+if (descriptionData) descriptionData.innerHTML = descriptionData.textContent;
 const editor = ace.edit(editorEl);
 editor.setOptions({
   autoScrollEditorIntoView: true,
   copyWithEmptySelection: true,
+  showPrintMargin: false,
 });
 const langsMap = {
   HTML5: "html",

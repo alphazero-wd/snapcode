@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% from "_formhelpers.html" import render_errors %} {%
 from 'dropzone.html' import render_dropzone %} {% block content %}
 <section class="bg-white top-16 relative dark:bg-gray-900">
-  <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+  <div class="py-8 px-4 mx-auto max-w-4xl lg:py-16">
     <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
       Add a new snippet
     </h2>
@@ -24,8 +24,8 @@ from 'dropzone.html' import render_dropzone %} {% block content %}
         <div>
           {{form.description.label(class="font-medium block mb-2 text-sm
           text-gray-900 dark:text-white")}} {{form.description(rows=8,
-          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg
-          border border-gray-300 focus:ring-blue-500 focus:border-blue-500
+          class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border
+          border-gray-300 focus:ring-blue-500 focus:border-blue-500
           dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
           placeholder="What is the snippet about?")}} {{
