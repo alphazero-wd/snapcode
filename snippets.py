@@ -16,6 +16,7 @@ class Snippets:
             ] if len(payload['tags']) > 0 else []
     self.__snippets.append({
       **payload,
+      "content": payload['content'].strip(),
       "id": str(uuid4()),
       "tags": tags,
       "createdAt": round(time())
@@ -23,10 +24,12 @@ class Snippets:
     return self.snippets[-1]
 
   def edit_snippet(self, snippet, index, payload):
-    tags = [tag.strip() for tag in payload['tags'].split(',')
+    tags = [tag.strip().lower() for tag in payload['tags'].split(',')
             ] if len(payload['tags']) > 0 else []
     if snippet and index > -1:
-      self.snippets[index] = {**snippet, **payload, "tags": tags, "updatedAt": round(time())}
+      self.snippets[index] = {**snippet, **payload,
+                              "content": payload['content'].strip(),
+                              "tags": tags, "updatedAt": round(time())}
       return snippet
 
   def remove_snippet(self, index):
@@ -60,3 +63,14 @@ class Snippets:
       if snippet['id'] == id:
         return snippet, index
     return None, -1
+
+  def search_snippets(self, keyword):
+    snippets = [
+      snippet for snippet in self.snippets
+      if keyword in snippet['title'].lower()
+        or keyword in snippet['description'].lower()
+        or keyword in snippet['lang'].lower()
+        or keyword in snippet['tags']
+        or keyword in snippet['content'].lower()
+    ]
+    return snippets

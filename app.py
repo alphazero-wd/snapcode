@@ -64,6 +64,7 @@ def create_snippet():
     return redirect(url_for('index', lang=snippet['lang'], snippet_id=snippet['id']))
   return render_template('create.html', langs=langs, form=form)
 
+
 @app.route('/snippet/edit/<id>', methods=('GET', 'POST'))
 def edit_snippet(id):
   form = EditSnippetForm()
@@ -75,7 +76,8 @@ def edit_snippet(id):
       "lang": form.lang.data,
       "tags": form.tags.data
   }
-  if not snippet: return redirect('/404')
+  if not snippet:
+    return redirect('/404')
   if request.method == 'GET':
     form.lang.data = snippet['lang']
     form.description.data = snippet['description']
@@ -87,6 +89,7 @@ def edit_snippet(id):
     return redirect(url_for('index', lang=updated_snippet['lang'], snippet_id=updated_snippet['id']))
   return render_template('edit.html', snippet=snippet, langs=langs, form=form)
 
+
 @app.route('/snippet/remove/<id>', methods=['POST'])
 @csrf.exempt
 def remove_snippet(id):
@@ -97,6 +100,14 @@ def remove_snippet(id):
     json_file.write_to_file(json.dumps(snippets.snippets))
     return redirect(url_for('index'))
   flash('Failed to remove snippet because it is not found', category='error')
+
+
+@app.route('/snippets/search', methods=['GET'])
+def search_snippets():
+  keyword = request.args.get('q')
+  found_snippets = snippets.search_snippets(keyword.lower()) if keyword else []
+  return render_template('search.html', keyword=keyword, datetime=datetime, snippets=found_snippets, convert_to_lang_logo=convert_to_lang_logo, convert_to_prism_lang=convert_to_prism_lang)
+
 
 if __name__ == '__main__':
   app.run(debug=True)
