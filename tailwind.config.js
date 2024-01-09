@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["'Source Sans 3'", "sans-serif"],
+        sans: ["'Exo 2'", "sans-serif"],
         mono: [
           "'Fira Code'",
           "'Fira Mono'",

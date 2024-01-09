@@ -26,15 +26,26 @@ const setLanguage = (el) => {
   const mode = langsMap[el.value] || el.value.toLowerCase();
   editor.session.setMode("ace/mode/" + mode);
 };
-langSelect.addEventListener("change", (e) => setLanguage(e.target));
+
+if (langSelect)
+  langSelect.addEventListener("change", (e) => setLanguage(e.target));
+
 window.addEventListener("load", () => {
   editor.setValue(hiddenEditorEl.value);
   setLanguage(langSelect);
 });
 
-document.getElementById("edit-snippet-form").addEventListener("submit", () => {
+const editSnippetForm = document.getElementById("edit-snippet-form");
+const createSnippetForm = document.getElementById("create-snippet-form");
+const updateSnippetEditor = () => {
   hiddenEditorEl.value = editor.getValue();
-});
+};
+
+if (editSnippetForm)
+  editSnippetForm.addEventListener("submit", updateSnippetEditor);
+
+if (createSnippetForm)
+  createSnippetForm.addEventListener("submit", updateSnippetEditor);
 
 const extensionConverter = {
   exs: "Elixir",
@@ -51,30 +62,22 @@ const extensionConverter = {
 };
 
 const fileInput = document.getElementById("file-input");
-fileInput.addEventListener("change", (e) => {
-  const files = e.target.files;
-  if (files.length > 0) {
-    const file = files[0];
-    const reader = new FileReader();
-    console.log({ file });
-    const display_file = (event) => {
-      // set the contents of the <textarea>
-      langSelect.value =
-        extensionConverter[file.name.split(".")[1]] || "Text File";
-      setLanguage(langSelect);
-      hiddenEditorEl.value = event.target.result;
-      editor.setValue(event.target.result);
-    };
+if (fileInput)
+  fileInput.addEventListener("change", (e) => {
+    const files = e.target.files;
+    if (files.length > 0) {
+      const file = files[0];
+      const reader = new FileReader();
+      const displayFile = (event) => {
+        langSelect.value =
+          extensionConverter[file.name.split(".").at(-1)] || "Text File";
+        setLanguage(langSelect);
+        hiddenEditorEl.value = event.target.result;
+        editor.setValue(event.target.result);
+      };
 
-    const onReaderLoad = (f) => {
-      console.info(". file reader load", f);
-      return display_file; // a function
-    };
-
-    // Closure to capture the file information.
-    reader.onload = onReaderLoad(file);
-
-    // Read the file as text.
-    reader.readAsText(file);
-  }
-});
+      const onReaderLoad = () => displayFile;
+      reader.onload = onReaderLoad(file);
+      reader.readAsText(file);
+    }
+  });
