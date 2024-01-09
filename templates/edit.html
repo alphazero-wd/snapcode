@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% from "_formhelpers.html" import render_errors %} {%
-from 'dropzone.html' import render_dropzone %} {% block content %}
+from 'file_input.html' import render_file_input %} {% block content %}
 <section class="bg-white top-16 relative dark:bg-gray-900">
-  <div class="py-8 px-4 mx-auto max-w-4xl lg:py-16">
+  <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
     <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
       Add a new snippet
     </h2>
@@ -53,16 +53,15 @@ from 'dropzone.html' import render_dropzone %} {% block content %}
         <div>
           {{form.content.label(class="font-medium block mb-2 text-sm
           text-gray-900 dark:text-white")}} {{form.content(rows=8,
-          id="hidden-editor", class="hidden p-2.5 w-full font-mono text-sm
-          text-gray-900 bg-gray-50 rounded-lg border border-gray-300
-          focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700
-          dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-          dark:focus:ring-blue-500 dark:focus:border-blue-500",
-          placeholder="Paste your snippet here")}} {{
-          render_errors(form.content) }}
+          id="hidden-editor", class="hidden p-2.5 w-full text-sm text-gray-900
+          bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500
+          focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600
+          dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+          dark:focus:border-blue-500", placeholder="Paste your snippet here")}}
+          {{ render_errors(form.content) }}
           <div id="editor" class="mb-6 text-base min-h-[400px]"></div>
 
-          {{ render_dropzone() }}
+          {{ render_file_input() }}
         </div>
       </div>
       {{form.submit(class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6

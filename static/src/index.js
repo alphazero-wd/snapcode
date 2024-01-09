@@ -4,8 +4,6 @@ if (!sidebar) document.getElementById("sidebar-btn").remove();
 const editorEl = document.getElementById("editor");
 const langSelect = document.getElementById("lang-select");
 
-const descriptionData = document.getElementById("description-data");
-if (descriptionData) descriptionData.innerHTML = descriptionData.textContent;
 const editor = ace.edit(editorEl);
 editor.setOptions({
   autoScrollEditorIntoView: true,
@@ -28,16 +26,15 @@ const setLanguage = (el) => {
   const mode = langsMap[el.value] || el.value.toLowerCase();
   editor.session.setMode("ace/mode/" + mode);
 };
-const setEditorValue = () => {
-  hiddenEditorEl.value = editor.getValue();
-};
 langSelect.addEventListener("change", (e) => setLanguage(e.target));
 window.addEventListener("load", () => {
   editor.setValue(hiddenEditorEl.value);
   setLanguage(langSelect);
 });
-editorEl.addEventListener("input", setEditorValue);
-editorEl.addEventListener("paste", setEditorValue);
+
+document.getElementById("edit-snippet-form").addEventListener("submit", () => {
+  hiddenEditorEl.value = editor.getValue();
+});
 
 const extensionConverter = {
   exs: "Elixir",
@@ -53,8 +50,8 @@ const extensionConverter = {
   c: "C",
 };
 
-const dropzone = document.getElementById("file-input");
-dropzone.addEventListener("change", (e) => {
+const fileInput = document.getElementById("file-input");
+fileInput.addEventListener("change", (e) => {
   const files = e.target.files;
   if (files.length > 0) {
     const file = files[0];

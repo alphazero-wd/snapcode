@@ -9,10 +9,6 @@ render_search_bar %}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="stylesheet"
-      href="{{url_for('static', filename='/dist/rte_theme_default.css')}}"
-    />
-    <link
       href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css"
       rel="stylesheet"
     />
@@ -175,20 +171,5 @@ render_search_bar %}
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <script src="{{url_for('static', filename='src/index.js')}}"></script>
-    <script
-      type="text/javascript"
-      src="{{url_for('static', filename='dist/rte.js')}}"
-    ></script>
-    <script
-      type="text/javascript"
-      src="{{url_for('static', filename='dist/all_plugins.js')}}"
-    ></script>
-    <script>
-      const editor1 = new RichTextEditor("#description", {
-        toolbar: "mytoolbar",
-        toolbar_mytoolbar:
-          "{bold,italic,underline,strike,superscript,subscript,forecolor,backcolor}|{insertunorderedlist,insertorderedlist,insertimage,insertlink,insertvideo,inserttable,insertchars,insertdate,insertblockquote,insertemoji}|{undo,redo,removeformat,selectall}",
-      });
-    </script>
   </body>
 </html>

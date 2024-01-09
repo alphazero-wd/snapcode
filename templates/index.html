@@ -171,13 +171,13 @@ content %}
   <h2 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
     {{snippet.title}}
   </h2>
-  <div id="description-data" class="text-gray-600 dark:text-gray-200">
-    {% if snippet.description %} {{snippet.description }} {% else %}
+  <p class="text-gray-600 whitespace-pre-wrap dark:text-gray-200">
+    {% if snippet.description %} {{ snippet.description }} {% else %}
     <i>No description provided</i>
     {% endif %}
-  </div>
+  </p>
 
-  <div class="flex text-gray-500 dark:text-white items-center gap-x-3">
+  <div class="flex mt-3 text-gray-500 dark:text-white items-center gap-x-3">
     {{ render_lang_logo(convert_to_lang_logo(snippet.lang), 24) }} {{
     snippet.lang }}
   </div>
