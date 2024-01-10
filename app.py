@@ -4,6 +4,7 @@ from flask_wtf import CSRFProtect
 from constants import APP_SECRET
 from file import File
 from forms import CreateSnippetForm, EditSnippetForm, SortSnippetsForm
+from relative_time import relative_time
 from snippets import Snippets
 from lang_convert import convert_to_lang_logo, convert_to_prism_lang, langs
 import json
@@ -43,7 +44,8 @@ def index():
                          snippet=snippet,
                          convert_to_prism_lang=convert_to_prism_lang,
                          convert_to_lang_logo=convert_to_lang_logo,
-                         datetime=datetime)
+                         datetime=datetime,
+                         relative_time=relative_time)
 
 
 @app.route('/snippet/create', methods=['GET', 'POST'])
@@ -116,7 +118,7 @@ def search_snippets():
 
     if is_valid_sort_by:
       found_snippets = snippets.sort_snippets(found_snippets, sort_by)
-  return render_template('search.html', form=form, sort_by=sort_by, keyword=keyword, datetime=datetime, snippets=found_snippets, convert_to_lang_logo=convert_to_lang_logo, convert_to_prism_lang=convert_to_prism_lang)
+  return render_template('search.html', form=form, sort_by=sort_by, keyword=keyword, datetime=datetime, snippets=found_snippets, convert_to_lang_logo=convert_to_lang_logo, convert_to_prism_lang=convert_to_prism_lang, relative_time=relative_time)
 
 
 if __name__ == '__main__':

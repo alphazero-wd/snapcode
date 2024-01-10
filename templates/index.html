@@ -196,7 +196,8 @@ content %}
       </svg>
       Created at {{
       datetime.fromtimestamp(snippet.createdAt).strftime("%d/%m/%Y, %I:%M %p")
-      }}
+      }} {% if snippet.updatedAt %} (edited
+      {{relative_time(datetime.fromtimestamp(snippet.updatedAt))}}) {% endif %}
     </div>
     <div class="gap-x-1 gap-y-2 flex flex-wrap items-center">
       {% for t in snippet.tags %}

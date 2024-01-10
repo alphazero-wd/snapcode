@@ -46,7 +46,7 @@
               <p
                 class="whitespace-pre-line font-normal text-gray-700 dark:text-gray-400"
               >
-                {{snippet.description[:100]}} {% if snippet.description|length >
+                {{snippet.description[:100]}}{% if snippet.description|length >
                 100 %}... {% endif %}
               </p>
               <div
@@ -65,7 +65,9 @@
                 </svg>
                 Created at {{
                 datetime.fromtimestamp(snippet.createdAt).strftime("%d/%m/%Y,
-                %I:%M %p") }}
+                %I:%M %p") }} {% if snippet.updatedAt %} (edited
+                {{relative_time(datetime.fromtimestamp(snippet.updatedAt))}}) {%
+                endif %}
               </div>
               <div class="mt-3 gap-y-2 flex flex-wrap items-center">
                 {% for t in snippet.tags %}

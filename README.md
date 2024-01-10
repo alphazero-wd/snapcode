@@ -13,7 +13,8 @@ Features included:
 - Create a snippet
 - Edit a snippet
 - Delete a snippet
-- Search snippets
+- Search, fitler snippets by tags, languages
+- Sort snippets by created date, title
 - Aggregate snippets by tags, languages
 
 ## Languages and frameworks used

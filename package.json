@@ -1,4 +1,12 @@
 {
+  "name": "snapcode",
+  "author": "Tran Thai Anh",
+  "categories": [
+    "Snippets",
+    "Programming Languages"
+  ],
+  "version": "1.0",
+  "license": "MIT",
   "devDependencies": {
     "tailwindcss": "^3.1.6"
   },
