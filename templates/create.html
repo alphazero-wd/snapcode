@@ -5,7 +5,11 @@ from 'file_input.html' import render_file_input %} {% block content %}
     <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
       Add a new snippet
     </h2>
-    <form action="{{url_for('create_snippet')}}" method="POST">
+    <form
+      id="create-snippet-form"
+      action="{{url_for('create_snippet')}}"
+      method="POST"
+    >
       {{ form.hidden_tag() }} {{ form.csrf_token }}
       <div class="space-y-6">
         <div>

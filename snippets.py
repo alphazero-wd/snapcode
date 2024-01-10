@@ -74,3 +74,7 @@ class Snippets:
         or keyword in snippet['content'].lower()
     ]
     return snippets
+
+  def sort_snippets(self, found_snippets, sort_by):
+    field, order = sort_by.split(':')
+    return sorted(found_snippets, key=lambda s: s[field], reverse=bool(int(order)))

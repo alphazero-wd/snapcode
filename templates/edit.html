@@ -33,13 +33,12 @@ from 'file_input.html' import render_file_input %} {% block content %}
         </div>
         <div>
           {{form.lang.label(class="font-medium block mb-2 text-sm text-gray-900
-          dark:text-white", value="Text File")}} {{form.lang(value=snippet.lang,
-          id="lang-select", class="bg-gray-50 border border-gray-300
-          text-gray-900 text-sm rounded-lg focus:ring-primary-500
-          focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700
-          dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-          dark:focus:ring-primary-500 dark:focus:border-primary-500")}} {{
-          render_errors(form.lang) }}
+          dark:text-white")}} {{form.lang(value=snippet.lang, id="lang-select",
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
+          rounded-lg focus:ring-primary-500 focus:border-primary-500 block
+          w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
+          dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500
+          dark:focus:border-primary-500")}} {{ render_errors(form.lang) }}
         </div>
         <div>
           {{form.tags.label(class="font-medium block mb-2 text-sm text-gray-900
@@ -64,9 +63,18 @@ from 'file_input.html' import render_file_input %} {% block content %}
           {{ render_file_input() }}
         </div>
       </div>
-      {{form.submit(class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6
-      text-sm text-center text-white bg-blue-700 rounded-lg focus:ring-4
-      focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800")}}
+      <div class="flex gap-x-3 mt-4 sm:mt-6">
+        <a
+          href="{{url_for('index')}}"
+          type="button"
+          class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        >
+          Cancel
+        </a>
+        {{form.submit(class="inline-flex items-center px-5 py-2.5 text-sm
+        text-center text-white bg-blue-700 rounded-lg focus:ring-4
+        focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800")}}
+      </div>
     </form>
   </div>
 </section>

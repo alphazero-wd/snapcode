@@ -1,0 +1,15 @@
+{% macro render_sort_options(q, sort_by, form) %}
+<form
+  action="{{url_for('search_snippets')}}"
+  method="GET"
+  class="flex justify-end items-center gap-x-3"
+>
+  <input type="hidden" name="q" value="{{q}}" />
+  {{form.sort_by.label(class="block text-sm font-medium text-gray-900
+  dark:text-white")}} {{form.sort_by(class="w-full max-w-48 bg-gray-50 border
+  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+  focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600
+  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+  dark:focus:border-blue-500" )}}
+</form>
+{% endmacro %}

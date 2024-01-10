@@ -12,6 +12,7 @@ class CreateSnippetForm(FlaskForm):
   content = TextAreaField('Paste your snippet here')
   submit = SubmitField('Add snippet')
 
+
 class EditSnippetForm(FlaskForm):
   title = StringField('Title', validators=[DataRequired(), Length(max=64)])
   description = TextAreaField('Description')
@@ -19,3 +20,14 @@ class EditSnippetForm(FlaskForm):
   tags = StringField('Tags (separated by commas)')
   content = TextAreaField('Paste your snippet here')
   submit = SubmitField('Edit snippet')
+
+
+class SortSnippetsForm(FlaskForm):
+  sort_by = SelectField('Sort by', choices=[
+                        ('', 'None'),
+                        ('createdAt:0', 'Created at (earliest to latest)'),
+                        ('createdAt:1', 'Created at (latest to earliest)'),
+                        ('title:0', 'Title (A-Z)'),
+                        ('title:1', 'Title (Z-A)')
+                        ], default='')
+  submit = SubmitField('Apply')

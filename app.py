@@ -3,7 +3,7 @@ from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_wtf import CSRFProtect
 from constants import APP_SECRET
 from file import File
-from forms import CreateSnippetForm, EditSnippetForm
+from forms import CreateSnippetForm, EditSnippetForm, SortSnippetsForm
 from snippets import Snippets
 from lang_convert import convert_to_lang_logo, convert_to_prism_lang, langs
 import json
@@ -104,9 +104,19 @@ def remove_snippet(id):
 
 @app.route('/snippets/search', methods=['GET'])
 def search_snippets():
+  form = SortSnippetsForm()
   keyword = request.args.get('q')
+  sort_by = request.args.get('sort_by')
+  form.sort_by.data = sort_by
   found_snippets = snippets.search_snippets(keyword.lower()) if keyword else []
-  return render_template('search.html', keyword=keyword, datetime=datetime, snippets=found_snippets, convert_to_lang_logo=convert_to_lang_logo, convert_to_prism_lang=convert_to_prism_lang)
+  if sort_by:
+    sort_by_split = sort_by.split(':')
+    is_valid_sort_by = sort_by_split and len(sort_by_split) == 2 and (
+      sort_by_split[0] in 'title', 'createdAt' and sort_by_split[1] in ['0', '1'])
+
+    if is_valid_sort_by:
+      found_snippets = snippets.sort_snippets(found_snippets, sort_by)
+  return render_template('search.html', form=form, sort_by=sort_by, keyword=keyword, datetime=datetime, snippets=found_snippets, convert_to_lang_logo=convert_to_lang_logo, convert_to_prism_lang=convert_to_prism_lang)
 
 
 if __name__ == '__main__':
