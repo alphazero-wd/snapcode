@@ -1,6 +1,8 @@
 {% extends 'base.html' %} {% from 'search_bar.html' import render_search_bar %}
 {% from 'sort_options.html' import render_sort_options %} {% from
-'lang_logo.html' import render_lang_logo %} {% block content %}
+'lang_logo.html' import render_lang_logo %} {% block title %} {% if keyword %}
+Search for &quot;{{keyword}}&quot; {% else %} Search snippets {% endif %} {%
+endblock %} {% block content %}
 <section class="py-16 px-4 top-16 relative h-[calc(100%-4rem)]">
   <div class="container h-full max-w-2xl mx-auto lg:p-4">
     {% if keyword %}
@@ -114,4 +116,5 @@
     {% endif %}
   </div>
 </section>
+<script src="{{url_for('static', filename='src/sort-by.js')}}"></script>
 {% endblock %}

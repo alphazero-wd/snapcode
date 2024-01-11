@@ -1,5 +1,4 @@
 from datetime import datetime
-from werkzeug.middleware.proxy_fix import ProxyFix
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_wtf import CSRFProtect
 from constants import APP_SECRET
@@ -13,10 +12,6 @@ import json
 app = Flask(__name__)
 csrf = CSRFProtect(app)
 app.config['SECRET_KEY'] = APP_SECRET
-app.wsgi_app = ProxyFix(
-    app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
-)
-
 json_file = File('data.json')
 
 data = json.loads(json_file.read_file())

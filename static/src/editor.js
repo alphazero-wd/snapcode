@@ -1,6 +1,4 @@
 const hiddenEditorEl = document.getElementById("hidden-editor");
-const sidebar = document.getElementById("sidebar");
-if (!sidebar) document.getElementById("sidebar-btn").remove();
 const editorEl = document.getElementById("editor");
 const langSelect = document.getElementById("lang-select");
 
@@ -60,7 +58,6 @@ const extensionConverter = {
   h: "C",
   c: "C",
 };
-
 const fileInput = document.getElementById("file-input");
 if (fileInput)
   fileInput.addEventListener("change", (e) => {
@@ -81,8 +78,3 @@ if (fileInput)
       reader.readAsText(file);
     }
   });
-
-const sortBy = document.getElementById("sort_by");
-sortBy.addEventListener("change", () => {
-  sortBy.parentElement.submit();
-});

@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% from "_formhelpers.html" import render_errors %} {%
-from 'file_input.html' import render_file_input %} {% block content %}
+from 'file_input.html' import render_file_input %} {% block title %} Edit
+&quot;{{snippet.title}}&quot; {% endblock %} {% block content %}
 <section class="bg-white top-16 relative dark:bg-gray-900">
   <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
     <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
@@ -78,4 +79,11 @@ from 'file_input.html' import render_file_input %} {% block content %}
     </form>
   </div>
 </section>
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.3/ace.js"
+  type="text/javascript"
+  charset="utf-8"
+></script>
+<script src="{{url_for('static', filename='src/editor.js')}}"></script>
 {% endblock %}

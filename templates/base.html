@@ -25,7 +25,7 @@ render_search_bar %}
       rel="shortcut icon"
       href="{{ url_for('static', filename='favicon.ico') }}"
     />
-    <title>Snapcode</title>
+    <title>Snapcode | {% block title %}{% endblock %}</title>
     <link
       rel="stylesheet"
       href="{{url_for('static',filename='dist/output.css')}}"
@@ -79,6 +79,40 @@ render_search_bar %}
           />
         </a>
         <div class="flex md:order-2">
+          <button
+            id="theme-toggle"
+            type="button"
+            class="text-gray-500 me-3 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
+          >
+            <svg
+              id="theme-toggle-dark-icon"
+              class="hidden w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 18 20"
+            >
+              <path
+                d="M17.8 13.75a1 1 0 0 0-.859-.5A7.488 7.488 0 0 1 10.52 2a1 1 0 0 0 0-.969A1.035 1.035 0 0 0 9.687.5h-.113a9.5 9.5 0 1 0 8.222 14.247 1 1 0 0 0 .004-.997Z"
+              />
+            </svg>
+            <svg
+              id="theme-toggle-light-icon"
+              class="hidden w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 3V1m0 18v-2M5.05 5.05 3.636 3.636m12.728 12.728L14.95 14.95M3 10H1m18 0h-2M5.05 14.95l-1.414 1.414M16.364 3.636 14.95 5.05M14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"
+              />
+            </svg>
+          </button>
           <button
             type="button"
             data-collapse-toggle="navbar-search"
@@ -163,14 +197,9 @@ render_search_bar %}
       <li>{{ display_alert(category, message) }}</li>
       {% endfor %}
     </ul>
-    {% endif %} {% endwith %} {% block content %}{% endblock %}
+    {% endif %} {% endwith %} {% block content %} {% endblock %}
     <script src="{{url_for('static', filename='dist/prism.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.3/ace.js"
-      type="text/javascript"
-      charset="utf-8"
-    ></script>
-    <script src="{{url_for('static', filename='src/index.js')}}"></script>
+    <script src="{{url_for('static', filename='src/navbar.js')}}"></script>
   </body>
 </html>
