@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SelectField, SubmitField
+from wtforms import StringField, TextAreaField, SelectField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length
 from lang_convert import langs
 
@@ -10,6 +10,7 @@ class CreateSnippetForm(FlaskForm):
   lang = SelectField('Language', choices=langs, default="Text File")
   tags = StringField('Tags (separated by commas)')
   content = TextAreaField('Paste your snippet here')
+  is_favorite = BooleanField('Mark this snippet as favorite', default=False)
   submit = SubmitField('Add snippet')
 
 
@@ -19,6 +20,7 @@ class EditSnippetForm(FlaskForm):
   lang = SelectField('Language', choices=langs)
   tags = StringField('Tags (separated by commas)')
   content = TextAreaField('Paste your snippet here')
+  is_favorite = BooleanField('Mark this snippet as favorite')
   submit = SubmitField('Edit snippet')
 
 

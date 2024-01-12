@@ -12,29 +12,61 @@ title %} {% if snippet %} {{ snippet.title }} {% elif current_tag %}
   <div
     class="h-full min-w-64 px-3 shadow py-4 overflow-y-auto dark:bg-gray-800"
   >
-    <a
-      href="{{url_for('create_snippet')}}"
-      class="text-white mb-3 flex justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-    >
-      <svg
-        class="w-3.5 h-3.5 me-2"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 18 18"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 1v16M1 9h16"
-        />
-      </svg>
-      Add snippet
-    </a>
     <!-- tags -->
     <ul class="space-y-1">
+      <li>
+        <a
+          href="{{ url_for('index') }}"
+          class="flex text-sm rounded-lg items-center px-2 py-2.5 {% if current_tag or current_lang or favorite_only %} text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {% else %} text-white bg-blue-700 {% endif %}"
+        >
+          <svg
+            class="flex-shrink-0 w-5 h-5 {% if current_tag or current_lang or favorite_only%}dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white text-gray-500 {% else %} text-white {% endif %} transition duration-75"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 18 18"
+          >
+            <path
+              d="M1 18h16a1 1 0 0 0 1-1v-6h-4.439a.99.99 0 0 0-.908.6 3.978 3.978 0 0 1-7.306 0 .99.99 0 0 0-.908-.6H0v6a1 1 0 0 0 1 1Z"
+            />
+            <path
+              d="M4.439 9a2.99 2.99 0 0 1 2.742 1.8 1.977 1.977 0 0 0 3.638 0A2.99 2.99 0 0 1 13.561 9H17.8L15.977.783A1 1 0 0 0 15 0H3a1 1 0 0 0-.977.783L.2 9h4.239Z"
+            />
+          </svg>
+          <span class="flex-1 ms-3 whitespace-nowrap uppercase font-semibold"
+            >Inbox</span
+          >
+          <span
+            class="inline-flex items-center justify-center px-2 ms-3 text-sm text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"
+            >{{ total_snippets_count }}</span
+          >
+        </a>
+      </li>
+      <li>
+        <a
+          href="{{ url_for('index', fav_only=True) }}"
+          class="flex text-sm rounded-lg items-center px-2 py-2.5 {% if not favorite_only %} text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {% else %} text-white bg-blue-700 {% endif %}"
+        >
+          <svg
+            class="flex-shrink-0 w-5 h-5 {% if not favorite_only %}dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white text-gray-500 {% else %} text-white {% endif %} transition duration-75"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 22 20"
+          >
+            <path
+              d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+            />
+          </svg>
+          <span class="flex-1 ms-3 whitespace-nowrap uppercase font-semibold"
+            >Favorites</span
+          >
+          <span
+            class="inline-flex items-center justify-center px-2 ms-3 text-sm text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"
+            >{{ favorited_snippets_count }}</span
+          >
+        </a>
+      </li>
       <li>
         <span
           class="flex text-sm p-2 items-center text-gray-600 rounded-lg dark:text-white"
@@ -63,7 +95,7 @@ title %} {% if snippet %} {{ snippet.title }} {% elif current_tag %}
       <li>
         <a
           href="{{ url_for('index', tag=tag) }}"
-          class="flex rounded-lg items-center p-2 {% if tag != current_tag %} text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {% else %} text-white bg-blue-700 {% endif %}"
+          class="flex rounded-lg items-center p-2 {% if tag != current_tag or current_lang or favorite_only %} text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {% else %} text-white bg-blue-700 {% endif %}"
         >
           <span class="flex-1 whitespace-nowrap font-medium">#{{ tag }}</span>
           <span
@@ -112,7 +144,7 @@ title %} {% if snippet %} {{ snippet.title }} {% elif current_tag %}
       <li>
         <a
           href="{{ url_for('index', lang=lang) }}"
-          class="flex rounded-lg items-center p-2 {% if lang != current_lang %} text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {% else %} text-white bg-blue-700 {% endif %}"
+          class="flex rounded-lg items-center p-2 {% if lang != current_lang or current_tag or favorite_only %} text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {% else %} text-white bg-blue-700 {% endif %}"
         >
           <div class="flex-1 flex gap-x-2">
             {{render_lang_logo(convert_to_lang_logo(lang), 24)}}
@@ -160,16 +192,36 @@ title %} {% if snippet %} {{ snippet.title }} {% elif current_tag %}
             >{{ snippets|length }}</span
           >
         </span>
+        <a
+          href="{{url_for('create_snippet')}}"
+          class="text-white my-3 flex justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          <svg
+            class="w-3.5 h-3.5 me-2"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 18 18"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 1v16M1 9h16"
+            />
+          </svg>
+          Add snippet
+        </a>
         {% if snippets|length == 0 %}
-        <li class="dark:text-gray-300 p-2 text-gray-600">
-          No snippets found. Select one of the tags or languages on the left to
-          get started
+        <li class="dark:text-gray-300 text-center p-2 text-gray-600">
+          No snippets found. Get started by creating one
         </li>
         {% else %} {% for snippet in snippets %}
 
         <li>
           <a
-            href="{{url_for('index', snippet_id=snippet.id, lang=current_lang, tag=current_tag)}}"
+            href="{{url_for('index', snippet_id=snippet.id, fav_only=favorite_only, lang=current_lang, tag=current_tag)}}"
             class="rounded-lg block p-2 {% if snippet.id != snippet_id %} text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {% else %} text-white bg-blue-700 {% endif %}"
           >
             <div class="flex items-center">
@@ -192,7 +244,28 @@ title %} {% if snippet %} {{ snippet.title }} {% elif current_tag %}
 >
   {% if snippet %}
   <h2 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
-    {{snippet.title}}
+    {{snippet.title}} {% if snippet.is_favorite %}
+    <svg
+      data-tooltip-target="favorite-tooltip"
+      class="inline-block -mt-1.5 ms-2 w-5 h-5 text-yellow-400"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 22 20"
+    >
+      <path
+        d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+      />
+    </svg>
+    <div
+      id="favorite-tooltip"
+      role="tooltip"
+      class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+    >
+      Favorited
+      <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
+    {% endif %}
   </h2>
   <p class="text-gray-600 whitespace-pre-line dark:text-gray-200">
     {% if snippet.description %} {{ snippet.description }} {% else %}

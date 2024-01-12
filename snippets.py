@@ -11,25 +11,27 @@ class Snippets:
   def snippets(self):
     return self.__snippets
 
+  def __remove_duplicate_empty_tags(self, given_tags):
+    tags = set([tag.strip() for tag in given_tags.split(',')])
+    tags.discard('')
+    return list(tags)
+
   def add_snippet(self, payload):
-    tags = [tag.strip() for tag in payload['tags'].split(',')
-            ] if len(payload['tags']) > 0 else []
     self.__snippets.append({
       **payload,
       "content": payload['content'].strip(),
       "id": str(uuid4()),
-      "tags": tags,
+      "tags": self.__remove_duplicate_empty_tags(payload['tags']),
       "createdAt": round(time())
     })
     return self.snippets[-1]
 
   def edit_snippet(self, snippet, index, payload):
-    tags = [tag.strip().lower() for tag in payload['tags'].split(',')
-            ] if len(payload['tags']) > 0 else []
     if snippet and index > -1:
       self.snippets[index] = {**snippet, **payload,
                               "content": payload['content'].strip(),
-                              "tags": tags, "updatedAt": round(time())}
+                              "tags": self.__remove_duplicate_empty_tags(payload['tags']),
+                              "updatedAt": round(time())}
       return snippet
 
   def remove_snippet(self, index):
@@ -57,6 +59,9 @@ class Snippets:
   def get_snippets_by_lang(self, lang):
     return [] if not lang else [
       snippet for snippet in self.snippets if snippet['lang'] == lang]
+
+  def get_favorited_snippets(self):
+    return [snippet for snippet in self.snippets if snippet.get('is_favorite', False)]
 
   def find_snippet_by_id(self, id):
     for index, snippet in enumerate(self.snippets):

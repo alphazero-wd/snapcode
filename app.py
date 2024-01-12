@@ -26,16 +26,25 @@ def index():
 
   current_tag = request.args.get('tag', default='')
   current_lang = request.args.get('lang', default='')
+  favorite_only = request.args.get('fav_only', type=bool)
   snippet_id = request.args.get('snippet_id', default='')
-
-  filtered_snippets = [*snippets.get_snippets_by_tag(current_tag),
-                       *snippets.get_snippets_by_lang(current_lang)]
-
+  filtered_snippets = snippets.snippets
+  favorited_snippets = snippets.get_favorited_snippets()
+  if current_tag:
+    filtered_snippets = snippets.get_snippets_by_tag(current_tag)
+    current_lang = ''  # reset language so as not to filter by languages as well
+  elif current_lang:
+    filtered_snippets = snippets.get_snippets_by_lang(current_lang)
+  elif favorite_only:
+    filtered_snippets = favorited_snippets.copy()
   snippet, _ = snippets.find_snippet_by_id(snippet_id)
 
   return render_template("index.html",
                          tags=tags,
                          langs=langs,
+                         favorite_only=favorite_only,
+                         favorited_snippets_count=len(favorited_snippets),
+                         total_snippets_count=len(snippets.snippets),
                          snippets=filtered_snippets,
                          snippet_id=snippet_id,
                          current_tag=current_tag,
@@ -56,7 +65,8 @@ def create_snippet():
       "content": form.content.data,
       "description": form.description.data,
       "lang": form.lang.data,
-      "tags": form.tags.data
+      "tags": form.tags.data,
+      "is_favorite": form.is_favorite.data
   }
   if request.method == 'POST' and form.validate_on_submit():
     snippet = snippets.add_snippet(payload)
@@ -75,14 +85,18 @@ def edit_snippet(id):
       "content": form.content.data,
       "description": form.description.data,
       "lang": form.lang.data,
-      "tags": form.tags.data
+      "tags": form.tags.data,
+      "is_favorite": form.is_favorite.data
   }
   if not snippet:
     return redirect('/404')
+
   if request.method == 'GET':
     form.lang.data = snippet['lang']
     form.description.data = snippet['description']
     form.content.data = snippet['content']
+    form.is_favorite.data = snippet['is_favorite']
+
   if request.method == 'POST' and form.validate_on_submit():
     updated_snippet = snippets.edit_snippet(snippet, index, payload)
     json_file.write_to_file(json.dumps(snippets.snippets))
