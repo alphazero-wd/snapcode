@@ -95,7 +95,7 @@ def edit_snippet(id):
     form.lang.data = snippet['lang']
     form.description.data = snippet['description']
     form.content.data = snippet['content']
-    form.is_favorite.data = snippet['is_favorite']
+    form.is_favorite.data = snippet.get('is_favorite', False)
 
   if request.method == 'POST' and form.validate_on_submit():
     updated_snippet = snippets.edit_snippet(snippet, index, payload)
