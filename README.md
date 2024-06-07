@@ -1,70 +1,36 @@
-# Snapcode - Your code snippets manager
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Overview
+## Getting Started
 
-![Preview](./assets/preview.png)
-
-Snapcode is a simple code snippets manager that helps you keep all your code snippets organized in one place.
-
-Features included:
-
-- List all snippets
-- View a snippet in details
-- Create a snippet
-- Edit a snippet
-- Delete a snippet
-- Search, fitler snippets by tags, languages
-- Sort snippets by created date, title
-- Aggregate snippets by tags, languages
-
-## Languages and frameworks used
-
-<div style="display: flex; justify-content: center; gap: 1.5rem">
-  <img alt="Flask" width="70px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" />
-  <img alt="Python" width="70px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" />
-  <img alt="Python" width="70px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" />
-  <img alt="HTML" width="70px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" />
-  <img alt="CSS" width="70px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" />
-  <img alt="Javascript" width="70px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
-</div>
-
-## Setup and Installation
-
-Prerequisites:
-
-- [Python](https://python.org) (version 3.6 or higher)
-- [Node.js](https://nodejs.org) (version 14 or higher)
-
-Clone the project from GitHub
+First, run the development server:
 
 ```bash
-git clone https://github.com/alphazero-wd/snapcode.git
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Install the necessary dependencies
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```bash
-npm i -g yarn
-cd snapcode/
-pip install -r requirements.txt
-yarn
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Run TailwindCSS compiler (in watch mode)
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-```bash
-yarn tw
-```
+## Learn More
 
-Start the main application
+To learn more about Next.js, take a look at the following resources:
 
-```bash
-python app.py # on Windows
-# python3 app.py (Mac, Linux)
-```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-Go to [http://localhost:5000](http://localhost:5000) in the browser.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-The application should be up and running.
+## Deploy on Vercel
 
-Enjoy using Snapcode :)
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

@@ -1,20 +1,46 @@
 {
   "name": "snapcode",
-  "author": "Tran Thai Anh",
-  "categories": [
-    "Snippets",
-    "Programming Languages"
-  ],
-  "version": "1.0",
-  "license": "MIT",
-  "devDependencies": {
-    "tailwindcss": "^3.1.6"
-  },
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "tw": "tailwindcss -i static/src/input.css -o static/dist/output.css --watch"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "flowbite": "^2.0.0",
-    "monaco-editor": "^0.45.0"
+    "@heroicons/react": "^2.1.3",
+    "@hookform/resolvers": "^3.6.0",
+    "@radix-ui/react-avatar": "^1.0.4",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toast": "^1.1.5",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
+    "@supabase/ssr": "^0.3.0",
+    "@supabase/supabase-js": "^2.43.4",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.51.5",
+    "react-markdown": "^9.0.1",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }
