@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@supabase/supabase-js";
+import { convertHashtagsToLinks } from "../utils";
 
 const supabase = createClient();
 
@@ -37,7 +38,9 @@ export const useEditPost = (id: string, content: string) => {
       try {
         const { error } = await supabase
           .from("posts")
-          .update(values)
+          .update({
+            content: convertHashtagsToLinks(values.content),
+          })
           .eq("id", id);
 
         if (error) throw new Error(error.message);

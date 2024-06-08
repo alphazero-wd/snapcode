@@ -1,6 +1,6 @@
 import { CreatePost } from "@/features/posts/create";
 import { createClient } from "@/lib/supabase/server";
-import { Posts } from "@/features/posts/items";
+import { PostsView } from "@/features/posts/view";
 
 export const metadata = {
   title: "Hub for developers to connect",
@@ -15,7 +15,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-y-6">
       <CreatePost user={user} />
-      <Posts />
+      <PostsView />
     </div>
   );
 }

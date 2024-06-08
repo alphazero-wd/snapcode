@@ -1,5 +1,5 @@
 create table posts(
-  id uuid primary key default gen_random_uid(),
+  id uuid primary key default uuid_generate_v4(),
   content text not null,
   created_at timestamptz default now(),
   updated_at timestamptz,

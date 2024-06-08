@@ -47,10 +47,12 @@ export const EditForm = ({
                 disabled={loading || !user}
               />
               <div className="mt-3 flex justify-between w-full">
-                <FormDescription>
-                  {!user ? "Log in to edit" : ""}
-                </FormDescription>
-                <FormMessage className="flex-1" />
+                <div>
+                  <FormDescription>
+                    Hashtags will automatically be converted to links once done.
+                  </FormDescription>
+                  <FormMessage className="flex-1" />
+                </div>
                 <div className="flex mt-3 gap-x-2">
                   <CancelEditModal
                     hasChanged={content !== form.getValues("content")}

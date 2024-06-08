@@ -5,6 +5,8 @@ import { PostOptions } from "./options";
 import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
+import { Button } from "../../ui/button";
+import Link from "next/link";
 
 interface PostHeaderProps {
   id: string;
@@ -34,14 +36,20 @@ export const PostHeader = ({
           <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
         </Avatar>
         <div>
-          <div className="font-semibold line-clamp-1 text-sm">{username}</div>
+          <Button
+            asChild
+            variant="link"
+            className="p-0 w-fit h-fit font-semibold line-clamp-1 text-sm"
+          >
+            <Link href={`/${username}/profile`}>{username}</Link>
+          </Button>
           <div className="text-muted-foreground text-xs line-clamp-1">
             created{" "}
             {formatDistanceToNowStrict(new Date(created_at), {
               addSuffix: true,
             })}
             {updated_at &&
-              ` (edit ${formatDistanceToNowStrict(new Date(updated_at), {
+              ` (edited ${formatDistanceToNowStrict(new Date(updated_at), {
                 addSuffix: true,
               })})`}
           </div>

@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@supabase/supabase-js";
 import { Post } from "../types";
+import { convertHashtagsToLinks } from "../utils";
 
 const supabase = createClient();
 
@@ -34,7 +35,10 @@ export const useCreatePost = () => {
       try {
         const { data, error } = await supabase
           .from("posts")
-          .insert({ ...values, creator_id: user.id })
+          .insert({
+            content: convertHashtagsToLinks(values.content),
+            creator_id: user.id,
+          })
           .select("id")
           .single();
 
