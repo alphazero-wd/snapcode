@@ -41,7 +41,9 @@ export const EditPostForm = ({ id, content, user }: EditPostFormProps) => {
                 </FormDescription>
                 <FormMessage className="flex-1" />
                 <div className="flex mt-3 gap-x-2">
-                  <CancelEditModal />
+                  <CancelEditModal
+                    hasChanged={content !== form.getValues("content")}
+                  />
                   <Button
                     disabled={
                       loading || !user || content === form.getValues("content")

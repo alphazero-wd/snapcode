@@ -1,9 +1,8 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Input } from "@/features/ui/input";
-import { Button } from "@/features/ui/button";
-import Link from "next/link";
 import { UserMenu } from "./user-menu";
 import { createClient } from "@/lib/supabase/server";
+import { AuthButtons } from "./auth-buttons";
 
 export const Navbar = async () => {
   const supabase = createClient();
@@ -25,19 +24,5 @@ export const Navbar = async () => {
       <UserMenu user={user} />
       <AuthButtons isAuthenticated={!!user} />
     </>
-  );
-};
-
-const AuthButtons = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
-  if (isAuthenticated) return null;
-  return (
-    <div className="flex gap-x-4">
-      <Button variant="link" asChild>
-        <Link href="/auth/login">Log in</Link>
-      </Button>
-      <Button asChild>
-        <Link href="/auth/signup">Sign up</Link>
-      </Button>
-    </div>
   );
 };

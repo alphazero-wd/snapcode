@@ -1,1 +1,2 @@
-export { LoginForm } from "./login-form";
+export { useLoginModal } from "./use-login-modal";
+export { LoginModal } from "./modal";

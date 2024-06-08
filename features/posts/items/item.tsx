@@ -33,7 +33,7 @@ export const PostItem = ({ post }: PostItemProps) => {
           creator_id={post.users.id}
         />
       </CardHeader>
-      <CardContent className="text-foreground prose dark:prose-invert prose-a:text-primary max-w-full overflow-hidden text-sm">
+      <CardContent className="text-foreground markdown max-w-full overflow-hidden text-sm">
         <ReactMarkdown>{post.content}</ReactMarkdown>
       </CardContent>
     </Card>

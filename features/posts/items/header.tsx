@@ -29,8 +29,8 @@ export const PostHeader = async ({
           <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
         </Avatar>
         <div>
-          <div className="font-semibold text-sm">{username}</div>
-          <div className="text-muted-foreground text-sm">
+          <div className="font-semibold line-clamp-1 text-sm">{username}</div>
+          <div className="text-muted-foreground text-sm line-clamp-1">
             created{" "}
             {formatDistanceToNowStrict(new Date(created_at), {
               addSuffix: true,

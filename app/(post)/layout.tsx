@@ -26,7 +26,7 @@ export default function PostsLayout({
           <Navbar />
         </div>
       </header>
-      <main className="grid py-8 container max-w-7xl lg:grid-cols-[1fr_300px] lg:gap-x-6 px-4 lg:px-6">
+      <main className="grid py-8 container max-w-7xl lg:grid-cols-[1fr_400px] lg:gap-x-6 px-4 lg:px-6">
         <div>{children}</div>
       </main>
       <DeletePostModal />

@@ -1,9 +1,6 @@
 import { Post } from "@/features/posts/types";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { Button } from "@/features/ui/button";
-import { ChevronLeftIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import { EditPostForm } from "@/features/posts/edit";
 
 interface PostPageParams {
@@ -11,6 +8,10 @@ interface PostPageParams {
     id: string;
   };
 }
+
+export const metadata = {
+  title: "Edit post",
+};
 
 export default async function PostPage({ params: { id } }: PostPageParams) {
   const supabase = createClient();

@@ -38,7 +38,7 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
       <div className="flex items-center flex-1 w-full gap-x-4">
         <Button
           size="icon"
-          className="rounded-full flex-shrink-0 w-8 h-8 items-center"
+          className="hidden md:inline-flex rounded-full flex-shrink-0 w-8 h-8 items-center"
           variant="outline"
           asChild
         >
@@ -55,7 +55,7 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
         />
       </div>
 
-      <div className="text-foreground sm:ml-12 prose dark:prose-invert prose-a:text-primary max-w-full overflow-hidden text-sm">
+      <div className="text-foreground sm:ml-12 markdown overflow-hidden text-sm">
         <ReactMarkdown>{data.content}</ReactMarkdown>
       </div>
     </div>

@@ -2,6 +2,10 @@ import { CreatePost } from "@/features/posts/create";
 import { createClient } from "@/lib/supabase/server";
 import { Posts } from "@/features/posts/items";
 
+export const metadata = {
+  title: "Hub for developers to connect",
+};
+
 export default async function Home() {
   const supabase = createClient();
   const {

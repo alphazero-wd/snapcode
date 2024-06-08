@@ -12,7 +12,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/features/ui/use-toast";
 
-export const CancelEditModal = () => {
+interface CancelEditModalProps {
+  hasChanged: boolean;
+}
+
+export const CancelEditModal = ({ hasChanged }: { hasChanged: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
@@ -26,9 +30,17 @@ export const CancelEditModal = () => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Cancel</Button>
+        <Button
+          onClick={() => {
+            if (hasChanged) setIsOpen(true);
+            else router.push("/");
+          }}
+          variant="outline"
+        >
+          Cancel
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
