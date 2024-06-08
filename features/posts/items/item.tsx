@@ -1,12 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import { Card, CardContent, CardHeader } from "@/features/ui/card";
-import { Avatar, AvatarFallback } from "@/features/ui/avatar";
-import { formatDistanceToNowStrict } from "date-fns/formatDistanceToNowStrict";
 import { Button } from "@/features/ui/button";
-import {
-  ChevronRightIcon,
-  EllipsisHorizontalIcon,
-} from "@heroicons/react/24/outline";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Post } from "../types";
 import { PostHeader } from "./header";
@@ -31,13 +26,14 @@ export const PostItem = ({ post }: PostItemProps) => {
       </Button>
       <CardHeader>
         <PostHeader
+          id={post.id}
           username={post.users.raw_user_meta_data.username}
           created_at={post.created_at}
           updated_at={post.updated_at}
           creator_id={post.users.id}
         />
       </CardHeader>
-      <CardContent className="text-foreground prose max-w-full overflow-hidden text-sm">
+      <CardContent className="text-foreground prose dark:prose-invert prose-a:text-primary max-w-full overflow-hidden text-sm">
         <ReactMarkdown>{post.content}</ReactMarkdown>
       </CardContent>
     </Card>

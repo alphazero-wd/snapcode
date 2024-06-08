@@ -28,6 +28,7 @@ export const UserMenu = ({ user }: { user: User | null }) => {
       title: "Sign out successfully!",
     });
     setTimeout(dismiss, 3000);
+    router.replace("/", { scroll: false });
     router.refresh();
   };
   return (

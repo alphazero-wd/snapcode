@@ -14,48 +14,64 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/features/ui/dropdown-menu";
-import { useEffect, useState } from "react";
-import { User } from "@supabase/supabase-js";
-import { createClient } from "@/lib/supabase/client";
-
-const supabase = createClient();
+import { useToast } from "@/features/ui/use-toast";
+import { useDeletePostModal } from "./use-delete-modal";
+import Link from "next/link";
 
 interface PostOptionsProps {
+  id: string;
   creator_id: string;
+  user_id?: string;
 }
+export const PostOptions = ({ creator_id, id, user_id }: PostOptionsProps) => {
+  const { toast } = useToast();
+  const { onOpen } = useDeletePostModal();
 
-export const PostOptions = ({ creator_id }: PostOptionsProps) => {
-  const [user, setUser] = useState<User | null>(null);
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
-  }, [supabase]);
+  const onCopyLink = async () => {
+    await navigator.clipboard.writeText(window.origin + "/post/" + id);
+    const { dismiss } = toast({
+      variant: "success",
+      title: "Link copied to the clipboard",
+    });
+    setTimeout(dismiss, 3000);
+  };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
-          <EllipsisHorizontalIcon className="w-5 h-5" />
+          <EllipsisHorizontalIcon className="w-4 h-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <LinkIcon className="w-5 h-5 text-muted-foreground" />
+          <DropdownMenuItem
+            onClick={onCopyLink}
+            className="flex gap-x-2 text-sm"
+          >
+            <LinkIcon className="w-4 h-4 text-muted-foreground" />
             Share link
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        {creator_id === user?.id && (
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <PencilIcon className="w-5 h-5 text-muted-foreground" />
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem className="text-destructive">
-              <TrashIcon className="w-5 h-5 text-muted-foreground" />
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
+        {creator_id === user_id && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem asChild className="flex gap-x-2 text-sm">
+                <Link href={"/post/" + id + "/edit"}>
+                  <PencilIcon className="w-4 h-4 text-muted-foreground" />
+                  Edit
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => onOpen(id)}
+                className="flex gap-x-2 text-sm text-destructive group"
+              >
+                <TrashIcon className="w-4 h-4 group-hover:text-destructive" />
+                <span className="group-hover:text-destructive">Delete</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </>
         )}
       </DropdownMenuContent>
     </DropdownMenu>
