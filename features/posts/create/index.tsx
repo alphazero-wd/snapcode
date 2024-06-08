@@ -10,6 +10,7 @@ import {
 import { useCreatePost } from "./use-create-post";
 import { Button } from "@/features/ui/button";
 import { User } from "@supabase/supabase-js";
+import { AutoresizeTextarea } from "@/features/ui/autoresize-textarea";
 
 export const CreatePost = ({ user }: { user: User | null }) => {
   const { form, loading, onSubmit } = useCreatePost();
@@ -22,7 +23,7 @@ export const CreatePost = ({ user }: { user: User | null }) => {
           name="content"
           render={({ field }) => (
             <FormItem>
-              <Textarea
+              <AutoresizeTextarea
                 {...field}
                 placeholder="New Post..."
                 rows={6}

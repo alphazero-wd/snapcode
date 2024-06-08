@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useToast } from "@/features/ui/use-toast";
 import { createClient } from "@/lib/supabase/client";
+import { useSignupModal } from "./use-signup-modal";
 
 const supabase = createClient();
 
@@ -40,6 +41,7 @@ export const useSignup = () => {
   const { toast } = useToast();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const onClose = useSignupModal((state) => state.onClose);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
@@ -59,7 +61,7 @@ export const useSignup = () => {
         });
 
         setTimeout(dismiss, 3000);
-        router.replace("/");
+        onClose();
         router.refresh();
       } catch (error: any) {
         const { dismiss } = toast({

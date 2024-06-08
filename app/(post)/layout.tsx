@@ -11,8 +11,8 @@ export default function PostsLayout({
 }) {
   return (
     <>
-      <header className="h-14 w-full flex items-center shadow backdrop-blur-xl bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-        <div className="flex items-center justify-between gap-4 max-w-7xl container">
+      <header className="h-14 w-full flex items-center shadow backdrop-blur-xl bg-muted/40 lg:h-[60px]">
+        <div className="flex items-center justify-between gap-4 max-w-7xl container px-4 lg:px-6">
           <div>
             <Link href="/">
               <div className="hidden md:block">

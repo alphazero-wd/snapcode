@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/features/ui/use-toast";
 import { createClient } from "@/lib/supabase/client";
+import { useLoginModal } from "./use-login-modal";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -25,6 +26,7 @@ export const useLogin = () => {
   });
   const { toast } = useToast();
   const router = useRouter();
+  const onClose = useLoginModal((state) => state.onClose);
   const [loading, setLoading] = useState(false);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -42,7 +44,7 @@ export const useLogin = () => {
         });
         setTimeout(dismiss, 3000);
         form.reset();
-        router.replace("/");
+        onClose();
         router.refresh();
       } catch (error: any) {
         const { dismiss } = toast({

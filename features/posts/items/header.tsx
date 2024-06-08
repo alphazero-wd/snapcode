@@ -1,7 +1,10 @@
+"use client";
 import { formatDistanceToNowStrict } from "date-fns/formatDistanceToNowStrict";
 import { Avatar, AvatarFallback } from "@/features/ui/avatar";
 import { PostOptions } from "./options";
-import { createClient } from "../../../lib/supabase/server";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
+import { User } from "@supabase/supabase-js";
 
 interface PostHeaderProps {
   id: string;
@@ -11,7 +14,7 @@ interface PostHeaderProps {
   creator_id: string;
 }
 
-export const PostHeader = async ({
+export const PostHeader = ({
   id,
   username,
   created_at,
@@ -19,9 +22,11 @@ export const PostHeader = async ({
   creator_id,
 }: PostHeaderProps) => {
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => setCurrentUser(user));
+  }, [supabase]);
+
   return (
     <div className="flex w-full flex-row justify-between items-center">
       <div className="flex gap-x-4 items-center">
@@ -30,7 +35,7 @@ export const PostHeader = async ({
         </Avatar>
         <div>
           <div className="font-semibold line-clamp-1 text-sm">{username}</div>
-          <div className="text-muted-foreground text-sm line-clamp-1">
+          <div className="text-muted-foreground text-xs line-clamp-1">
             created{" "}
             {formatDistanceToNowStrict(new Date(created_at), {
               addSuffix: true,
@@ -42,7 +47,7 @@ export const PostHeader = async ({
           </div>
         </div>
       </div>
-      <PostOptions id={id} creator_id={creator_id} user_id={user?.id} />
+      <PostOptions id={id} creator_id={creator_id} user_id={currentUser?.id} />
     </div>
   );
 };

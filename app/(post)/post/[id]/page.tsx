@@ -55,7 +55,7 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
         />
       </div>
 
-      <div className="text-foreground sm:ml-12 markdown overflow-hidden text-sm">
+      <div className="text-foreground sm:ml-12 markdown text-sm">
         <ReactMarkdown>{data.content}</ReactMarkdown>
       </div>
     </div>
