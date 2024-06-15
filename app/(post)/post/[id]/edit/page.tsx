@@ -23,9 +23,9 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
   content,
   created_at,
   updated_at,
-  users (
-    id,
-    raw_user_meta_data
+  profiles (
+    user_id,
+    username
   )
 `
     )

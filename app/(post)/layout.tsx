@@ -3,6 +3,7 @@ import { Navbar } from "@/features/layout/navbar";
 import { DesktopLogo, MobileLogo } from "@/features/ui/logo";
 import React from "react";
 import { DeletePostModal } from "@/features/posts/items/delete-modal";
+import { TrendingTags } from "@/features/posts/tags/trending";
 
 export default function PostsLayout({
   children,
@@ -26,9 +27,12 @@ export default function PostsLayout({
           <Navbar />
         </div>
       </header>
-      <main className="grid py-8 container max-w-7xl lg:grid-cols-[1fr_400px] lg:gap-x-6 px-4 lg:px-6">
-        <div>{children}</div>
-      </main>
+      <div className="grid relative py-8 container max-w-7xl lg:grid-cols-[1fr_300px] lg:gap-x-16 px-4 lg:px-6">
+        <main>{children}</main>
+        <aside className="lg:sticky lg:top-8 lg:mt-0 mt-8 h-fit">
+          <TrendingTags />
+        </aside>
+      </div>
       <DeletePostModal />
     </>
   );

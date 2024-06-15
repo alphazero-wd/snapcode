@@ -7,13 +7,13 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@supabase/supabase-js";
-import { Post } from "../types";
-import { convertHashtagsToLinks } from "../utils";
+import { useTags } from "../tags";
 
 const supabase = createClient();
 
 export const useCreatePost = () => {
   const [user, setUser] = useState<User | null>(null);
+  const { manageTags } = useTags();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,11 +36,13 @@ export const useCreatePost = () => {
         const { data, error } = await supabase
           .from("posts")
           .insert({
-            content: convertHashtagsToLinks(values.content),
+            content: values.content,
             creator_id: user.id,
           })
           .select("id")
           .single();
+
+        await manageTags(data!.id, values.content, user.id);
 
         if (error) throw new Error(error.message);
 

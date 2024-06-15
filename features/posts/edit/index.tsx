@@ -3,6 +3,7 @@ import { useEditPost } from "./use-edit-post";
 import { User } from "@supabase/supabase-js";
 import { EditForm } from "./edit-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/features/ui/tabs";
+import { convertHashtagsToLinks } from "../utils";
 import ReactMarkdown from "react-markdown";
 
 interface EditPostFormProps {
@@ -32,7 +33,9 @@ export const EditPostForm = ({ id, content, user }: EditPostFormProps) => {
       </TabsContent>
       <TabsContent value="preview">
         <div className="text-foreground markdown text-sm">
-          <ReactMarkdown>{contentPreview}</ReactMarkdown>
+          <ReactMarkdown>
+            {convertHashtagsToLinks(contentPreview)}
+          </ReactMarkdown>
         </div>
       </TabsContent>
     </Tabs>

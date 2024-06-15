@@ -14,6 +14,7 @@ interface PostHeaderProps {
   created_at: string;
   updated_at: string | null;
   creator_id: string;
+  user: User | null;
 }
 
 export const PostHeader = ({
@@ -22,13 +23,8 @@ export const PostHeader = ({
   created_at,
   updated_at,
   creator_id,
+  user,
 }: PostHeaderProps) => {
-  const supabase = createClient();
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => setCurrentUser(user));
-  }, [supabase]);
-
   return (
     <div className="flex w-full flex-row justify-between items-center">
       <div className="flex gap-x-4 items-center">
@@ -43,7 +39,10 @@ export const PostHeader = ({
           >
             <Link href={`/${username}/profile`}>{username}</Link>
           </Button>
-          <div className="text-muted-foreground text-xs line-clamp-1">
+          <div
+            suppressHydrationWarning
+            className="text-muted-foreground text-xs line-clamp-1"
+          >
             created{" "}
             {formatDistanceToNowStrict(new Date(created_at), {
               addSuffix: true,
@@ -55,7 +54,7 @@ export const PostHeader = ({
           </div>
         </div>
       </div>
-      <PostOptions id={id} creator_id={creator_id} user_id={currentUser?.id} />
+      <PostOptions id={id} creator_id={creator_id} user_id={user?.id} />
     </div>
   );
 };

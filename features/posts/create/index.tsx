@@ -30,10 +30,12 @@ export const CreatePost = ({ user }: { user: User | null }) => {
                 disabled={loading || !user}
               />
               <div className="mt-3 flex justify-between w-full">
-                <FormDescription>
-                  {!user ? "Log in to post" : ""}
-                </FormDescription>
-                <FormMessage className="flex-1" />
+                <div>
+                  <FormDescription className="block">
+                    {!user ? "Log in to post" : ""}
+                  </FormDescription>
+                  <FormMessage className="flex-1 block" />
+                </div>
                 <Button
                   disabled={loading || !user}
                   className="w-fit justify-self-end"
