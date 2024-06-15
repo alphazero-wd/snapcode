@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { Button } from "../../ui/button";
+import { Button } from "@/features/ui/button";
 import Link from "next/link";
 import { TrendingTag } from "../types";
 

@@ -12,7 +12,7 @@ export default function PostsLayout({
 }) {
   return (
     <>
-      <header className="h-14 w-full flex items-center shadow backdrop-blur-xl bg-muted/40 lg:h-[60px]">
+      <header className="h-14 z-50 relative w-full flex items-center shadow backdrop-blur-xl bg-muted/40 lg:h-[60px]">
         <div className="flex items-center justify-between gap-4 max-w-7xl container px-4 lg:px-6">
           <div>
             <Link href="/">

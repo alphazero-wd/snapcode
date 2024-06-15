@@ -1,40 +1,83 @@
 "use client";
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Input } from "@/features/ui/input";
-import { useParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/features/ui/command";
+import { cn } from "@/lib/utils";
+import { Tag } from "@/features/posts/types";
+import { createClient } from "@/lib/supabase/client";
+import { Highlighter } from "@/features/common/highlighter";
 
+const supabase = createClient();
 export const Search = () => {
   const { tag } = useParams();
   const [value, setValue] = useState("");
-  const searchRef = useRef<HTMLInputElement>(null);
+  const [isCommandOpen, setIsCommandOpen] = useState(false);
+  const [tagsResult, setTagsResult] = useState<Tag[]>([]);
   const hashtagValue = useMemo(() => (tag ? "#" + tag : ""), [tag]);
+  const router = useRouter();
 
   useEffect(() => {
     setValue(hashtagValue);
   }, [hashtagValue]);
 
-  const clearSearch = () => {
-    setValue("");
-    searchRef.current?.focus();
+  const searchForTags = async () => {
+    const { data } = await supabase
+      .from("tags")
+      .select()
+      .ilike("name", `*${value.replace("#", "")}*`)
+      .limit(10)
+      .returns<Tag[]>();
+    return data;
   };
 
+  useEffect(() => {
+    searchForTags().then((data) => setTagsResult(data || []));
+  }, [value]);
+
   return (
-    <div className="relative w-full md:w-2/3 lg:w-1/3">
-      <MagnifyingGlassIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-      <Input
-        ref={searchRef}
-        placeholder={value || hashtagValue || "Search..."}
-        className="w-full appearance-none bg-background pl-8 shadow-none"
+    <Command
+      shouldFilter={false} // must add this
+      className="z-50 w-full md:w-2/3 lg:w-1/3"
+    >
+      <CommandInput
+        placeholder={hashtagValue || "Search..."}
         value={value || ""}
-        onChange={(e) => setValue(e.target.value)}
+        onValueChange={(search) => setValue(search)}
+        onBlur={() => setIsCommandOpen(false)}
+        onFocus={() => setIsCommandOpen(true)}
       />
-      {value && (
-        <XMarkIcon
-          className="absolute top-2.5 h-4 w-4 cursor-pointer text-muted-foreground right-2.5"
-          onClick={clearSearch}
-        />
-      )}
-    </div>
+
+      <CommandList
+        className={cn(
+          (!value || !isCommandOpen) && "hidden",
+          "absolute shadow border rounded-md bg-popover w-4/5 md:w-2/3 lg:w-1/3 top-14"
+        )}
+      >
+        {tagsResult.length === 0 ? (
+          <CommandEmpty>No results found.</CommandEmpty>
+        ) : (
+          <CommandGroup heading="Tags">
+            {tagsResult.map((tag) => (
+              <CommandItem
+                key={tag.id}
+                onSelect={() => {
+                  router.push(`/tag/${tag.name}`);
+                  setIsCommandOpen(false);
+                }}
+              >
+                <Highlighter content={`#${tag.name}`} keyword={value} />
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
+      </CommandList>
+    </Command>
   );
 };

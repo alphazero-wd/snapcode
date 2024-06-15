@@ -9,6 +9,11 @@ export interface Post {
   };
 }
 
+export interface Tag {
+  id: string;
+  name: string;
+}
+
 export interface TrendingTag {
   name: string;
   count: number;
