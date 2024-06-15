@@ -6,6 +6,7 @@ import { Button } from "@/features/ui/button";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import { convertHashtagsToLinks } from "@/features/posts/utils";
 
 interface PostPageParams {
   params: {
@@ -15,6 +16,9 @@ interface PostPageParams {
 
 export default async function PostPage({ params: { id } }: PostPageParams) {
   const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const { data } = await supabase
     .from("posts")
     .select(
@@ -23,9 +27,9 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
   content,
   created_at,
   updated_at,
-  users (
-    id,
-    raw_user_meta_data
+  profiles (
+    user_id,
+    username
   )
 `
     )
@@ -47,16 +51,17 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
           </Link>
         </Button>
         <PostHeader
+          user={user}
           id={id}
-          username={data.users.raw_user_meta_data.username}
+          username={data.profiles.username}
           created_at={data.created_at}
           updated_at={data.updated_at}
-          creator_id={data.users.id}
+          creator_id={data.profiles.user_id}
         />
       </div>
 
       <div className="text-foreground sm:ml-12 markdown text-sm">
-        <ReactMarkdown>{data.content}</ReactMarkdown>
+        <ReactMarkdown>{convertHashtagsToLinks(data.content)}</ReactMarkdown>
       </div>
     </div>
   );

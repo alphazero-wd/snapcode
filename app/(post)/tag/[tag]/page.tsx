@@ -1,4 +1,5 @@
 import { PostsView } from "@/features/posts/view";
+import { createClient } from "@/lib/supabase/server";
 
 interface TagPageParams {
   params: {
@@ -7,10 +8,13 @@ interface TagPageParams {
 }
 
 export default async function TagPage({ params: { tag } }: TagPageParams) {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   return (
     <div className="flex flex-col gap-y-6">
-      <h1 className="mb-3 text-2xl tracking-tight font-semibold">#{tag}</h1>
-      <PostsView tag={tag} />
+      <PostsView tag={tag} user={user} />
     </div>
   );
 }

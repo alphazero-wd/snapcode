@@ -3,10 +3,18 @@ export interface Post {
   content: string;
   created_at: string;
   updated_at: string | null;
-  users: {
-    id: string;
-    raw_user_meta_data: {
-      username: string;
-    };
+  profiles: {
+    user_id: string;
+    username: string;
   };
+}
+
+export interface Tag {
+  id: string;
+  name: string;
+}
+
+export interface TrendingTag {
+  name: string;
+  count: number;
 }

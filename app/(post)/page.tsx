@@ -15,7 +15,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-y-6">
       <CreatePost user={user} />
-      <PostsView />
+      <PostsView user={user} />
     </div>
   );
 }

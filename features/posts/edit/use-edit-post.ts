@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@supabase/supabase-js";
-import { convertHashtagsToLinks } from "../utils";
+import { useTags } from "../tags";
 
 const supabase = createClient();
 
@@ -20,6 +20,7 @@ export const useEditPost = (id: string, content: string) => {
     },
   });
   const { toast } = useToast();
+  const { manageTags } = useTags();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -39,9 +40,11 @@ export const useEditPost = (id: string, content: string) => {
         const { error } = await supabase
           .from("posts")
           .update({
-            content: convertHashtagsToLinks(values.content),
+            content: values.content,
           })
           .eq("id", id);
+
+        await manageTags(id, values.content, user.id);
 
         if (error) throw new Error(error.message);
 

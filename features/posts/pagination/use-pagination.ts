@@ -35,19 +35,20 @@ export const usePostsPagination = (tag?: string) => {
     content,
     created_at,
     updated_at,
-    users (
-      id,
-      raw_user_meta_data
+    profiles (
+      user_id,
+      username
     )
   `
       )
       .limit(POSTS_LIMIT + 1)
       .lt("created_at", cursor || new Date().toISOString())
-      .ilike("content", tag ? `*#${tag}*` : "*")
+      .ilike("content", tag ? `%#${tag}%` : "%%")
       .order("created_at", {
         ascending: false,
       })
       .returns<Post[]>();
+
     return data || [];
   }, [cursor]);
 
