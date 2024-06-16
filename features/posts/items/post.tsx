@@ -13,7 +13,7 @@ interface PostProps {
 
 export const Post = ({ post, user }: PostProps) => {
   return (
-    <PostItem post={post}>
+    <PostItem>
       <CardHeader>
         <PostHeader
           user={user}
@@ -24,7 +24,7 @@ export const Post = ({ post, user }: PostProps) => {
           creator_id={post.profiles.user_id}
         />
       </CardHeader>
-      <CardContent className="text-foreground markdown max-w-full overflow-hidden text-sm">
+      <CardContent className="text-foreground markdown max-w-full text-sm">
         <ReactMarkdown>{convertHashtagsToLinks(post.content)}</ReactMarkdown>
       </CardContent>
     </PostItem>

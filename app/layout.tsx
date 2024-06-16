@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/features/ui/toaster";
 import { SignupModal } from "@/features/auth/signup";
 import { LoginModal } from "@/features/auth/login";
+import { ThemeProvider } from "@/features/theme/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,10 +24,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Toaster />
-        <SignupModal />
-        <LoginModal />
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Toaster />
+          <SignupModal />
+          <LoginModal />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

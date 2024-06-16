@@ -9,7 +9,7 @@ export const TrendingTags = async () => {
     .from("trending_tags")
     .select()
     .order("count", { ascending: false })
-    .limit(15)
+    .limit(10)
     .returns<TrendingTag[]>();
 
   if (!data) return null;

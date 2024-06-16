@@ -28,6 +28,7 @@ export const Search = () => {
   }, [hashtagValue]);
 
   const searchForTags = async () => {
+    if (value.length === 0) return [];
     const { data } = await supabase
       .from("tags")
       .select()

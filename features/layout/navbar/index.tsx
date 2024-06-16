@@ -1,18 +1,11 @@
-import { UserMenu } from "./user-menu";
-import { createClient } from "@/lib/supabase/server";
-import { AuthButtons } from "./auth-buttons";
+import { ModeToggle } from "@/features/theme/toggler";
 import { Search } from "./search";
 
 export const Navbar = async () => {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
   return (
-    <>
+    <div className="w-full flex justify-between ml-3 md:ml-0 flex-1">
       <Search />
-      <UserMenu user={user} />
-      <AuthButtons isAuthenticated={!!user} />
-    </>
+      <ModeToggle />
+    </div>
   );
 };
