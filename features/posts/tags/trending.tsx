@@ -15,7 +15,7 @@ export const TrendingTags = async () => {
   if (!data) return null;
 
   return (
-    <div>
+    <div className="hidden lg:block">
       <h2 className="text-xl tracking-tight font-semibold mb-2">
         Trending Topics
       </h2>

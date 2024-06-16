@@ -12,22 +12,26 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { useDeletePostModal } from "./use-delete-modal";
 import { useToast } from "@/features/ui/use-toast";
+import { usePostsStore } from "../store";
 
 const supabase = createClient();
 export const DeletePostModal = () => {
   const router = useRouter();
   const { toast } = useToast();
   const { isOpen, onClose, id } = useDeletePostModal();
+  const deletePost = usePostsStore((state) => state.deletePost);
 
   const onDeletePost = async () => {
+    if (!id) return;
     const { dismiss } = toast({
       variant: "success",
       title: "Delete post successfully!",
     });
     setTimeout(dismiss, 3000);
     await supabase.from("posts").delete().eq("id", id);
+    deletePost(id);
+
     router.replace("/", { scroll: false });
-    router.refresh();
     onClose();
   };
 

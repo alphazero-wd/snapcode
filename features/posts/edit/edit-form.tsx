@@ -10,6 +10,7 @@ import {
 import { CancelEditModal } from "./cancel-modal";
 import { UseFormReturn } from "react-hook-form";
 import { User } from "@supabase/supabase-js";
+import { PostEditor } from "../editor";
 
 interface EditFormProps {
   form: UseFormReturn<
@@ -40,11 +41,9 @@ export const EditForm = ({
           name="content"
           render={({ field }) => (
             <FormItem>
-              <AutoresizeTextarea
-                {...field}
-                placeholder="Edit your post here..."
-                rows={20}
-                disabled={loading || !user}
+              <PostEditor
+                value={field.value}
+                onChange={(value) => form.setValue("content", value)}
               />
               <div className="mt-3 flex justify-between w-full">
                 <FormMessage className="flex-1" />

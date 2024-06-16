@@ -1,10 +1,9 @@
-import ReactMarkdown from "react-markdown";
 import { CardHeader, CardContent } from "@/features/ui/card";
 import { PostHeader } from "./header";
 import { PostItem } from "./item";
 import { Post as IPost } from "../types";
 import { User } from "@supabase/supabase-js";
-import { convertHashtagsToLinks } from "../utils";
+import { PostMarkdown } from "../view/markdown";
 
 interface PostProps {
   post: IPost;
@@ -25,7 +24,7 @@ export const Post = ({ post, user }: PostProps) => {
         />
       </CardHeader>
       <CardContent className="text-foreground markdown max-w-full text-sm">
-        <ReactMarkdown>{convertHashtagsToLinks(post.content)}</ReactMarkdown>
+        <PostMarkdown content={post.content} />
       </CardContent>
     </PostItem>
   );

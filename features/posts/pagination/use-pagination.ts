@@ -2,13 +2,17 @@ import { useState, useCallback, useEffect } from "react";
 import { POSTS_LIMIT } from "@/constants";
 import { createClient } from "@/lib/supabase/client";
 import { Post } from "../types";
+import { usePostsStore } from "../store";
 
 const MINIMUM_DEVIATION = 20;
 export const usePostsPagination = (tag?: string) => {
   const supabase = createClient();
-  const [posts, setPosts] = useState<Post[]>([]);
+  const posts = usePostsStore((state) => state.posts);
+  const cursor = usePostsStore((state) => state.cursor);
+  const updateCursor = usePostsStore((state) => state.updateCursor);
+  const getPosts = usePostsStore((state) => state.getPosts);
+  const reset = usePostsStore((state) => state.reset);
   const [loading, setLoading] = useState(false);
-  const [cursor, setCursor] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
 
   const onScroll = useCallback(() => {
@@ -18,12 +22,18 @@ export const usePostsPagination = (tag?: string) => {
     if (scrollTop + clientHeight < scrollHeight - MINIMUM_DEVIATION || loading)
       return;
 
-    setCursor(posts.at(-1)?.created_at || null);
+    updateCursor();
   }, [posts, hasMore, loading]);
 
   useEffect(() => {
+    reset();
+  }, []);
+
+  useEffect(() => {
     window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [onScroll]);
 
   const fetchPosts = useCallback(async () => {
@@ -61,7 +71,7 @@ export const usePostsPagination = (tag?: string) => {
           .then((data) => {
             const hasMorePosts = data.length === POSTS_LIMIT + 1;
             const newPosts = !hasMorePosts ? data : data.slice(0, -1);
-            setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+            getPosts(newPosts);
             setHasMore(hasMorePosts);
           })
           .finally(() => setLoading(false)),
@@ -69,5 +79,5 @@ export const usePostsPagination = (tag?: string) => {
     );
   }, [fetchPosts, hasMore]);
 
-  return { posts, loading };
+  return { loading };
 };

@@ -1,6 +1,7 @@
 "use client";
 import {
   EllipsisHorizontalIcon,
+  EyeIcon,
   LinkIcon,
   PencilIcon,
   TrashIcon,
@@ -45,6 +46,12 @@ export const PostOptions = ({ creator_id, id, user_id }: PostOptionsProps) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
+          <DropdownMenuItem className="flex gap-x-2 text-sm" asChild>
+            <Link href={"/post/" + id}>
+              <EyeIcon className="w-4 h-4 text-muted-foreground" />
+              View
+            </Link>
+          </DropdownMenuItem>
           <DropdownMenuItem
             onClick={onCopyLink}
             className="flex gap-x-2 text-sm"

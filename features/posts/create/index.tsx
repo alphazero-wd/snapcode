@@ -1,5 +1,4 @@
 "use client";
-import { Textarea } from "@/features/ui/textarea";
 import {
   Form,
   FormDescription,
@@ -10,7 +9,7 @@ import {
 import { useCreatePost } from "./use-create-post";
 import { Button } from "@/features/ui/button";
 import { User } from "@supabase/supabase-js";
-import { AutoresizeTextarea } from "@/features/ui/autoresize-textarea";
+import { PostEditor } from "../editor";
 
 export const CreatePost = ({ user }: { user: User | null }) => {
   const { form, loading, onSubmit } = useCreatePost();
@@ -23,11 +22,9 @@ export const CreatePost = ({ user }: { user: User | null }) => {
           name="content"
           render={({ field }) => (
             <FormItem>
-              <AutoresizeTextarea
-                {...field}
-                placeholder="New Post..."
-                rows={6}
-                disabled={loading || !user}
+              <PostEditor
+                value={field.value}
+                onChange={(value) => form.setValue("content", value)}
               />
               <div className="mt-3 flex justify-between w-full">
                 <div>
