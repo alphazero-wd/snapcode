@@ -15,12 +15,21 @@ const allowedTags = [
   "video",
   "a",
   "p",
+  "li",
+  "ul",
+  "ol",
   "br",
+  "span",
+  "div",
 ];
 
 export const sanitizeContent = (content: string) => {
   return sanitize(content, {
     allowedTags,
     allowedIframeDomains: ["www.youtube.com"],
+    allowedAttributes: {
+      code: ["class"],
+      a: ["href"],
+    },
   });
 };

@@ -2,7 +2,7 @@
 import { Button } from "@/features/ui/button";
 import { Form, FormField, FormItem, FormMessage } from "@/features/ui/form";
 import { User } from "@supabase/supabase-js";
-import { PostEditor } from "../editor";
+import { PostEditor } from "../../common/editor";
 import { CancelEditModal } from "./cancel-modal";
 import { useEditPost } from "./use-edit-post";
 

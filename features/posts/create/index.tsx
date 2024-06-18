@@ -9,7 +9,7 @@ import {
 import { useCreatePost } from "./use-create-post";
 import { Button } from "@/features/ui/button";
 import { User } from "@supabase/supabase-js";
-import { PostEditor } from "../editor";
+import { PostEditor } from "../../common/editor";
 
 export const CreatePost = ({ user }: { user: User | null }) => {
   const { form, loading, onSubmit, editor } = useCreatePost();

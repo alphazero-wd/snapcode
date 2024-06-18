@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@supabase/supabase-js";
 import { useTags } from "../tags";
-import { usePostEditor } from "../editor/use-editor";
+import { useContentEditor } from "@/features/common/editor/use-editor";
 
 const supabase = createClient();
 
@@ -21,7 +21,7 @@ export const useCreatePost = () => {
       content: "",
     },
   });
-  const editor = usePostEditor({
+  const editor = useContentEditor({
     onChange: (newValue) => form.setValue("content", newValue),
   });
   const { toast } = useToast();

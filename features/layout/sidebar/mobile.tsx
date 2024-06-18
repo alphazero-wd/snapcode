@@ -1,7 +1,7 @@
 import { Button } from "@/features/ui/button";
 import { DesktopLogo } from "@/features/ui/logo";
 import { Sheet, SheetContent, SheetTrigger } from "@/features/ui/sheet";
-import { Bars2Icon } from "@heroicons/react/24/outline";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { getUserWithProfile } from "./get-user-with-profile";
 import { SidebarLinks } from "./links";
@@ -13,7 +13,7 @@ export const MobileSidebar = async () => {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" size="icon" className="shrink-0 md:hidden">
-          <Bars2Icon className="h-5 w-5" />
+          <Bars3Icon className="h-5 w-5" />
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>

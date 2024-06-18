@@ -3,7 +3,7 @@ import { PostHeader } from "./header";
 import { PostItem } from "./item";
 import { Post as IPost } from "../types";
 import { User } from "@supabase/supabase-js";
-import { PostMarkdown } from "../view/markdown";
+import { Markdown } from "@/features/common/markdown";
 
 interface PostProps {
   post: IPost;
@@ -24,7 +24,7 @@ export const Post = ({ post, user }: PostProps) => {
         />
       </CardHeader>
       <CardContent className="text-foreground markdown max-w-full text-sm">
-        <PostMarkdown content={post.content} />
+        <Markdown content={post.content} />
       </CardContent>
     </PostItem>
   );

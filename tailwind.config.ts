@@ -10,6 +10,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        mono: ["Cascadia Mono"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

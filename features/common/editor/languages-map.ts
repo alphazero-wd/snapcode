@@ -1,0 +1,15 @@
+export const languagesMap: Record<string, string> = {
+  html: "HTML",
+  css: "CSS",
+  javascript: "Javascript",
+  typescript: "Typescript",
+  csharp: "C#",
+  cpp: "C++",
+  ruby: "Ruby",
+  python: "Python",
+  php: "PHP",
+  c: "C",
+  elixir: "Elixir",
+  plaintext: "Text File",
+  "": "None",
+};

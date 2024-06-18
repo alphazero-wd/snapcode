@@ -5,7 +5,7 @@ import { PostHeader } from "@/features/posts/items/header";
 import { Button } from "@/features/ui/button";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { PostMarkdown } from "@/features/posts/view/markdown";
+import { Markdown } from "@/features/common/markdown";
 
 interface PostPageParams {
   params: {
@@ -60,7 +60,7 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
       </div>
 
       <div className="text-foreground sm:ml-12 markdown text-sm">
-        <PostMarkdown content={data.content} />
+        <Markdown content={data.content} />
       </div>
     </div>
   );

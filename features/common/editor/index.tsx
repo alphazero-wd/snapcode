@@ -13,7 +13,6 @@ export const PostEditor = ({ editor }: PostEditorProps) => {
 
   return (
     <div className="flex flex-col gap-y-2">
-      <Toolbar editor={editor} />
       <div className="relative bg-background">
         <Textarea
           readOnly
@@ -22,6 +21,7 @@ export const PostEditor = ({ editor }: PostEditorProps) => {
         />
         <EditorContent editor={editor} />
       </div>
+      <Toolbar editor={editor} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { Toaster } from "@/features/ui/toaster";
 import { SignupModal } from "@/features/auth/signup";
 import { LoginModal } from "@/features/auth/login";
