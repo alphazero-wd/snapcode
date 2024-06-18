@@ -6,7 +6,10 @@ import { sanitizeContent } from "@/features/common/utils";
 
 export const Markdown = ({ content }: { content: string }) => {
   return (
-    <ReactMarkdown rehypePlugins={[rehypeRaw, rehypeHighlight]}>
+    <ReactMarkdown
+      className="markdown max-w-full break-words"
+      rehypePlugins={[rehypeRaw, rehypeHighlight]}
+    >
       {convertHashtagsToLinks(sanitizeContent(content))}
     </ReactMarkdown>
   );

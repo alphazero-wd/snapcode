@@ -42,7 +42,7 @@ export const useLogin = () => {
           title: "Login successfully!",
           description: `Welcome back, ${username} :)`,
         });
-        setTimeout(dismiss, 3000);
+        setTimeout(dismiss, 2000);
         form.reset();
         onClose();
         router.refresh();
@@ -52,7 +52,7 @@ export const useLogin = () => {
           title: "Login failed!",
           description: error.message,
         });
-        setTimeout(dismiss, 3000);
+        setTimeout(dismiss, 2000);
         console.log({ error });
       } finally {
         setLoading(false);

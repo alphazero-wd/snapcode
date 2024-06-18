@@ -3,7 +3,7 @@
 import { User } from "@supabase/supabase-js";
 import { Posts } from "../items";
 import { usePostsPagination } from "../pagination";
-import { usePostsStore } from "../store";
+import { usePostsQuery } from "../query";
 
 interface PostsViewProps {
   tag?: string;
@@ -11,8 +11,8 @@ interface PostsViewProps {
 }
 
 export const PostsView = ({ tag, user }: PostsViewProps) => {
-  const { loading } = usePostsPagination(tag);
-  const posts = usePostsStore((state) => state.posts);
+  const { hasMore, loading } = usePostsQuery({ tag });
+  usePostsPagination({ hasMore, loading });
 
-  return <Posts user={user} posts={posts} loading={loading} />;
+  return <Posts user={user} loading={loading} />;
 };

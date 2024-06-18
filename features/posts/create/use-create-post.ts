@@ -54,7 +54,7 @@ export const useCreatePost = () => {
           variant: "success",
           title: "Create post successfully!",
         });
-        setTimeout(dismiss, 3000);
+        setTimeout(dismiss, 2000);
         form.reset();
         editor?.commands.clearContent();
         router.push("/post/" + data.id);
@@ -65,7 +65,7 @@ export const useCreatePost = () => {
           title: "Failed to create post!",
           description: error.message,
         });
-        setTimeout(dismiss, 3000);
+        setTimeout(dismiss, 2000);
         console.log({ error });
       } finally {
         setLoading(false);

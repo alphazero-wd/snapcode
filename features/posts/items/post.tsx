@@ -23,7 +23,7 @@ export const Post = ({ post, user }: PostProps) => {
           creator_id={post.profiles.user_id}
         />
       </CardHeader>
-      <CardContent className="text-foreground markdown max-w-full text-sm">
+      <CardContent className="text-foreground max-w-full text-sm">
         <Markdown content={post.content} />
       </CardContent>
     </PostItem>

@@ -3,4 +3,6 @@ export interface Profile {
   username: string;
   bio?: string;
   avatar_url?: string;
+  display_name?: string;
+  created_at: string;
 }

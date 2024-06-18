@@ -2,18 +2,18 @@
 import { Post } from "./post";
 import { POSTS_LIMIT } from "@/constants";
 import { PostLoading } from "./loading";
-import { Post as IPost } from "../types";
 import { User } from "@supabase/supabase-js";
+import { usePostsStore } from "../store";
 
 interface PostsProps {
-  posts: IPost[];
   loading: boolean;
   user: User | null;
 }
 
-export const Posts = ({ posts, loading, user }: PostsProps) => {
+export const Posts = ({ loading, user }: PostsProps) => {
+  const posts = usePostsStore((state) => state.posts);
   return (
-    <>
+    <div className="grid gap-y-4">
       {posts.map((post) => (
         <Post user={user} key={post.id} post={post} />
       ))}
@@ -21,6 +21,6 @@ export const Posts = ({ posts, loading, user }: PostsProps) => {
         Array(POSTS_LIMIT)
           .fill(null)
           .map((_, i) => <PostLoading key={i} />)}
-    </>
+    </div>
   );
 };

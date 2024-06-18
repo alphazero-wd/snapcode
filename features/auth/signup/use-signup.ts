@@ -60,7 +60,7 @@ export const useSignup = () => {
           description: "Get ready to join the dev community :)",
         });
 
-        setTimeout(dismiss, 3000);
+        setTimeout(dismiss, 2000);
         onClose();
         router.refresh();
       } catch (error: any) {
@@ -69,7 +69,7 @@ export const useSignup = () => {
           title: "Sign up error!",
           description: error.message,
         });
-        setTimeout(dismiss, 3000);
+        setTimeout(dismiss, 2000);
         console.log({ error });
       } finally {
         setLoading(false);

@@ -15,7 +15,7 @@ export const useLogOut = () => {
       variant: "success",
       title: "Sign out successfully!",
     });
-    setTimeout(dismiss, 3000);
+    setTimeout(dismiss, 2000);
     router.replace("/", { scroll: false });
     router.refresh();
   };

@@ -18,7 +18,7 @@ export default function PostsLayout({
           <MobileSidebar />
           <Navbar />
         </header>
-        <div className="grid relative py-8 lg:grid-cols-[1fr_250px] xl:grid-cols-[1fr_400px] lg:gap-x-8 px-4 lg:px-6 xl:px-12">
+        <div className="grid relative py-8 lg:grid-cols-[1fr_250px] xl:grid-cols-[1fr_400px] lg:gap-x-8 xl:gap-x-16 px-4 lg:px-6 xl:px-12">
           <main>{children}</main>
           <aside className="lg:sticky lg:top-20 lg:mt-0 mt-8 h-fit">
             <TrendingTags />
