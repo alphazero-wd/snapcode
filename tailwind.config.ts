@@ -1,6 +1,4 @@
-import type { Config } from "tailwindcss";
-
-const config = {
+module.exports = {
   darkMode: ["class"],
   content: ["./features/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}"],
   prefix: "",
@@ -12,6 +10,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        mono: ["Cascadia Mono"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -69,6 +70,4 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
-} satisfies Config;
-
-export default config;
+};

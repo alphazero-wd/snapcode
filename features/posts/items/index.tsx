@@ -20,7 +20,7 @@ export const Posts = ({ posts, loading, user }: PostsProps) => {
       {loading &&
         Array(POSTS_LIMIT)
           .fill(null)
-          .map(() => <PostLoading />)}
+          .map((_, i) => <PostLoading key={i} />)}
     </>
   );
 };

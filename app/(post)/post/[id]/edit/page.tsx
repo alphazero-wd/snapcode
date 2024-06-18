@@ -36,5 +36,5 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
   } = await supabase.auth.getUser();
   if (!data) redirect("/not-found");
 
-  return <EditPostForm content={data.content} id={data.id} user={user} />;
+  return <EditPostForm content={data.content} postId={data.id} user={user} />;
 }

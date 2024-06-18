@@ -26,7 +26,7 @@ export const PostHeader = ({
   user,
 }: PostHeaderProps) => {
   return (
-    <div className="flex w-full flex-row justify-between items-center">
+    <div className="flex w-full gap-x-4 flex-row justify-between items-center">
       <div className="flex gap-x-4 items-center">
         <Avatar>
           <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>

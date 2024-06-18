@@ -3,51 +3,49 @@
 @tailwind utilities;
 
 @layer base {
-  @layer base {
-    :root {
-      --background: 0 0% 100%;
-      --foreground: 20 14.3% 4.1%;
-      --card: 0 0% 100%;
-      --card-foreground: 20 14.3% 4.1%;
-      --popover: 0 0% 100%;
-      --popover-foreground: 20 14.3% 4.1%;
-      --primary: 24.6 95% 53.1%;
-      --primary-foreground: 60 9.1% 97.8%;
-      --secondary: 60 4.8% 95.9%;
-      --secondary-foreground: 24 9.8% 10%;
-      --muted: 60 4.8% 95.9%;
-      --muted-foreground: 25 5.3% 44.7%;
-      --accent: 60 4.8% 95.9%;
-      --accent-foreground: 24 9.8% 10%;
-      --destructive: 0 84.2% 60.2%;
-      --destructive-foreground: 60 9.1% 97.8%;
-      --border: 20 5.9% 90%;
-      --input: 20 5.9% 90%;
-      --ring: 24.6 95% 53.1%;
-      --radius: 0.5rem;
-    }
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 24.6 95% 53.1%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 24.6 95% 53.1%;
+    --radius: 0.5rem;
+  }
 
-    .dark {
-      --background: 20 14.3% 4.1%;
-      --foreground: 60 9.1% 97.8%;
-      --card: 20 14.3% 4.1%;
-      --card-foreground: 60 9.1% 97.8%;
-      --popover: 20 14.3% 4.1%;
-      --popover-foreground: 60 9.1% 97.8%;
-      --primary: 20.5 90.2% 48.2%;
-      --primary-foreground: 60 9.1% 97.8%;
-      --secondary: 12 6.5% 15.1%;
-      --secondary-foreground: 60 9.1% 97.8%;
-      --muted: 12 6.5% 15.1%;
-      --muted-foreground: 24 5.4% 63.9%;
-      --accent: 12 6.5% 15.1%;
-      --accent-foreground: 60 9.1% 97.8%;
-      --destructive: 0 72.2% 50.6%;
-      --destructive-foreground: 60 9.1% 97.8%;
-      --border: 12 6.5% 15.1%;
-      --input: 12 6.5% 15.1%;
-      --ring: 20.5 90.2% 48.2%;
-    }
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+    --primary: 20.5 90.2% 48.2%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 72.2% 50.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 20.5 90.2% 48.2%;
   }
 }
 
@@ -56,12 +54,168 @@
     @apply border-border;
   }
   body {
-    @apply h-screen bg-background text-foreground;
+    @apply bg-background text-foreground;
+  }
+  .markdown mark {
+    @apply px-1 py-0.5 bg-orange-300 text-orange-950 rounded-sm;
+  }
+
+  .markdown > p > code {
+    @apply px-1 py-1.5 font-normal;
+  }
+
+  .dark .markdown pre {
+    .hljs-comment,
+    .hljs-quote {
+      color: #5c6370;
+      font-style: italic;
+    }
+
+    .hljs-doctag,
+    .hljs-keyword,
+    .hljs-formula {
+      color: #c678dd;
+    }
+
+    .hljs-section,
+    .hljs-name,
+    .hljs-selector-tag,
+    .hljs-deletion,
+    .hljs-subst {
+      color: #e06c75;
+    }
+
+    .hljs-literal {
+      color: #56b6c2;
+    }
+
+    .hljs-string,
+    .hljs-regexp,
+    .hljs-addition,
+    .hljs-attribute,
+    .hljs-meta .hljs-string {
+      color: #98c379;
+    }
+
+    .hljs-attr,
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-type,
+    .hljs-selector-class,
+    .hljs-selector-attr,
+    .hljs-selector-pseudo,
+    .hljs-number {
+      color: #d19a66;
+    }
+
+    .hljs-symbol,
+    .hljs-bullet,
+    .hljs-link,
+    .hljs-meta,
+    .hljs-selector-id,
+    .hljs-title {
+      color: #61aeee;
+    }
+
+    .hljs-built_in,
+    .hljs-title.class_,
+    .hljs-class .hljs-title {
+      color: #e6c07b;
+    }
+
+    .hljs-emphasis {
+      font-style: italic;
+    }
+
+    .hljs-strong {
+      font-weight: bold;
+    }
+
+    .hljs-link {
+      text-decoration: underline;
+    }
+  }
+
+  .markdown pre {
+    .hljs-comment,
+    .hljs-quote {
+      color: #a0a1a7;
+      font-style: italic;
+    }
+
+    .hljs-doctag,
+    .hljs-keyword,
+    .hljs-formula {
+      color: #a626a4;
+    }
+
+    .hljs-section,
+    .hljs-name,
+    .hljs-selector-tag,
+    .hljs-deletion,
+    .hljs-subst {
+      color: #e45649;
+    }
+
+    .hljs-literal {
+      color: #0184bb;
+    }
+
+    .hljs-string,
+    .hljs-regexp,
+    .hljs-addition,
+    .hljs-attribute,
+    .hljs-meta .hljs-string {
+      color: #50a14f;
+    }
+
+    .hljs-attr,
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-type,
+    .hljs-selector-class,
+    .hljs-selector-attr,
+    .hljs-selector-pseudo,
+    .hljs-number {
+      color: #986801;
+    }
+
+    .hljs-symbol,
+    .hljs-bullet,
+    .hljs-link,
+    .hljs-meta,
+    .hljs-selector-id,
+    .hljs-title {
+      color: #4078f2;
+    }
+
+    .hljs-built_in,
+    .hljs-title.class_,
+    .hljs-class .hljs-title {
+      color: hsl(20.5, 90.2%, 48.2%);
+    }
+
+    .hljs-emphasis {
+      font-style: italic;
+    }
+
+    .hljs-strong {
+      font-weight: bold;
+    }
+
+    .hljs-link {
+      text-decoration: underline;
+    }
   }
 }
 
 @layer utilities {
   .markdown {
-    @apply max-w-full prose prose-sm prose-p:leading-5 prose-p:whitespace-pre-line prose-img:rounded-lg prose-img:my-2 prose-img:max-w-xs dark:prose-invert prose-a:text-primary;
+    @apply max-w-full leading-5 prose prose-sm dark:prose-invert
+      prose-p:my-0 prose-p:whitespace-pre-line prose-p:before:content-none prose-p:after:content-none
+      prose-img:rounded-lg prose-img:max-w-md prose-img:mx-auto
+      prose-a:text-primary
+      prose-code:before:content-none prose-code:after:content-none prose-code:text-sm prose-code:bg-muted
+      prose-pre:leading-4 prose-pre:text-secondary-foreground prose-pre:bg-muted prose-pre:p-3 prose-pre:text-base;
   }
 }

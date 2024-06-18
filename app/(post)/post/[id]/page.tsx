@@ -5,8 +5,7 @@ import { PostHeader } from "@/features/posts/items/header";
 import { Button } from "@/features/ui/button";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
-import { convertHashtagsToLinks } from "@/features/posts/utils";
+import { Markdown } from "@/features/common/markdown";
 
 interface PostPageParams {
   params: {
@@ -61,7 +60,7 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
       </div>
 
       <div className="text-foreground sm:ml-12 markdown text-sm">
-        <ReactMarkdown>{convertHashtagsToLinks(data.content)}</ReactMarkdown>
+        <Markdown content={data.content} />
       </div>
     </div>
   );

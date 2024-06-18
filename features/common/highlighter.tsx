@@ -20,7 +20,7 @@ export const Highlighter = ({ keyword, content }: HighlighterProps) => {
     <span key={i}>
       {part}
       {i !== parts.length - 1 && (
-        <span className="bg-orange-100 decoration-orange-500 text-orange-900 decoration-2 underline-offset-4 font-medium underline">
+        <span className="rounded-t-[2px] bg-orange-100 decoration-primary text-orange-700 decoration-2 underline-offset-4 font-medium underline">
           {matches[i]}
         </span>
       )}

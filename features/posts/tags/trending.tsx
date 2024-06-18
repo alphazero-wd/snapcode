@@ -9,13 +9,13 @@ export const TrendingTags = async () => {
     .from("trending_tags")
     .select()
     .order("count", { ascending: false })
-    .limit(15)
+    .limit(10)
     .returns<TrendingTag[]>();
 
   if (!data) return null;
 
   return (
-    <div>
+    <div className="hidden lg:block">
       <h2 className="text-xl tracking-tight font-semibold mb-2">
         Trending Topics
       </h2>
