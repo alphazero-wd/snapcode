@@ -1,43 +1,49 @@
 "use client";
-import { useEditPost } from "./use-edit-post";
+import { Button } from "@/features/ui/button";
+import { Form, FormField, FormItem, FormMessage } from "@/features/ui/form";
 import { User } from "@supabase/supabase-js";
-import { EditForm } from "./edit-form";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/features/ui/tabs";
-import { convertHashtagsToLinks } from "../utils";
-import ReactMarkdown from "react-markdown";
+import { PostEditor } from "../editor";
+import { CancelEditModal } from "./cancel-modal";
+import { useEditPost } from "./use-edit-post";
 
 interface EditPostFormProps {
-  id: string;
-  content: string;
   user: User | null;
+  content: string;
+  postId: string;
 }
 
-export const EditPostForm = ({ id, content, user }: EditPostFormProps) => {
-  const { form, loading, onSubmit } = useEditPost(id, content);
-  const contentPreview = form.watch("content");
-
+export const EditPostForm = ({ postId, user, content }: EditPostFormProps) => {
+  const { form, loading, onSubmit, editor } = useEditPost(postId, content);
   return (
-    <Tabs defaultValue="editor">
-      <TabsList>
-        <TabsTrigger value="editor">Editor</TabsTrigger>
-        <TabsTrigger value="preview">Preview</TabsTrigger>
-      </TabsList>
-      <TabsContent value="editor">
-        <EditForm
-          form={form}
-          loading={loading}
-          onSubmit={onSubmit}
-          user={user}
-          content={content}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="content"
+          render={() => (
+            <FormItem>
+              <PostEditor editor={editor} />
+              <div className="mt-3 flex justify-between w-full">
+                <FormMessage className="flex-1" />
+                <div className="flex mt-3 gap-x-2">
+                  <CancelEditModal
+                    hasChanged={content !== form.getValues("content")}
+                  />
+                  <Button
+                    disabled={
+                      loading || !user || content === form.getValues("content")
+                    }
+                    className="w-fit justify-self-end"
+                    type="submit"
+                  >
+                    Edit
+                  </Button>
+                </div>
+              </div>
+            </FormItem>
+          )}
         />
-      </TabsContent>
-      <TabsContent value="preview">
-        <div className="text-foreground markdown text-sm">
-          <ReactMarkdown>
-            {convertHashtagsToLinks(contentPreview)}
-          </ReactMarkdown>
-        </div>
-      </TabsContent>
-    </Tabs>
+      </form>
+    </Form>
   );
 };

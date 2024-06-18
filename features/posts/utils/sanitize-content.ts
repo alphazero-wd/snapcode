@@ -1,6 +1,8 @@
 import sanitize from "sanitize-html";
 const allowedTags = [
   "b",
+  "em",
+  "strong",
   "i",
   "u",
   "strike",

@@ -12,7 +12,7 @@ import { User } from "@supabase/supabase-js";
 import { PostEditor } from "../editor";
 
 export const CreatePost = ({ user }: { user: User | null }) => {
-  const { form, loading, onSubmit } = useCreatePost();
+  const { form, loading, onSubmit, editor } = useCreatePost();
 
   return (
     <Form {...form}>
@@ -20,12 +20,9 @@ export const CreatePost = ({ user }: { user: User | null }) => {
         <FormField
           control={form.control}
           name="content"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
-              <PostEditor
-                value={field.value}
-                onChange={(value) => form.setValue("content", value)}
-              />
+              <PostEditor editor={editor} />
               <div className="mt-3 flex justify-between w-full">
                 <div>
                   <FormDescription className="block">

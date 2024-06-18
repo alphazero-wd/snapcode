@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@supabase/supabase-js";
 import { useTags } from "../tags";
+import { usePostEditor } from "../editor/use-editor";
 
 const supabase = createClient();
 
@@ -19,6 +20,9 @@ export const useCreatePost = () => {
     defaultValues: {
       content: "",
     },
+  });
+  const editor = usePostEditor({
+    onChange: (newValue) => form.setValue("content", newValue),
   });
   const { toast } = useToast();
   const router = useRouter();
@@ -52,6 +56,7 @@ export const useCreatePost = () => {
         });
         setTimeout(dismiss, 3000);
         form.reset();
+        editor?.commands.clearContent();
         router.push("/post/" + data.id);
         router.refresh();
       } catch (error: any) {
@@ -67,5 +72,5 @@ export const useCreatePost = () => {
       }
     }, 1000);
   }
-  return { form, onSubmit, loading };
+  return { form, onSubmit, loading, editor };
 };

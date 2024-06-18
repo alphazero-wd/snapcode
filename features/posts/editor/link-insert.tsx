@@ -2,28 +2,22 @@ import { Button } from "@/features/ui/button";
 import { LinkIcon } from "@heroicons/react/24/outline";
 import { Popover, PopoverContent, PopoverTrigger } from "@/features/ui/popover";
 import { Input } from "@/features/ui/input";
-import { MouseEventHandler, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Editor } from "@tiptap/react";
+import { useLink } from "./use-link";
 
 interface LinkButtonProps {
-  appendLink: (link: string) => void;
+  editor: Editor;
 }
 
-export const LinkButton = ({ appendLink }: LinkButtonProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [link, setLink] = useState("");
-
-  const addLink: MouseEventHandler<HTMLButtonElement> = (evt) => {
-    evt.preventDefault();
-    setIsOpen(false); // Avoids loosing focus from the editable area
-    appendLink(link);
-  };
+export const LinkInsert = ({ editor }: LinkButtonProps) => {
+  const { isOpen, onLinkChange, onOpenChange, link, addLink } = useLink(editor);
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
+    <Popover open={isOpen} onOpenChange={onOpenChange}>
       <PopoverTrigger asChild>
         <Button
-          className={cn(isOpen && "bg-accent")}
+          className={cn((editor.isActive("link") || isOpen) && "bg-accent")}
           variant="ghost"
           type="button"
           size="icon"
@@ -36,10 +30,10 @@ export const LinkButton = ({ appendLink }: LinkButtonProps) => {
           className="border-none focus:outline-none"
           placeholder="Enter link..."
           value={link}
-          onChange={(e) => setLink(e.target.value)}
+          onChange={onLinkChange}
         />
         <Button type="button" onMouseDown={addLink} size="sm">
-          Enter <kbd>↵</kbd>
+          Enter <kbd className="text-lg ml-2">↵</kbd>
         </Button>
       </PopoverContent>
     </Popover>

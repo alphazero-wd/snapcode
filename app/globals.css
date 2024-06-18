@@ -56,10 +56,17 @@
   body {
     @apply bg-background text-foreground;
   }
+  .markdown mark {
+    @apply px-1 py-0.5 bg-orange-300 text-orange-950 rounded-sm;
+  }
 }
 
 @layer utilities {
   .markdown {
-    @apply max-w-full prose prose-sm prose-p:leading-5 prose-p:whitespace-pre-line prose-img:rounded-lg prose-img:my-2 prose-img:max-w-xs dark:prose-invert prose-a:text-primary;
+    @apply max-w-full leading-5 prose prose-sm dark:prose-invert
+      prose-p:my-0 prose-p:whitespace-pre-line prose-p:before:content-none prose-p:after:content-none
+      prose-img:rounded-lg prose-img:max-w-xs
+      prose-a:text-primary
+      prose-code:before:content-none prose-code:after:content-none prose-code:bg-muted prose-code:px-1 prose-code:py-1.5 prose-code:rounded-sm prose-code:text-sm prose-code:font-normal;
   }
 }
