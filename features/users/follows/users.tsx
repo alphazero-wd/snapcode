@@ -11,18 +11,18 @@ interface FollowersProps {
 
 export const FollowUsers = ({ follows, userId, loading }: FollowersProps) => {
   return (
-    <div className="grid gap-y-5">
-      {loading
-        ? Array(PAGE_LIMIT)
-            .fill(null)
-            .map((_, i) => <FollowUserLoading key={i} />)
-        : follows.map((follow) => (
-            <FollowUser
-              key={follow.profiles.user_id}
-              userId={userId}
-              profile={follow.profiles}
-            />
-          ))}
+    <div className="grid gap-y-4">
+      {follows.map((follow) => (
+        <FollowUser
+          key={follow.profiles.user_id}
+          userId={userId}
+          profile={follow.profiles}
+        />
+      ))}
+      {loading &&
+        Array(PAGE_LIMIT)
+          .fill(null)
+          .map((_, i) => <FollowUserLoading key={i} />)}
     </div>
   );
 };

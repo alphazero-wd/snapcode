@@ -24,7 +24,7 @@ export const FollowUser = ({ profile, userId }: FollowUserProps) => {
             renderTrigger={() => (
               <Link
                 href={`/user/${profile.username}/profile`}
-                className="hover:underline decoration-1 text-lg line-clamp-1 font-semibold text-foreground"
+                className="hover:underline decoration-1 line-clamp-1 font-semibold text-foreground"
               >
                 {profile.display_name || profile.username}
               </Link>

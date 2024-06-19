@@ -6,7 +6,7 @@ import { Markdown } from "@/features/common/markdown";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { format } from "date-fns/format";
 import { FollowStats } from "@/features/users/follows/stats";
-import { ProfileTabs } from "@/features/users/profile/tabs";
+import { ProfilePosts } from "@/features/users/posts";
 
 interface ProfilePageParams {
   params: {
@@ -19,7 +19,6 @@ interface ProfilePageParams {
 
 export default async function ProfilePage({
   params: { username },
-  searchParams: { tab },
 }: ProfilePageParams) {
   const supabase = createClient();
   const { data } = await supabase
@@ -50,7 +49,7 @@ export default async function ProfilePage({
       <FollowStats profileId={data.user_id} username={data.username} />
 
       <div className="mt-6">
-        <ProfileTabs tab={tab} profileId={data.user_id} user={user} />
+        <ProfilePosts user={user} profileId={data.user_id} />
       </div>
     </div>
   );
