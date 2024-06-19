@@ -1,9 +1,10 @@
 "use client";
-import { Card } from "@/features/ui/card";
+import { useCutContent } from "@/features/common/hooks";
 import { Button } from "@/features/ui/button";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import React, { useEffect, useRef, useState } from "react";
+import { Card } from "@/features/ui/card";
 import { cn } from "@/lib/utils";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import React from "react";
 
 interface PostItemProps {
   children: React.ReactNode;
@@ -12,15 +13,7 @@ interface PostItemProps {
 const MAX_HEIGHT = 300;
 
 export const PostItem = ({ children }: PostItemProps) => {
-  const [shouldCut, setShouldCut] = useState(true);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    const height = ref.current.getBoundingClientRect().height;
-
-    if (height < MAX_HEIGHT) setShouldCut(false);
-  }, []);
+  const { ref, shouldCut, unCut } = useCutContent(MAX_HEIGHT);
 
   return (
     <Card className={cn(shouldCut && "max-h-80", "relative flex flex-col")}>
@@ -30,7 +23,7 @@ export const PostItem = ({ children }: PostItemProps) => {
           <Button
             variant="outline"
             className="absolute self-center bottom-4 gap-x-2"
-            onClick={() => setShouldCut(false)}
+            onClick={unCut}
           >
             Read more <ChevronDownIcon className="w-4 h-4" />
           </Button>

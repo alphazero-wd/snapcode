@@ -61,7 +61,7 @@
   }
 
   .markdown > p > code {
-    @apply px-1 py-1.5 font-normal;
+    @apply p-1 rounded-sm font-normal;
   }
 
   .dark .markdown pre {
@@ -213,7 +213,7 @@
   .markdown {
     @apply max-w-full leading-5 prose prose-sm dark:prose-invert
       prose-p:my-0 prose-p:whitespace-pre-line prose-p:before:content-none prose-p:after:content-none
-      prose-img:rounded-lg prose-img:max-w-md prose-img:mx-auto
+      prose-img:rounded-lg prose-img:w-full
       prose-a:text-primary
       prose-code:before:content-none prose-code:after:content-none prose-code:text-sm prose-code:bg-muted
       prose-pre:leading-4 prose-pre:text-secondary-foreground prose-pre:bg-muted prose-pre:p-3 prose-pre:text-base;

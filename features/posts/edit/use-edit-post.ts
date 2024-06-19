@@ -57,7 +57,7 @@ export const useEditPost = (id: string, content: string) => {
           variant: "success",
           title: "Edit post successfully!",
         });
-        setTimeout(dismiss, 3000);
+        setTimeout(dismiss, 2000);
         form.reset();
         editor?.commands.clearContent();
         router.push("/post/" + id);
@@ -68,7 +68,7 @@ export const useEditPost = (id: string, content: string) => {
           title: "Failed to edit post!",
           description: error.message,
         });
-        setTimeout(dismiss, 3000);
+        setTimeout(dismiss, 2000);
         console.log({ error });
       } finally {
         setLoading(false);

@@ -27,7 +27,7 @@ export const DeletePostModal = () => {
       variant: "success",
       title: "Delete post successfully!",
     });
-    setTimeout(dismiss, 3000);
+    setTimeout(dismiss, 2000);
     await supabase.from("posts").delete().eq("id", id);
     deletePost(id);
 

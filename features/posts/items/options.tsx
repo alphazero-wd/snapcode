@@ -34,7 +34,7 @@ export const PostOptions = ({ creator_id, id, user_id }: PostOptionsProps) => {
       variant: "success",
       title: "Link copied to the clipboard",
     });
-    setTimeout(dismiss, 3000);
+    setTimeout(dismiss, 2000);
   };
 
   return (

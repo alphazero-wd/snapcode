@@ -30,6 +30,7 @@ export const sanitizeContent = (content: string) => {
     allowedAttributes: {
       code: ["class"],
       a: ["href"],
+      img: ["src"],
     },
   });
 };

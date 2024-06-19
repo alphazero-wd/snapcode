@@ -2,10 +2,9 @@
 import { formatDistanceToNowStrict } from "date-fns/formatDistanceToNowStrict";
 import { Avatar, AvatarFallback } from "@/features/ui/avatar";
 import { PostOptions } from "./options";
-import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
-import { Button } from "../../ui/button";
+import { ProfileCard } from "@/features/users/profile/card";
+import { Button } from "@/features/ui/button";
 import Link from "next/link";
 
 interface PostHeaderProps {
@@ -32,13 +31,21 @@ export const PostHeader = ({
           <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
         </Avatar>
         <div>
-          <Button
-            asChild
-            variant="link"
-            className="p-0 w-fit h-fit font-semibold line-clamp-1 text-sm"
-          >
-            <Link href={`/${username}/profile`}>{username}</Link>
-          </Button>
+          <ProfileCard
+            renderTrigger={(profile) => (
+              <Button
+                asChild
+                variant="link"
+                className="p-0 w-fit h-fit font-semibold line-clamp-1 text-sm"
+              >
+                <Link href={`/user/${username}/profile`}>
+                  {profile?.display_name || username}
+                </Link>
+              </Button>
+            )}
+            userId={user?.id}
+            username={username}
+          />
           <div
             suppressHydrationWarning
             className="text-muted-foreground text-xs line-clamp-1"
