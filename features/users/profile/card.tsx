@@ -1,6 +1,4 @@
 import { Markdown } from "@/features/common/markdown";
-import { Avatar, AvatarFallback } from "@/features/ui/avatar";
-import { Button } from "@/features/ui/button";
 import {
   HoverCard,
   HoverCardContent,
@@ -11,19 +9,22 @@ import { Profile } from "@/features/users/types";
 import { createClient } from "@/lib/supabase/client";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { format } from "date-fns/format";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { FollowButton } from "@/features/users/follow/button";
-import { ProfileBasicInfo } from "../../users/profile";
+import { ReactNode, useEffect, useState } from "react";
+import { FollowButton } from "@/features/users/follows/button";
+import { ProfileAvatar, ProfileBasicInfo } from "@/features/users/profile";
 
 interface ProfileCardProps {
   username: string;
+  renderTrigger: (profile?: Profile | null) => ReactNode;
   userId?: string;
 }
-const content = `Software dev @DavidPatelSF | Java, Python, C++ | Agile, Docker, Kubernetes | Stanford CS alum | Built personal project mgmt tool with React & Node.js | Reading, chess, hiking`;
 
 const supabase = createClient();
-export const ProfileCard = ({ username, userId }: ProfileCardProps) => {
+export const ProfileCard = ({
+  username,
+  userId,
+  renderTrigger,
+}: ProfileCardProps) => {
   const [profile, setProfile] = useState<Profile | null>();
 
   const fetchProfile = async () => {
@@ -52,23 +53,16 @@ export const ProfileCard = ({ username, userId }: ProfileCardProps) => {
 
   return (
     <HoverCard>
-      <HoverCardTrigger asChild>
-        <Button
-          asChild
-          variant="link"
-          className="p-0 w-fit h-fit font-semibold line-clamp-1 text-sm"
-        >
-          <Link href={`/user/${username}/profile`}>{username}</Link>
-        </Button>
-      </HoverCardTrigger>
+      <HoverCardTrigger asChild>{renderTrigger(profile)}</HoverCardTrigger>
       <HoverCardContent className="grid w-[320px] md:w-[350px] overflow-hidden gap-y-3 relative">
         <div className="grid gap-y-1">
           <div className="flex items-center justify-between">
             {profile ? (
               <>
-                <Avatar>
-                  <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
-                </Avatar>
+                <ProfileAvatar
+                  username={profile.username}
+                  imageUrl={profile.avatar_url}
+                />
                 {profile.user_id !== userId && (
                   <FollowButton
                     profileId={profile.user_id}
@@ -86,10 +80,12 @@ export const ProfileCard = ({ username, userId }: ProfileCardProps) => {
           </div>
           {profile ? (
             <>
-              <ProfileBasicInfo
-                displayName={profile.display_name || username}
-                username={username}
-              />
+              <div className="flex flex-wrap gap-x-3 items-baseline">
+                <ProfileBasicInfo
+                  displayName={profile.display_name || username}
+                  username={username}
+                />
+              </div>
               <div className="text-muted-foreground flex items-center text-sm gap-x-2">
                 <CalendarDaysIcon className="w-4 h-4" />
                 Joined {format(new Date(profile.created_at), "MMMM y")}
@@ -107,7 +103,7 @@ export const ProfileCard = ({ username, userId }: ProfileCardProps) => {
         </div>
         {profile ? (
           <div className="h-fit">
-            <Markdown content={profile.bio || content} />
+            <Markdown content={profile.bio || ""} />
           </div>
         ) : (
           <div className="space-y-1">

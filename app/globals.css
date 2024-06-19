@@ -61,7 +61,7 @@
   }
 
   .markdown > p > code {
-    @apply px-1 py-1.5 font-normal;
+    @apply p-1 rounded-sm font-normal;
   }
 
   .dark .markdown pre {

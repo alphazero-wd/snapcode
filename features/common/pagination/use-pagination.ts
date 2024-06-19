@@ -1,18 +1,20 @@
 import { useCallback, useEffect } from "react";
-import { usePostsStore } from "../store";
 
 const MINIMUM_DEVIATION = 20;
 
-interface PostsPagination {
+interface Pagination<T> {
+  items: T[];
   hasMore: boolean;
   loading: boolean;
+  updateCursor: () => void;
 }
 
-export const usePostsPagination = ({ hasMore, loading }: PostsPagination) => {
-  const posts = usePostsStore((state) => state.posts);
-  const updateCursor = usePostsStore((state) => state.updateCursor);
-  const reset = usePostsStore((state) => state.reset);
-
+export const usePagination = <T>({
+  hasMore,
+  loading,
+  items,
+  updateCursor,
+}: Pagination<T>) => {
   const onScroll = useCallback(() => {
     if (!hasMore) return;
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
@@ -21,11 +23,7 @@ export const usePostsPagination = ({ hasMore, loading }: PostsPagination) => {
       return;
 
     updateCursor();
-  }, [posts, hasMore, loading]);
-
-  useEffect(() => {
-    reset();
-  }, []);
+  }, [items, hasMore, loading]);
 
   useEffect(() => {
     window.addEventListener("scroll", onScroll);

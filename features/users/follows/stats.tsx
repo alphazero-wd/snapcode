@@ -33,13 +33,13 @@ export const FollowStats = ({ profileId, username }: FollowStatsProps) => {
   return (
     <div className="flex gap-x-4">
       <Button className="p-0 h-fit w-fit font-normal" variant="link">
-        <Link href={`/user/${username}/followers`}>
+        <Link href={`/user/${username}/profile?tab=followers`}>
           <span className="font-semibold">{followedCount}</span>{" "}
           <span>followed</span>
         </Link>
       </Button>
       <Button className="p-0 h-fit w-fit font-normal" variant="link">
-        <Link href={`/user/${username}/following`}>
+        <Link href={`/user/${username}/profile?tab=following`}>
           <span className="font-semibold">{followingCount}</span>{" "}
           <span>following</span>
         </Link>

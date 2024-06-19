@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
 import { useState, useCallback, useEffect } from "react";
-import { POSTS_LIMIT } from "@/constants";
+import { PAGE_LIMIT } from "@/constants";
 import { usePostsStore } from "../store";
 import { Post } from "../types";
 
@@ -30,7 +30,7 @@ export const usePostsQuery = ({ tag, profileId }: PostsQueryParams) => {
           )
         `
       )
-      .limit(POSTS_LIMIT + 1)
+      .limit(PAGE_LIMIT + 1)
       .lt("created_at", cursor || new Date().toISOString());
 
     if (tag) query = query.ilike("content", `%#${tag}%`);
@@ -49,7 +49,7 @@ export const usePostsQuery = ({ tag, profileId }: PostsQueryParams) => {
       () =>
         fetchPosts()
           .then((data) => {
-            const hasMorePosts = data.length === POSTS_LIMIT + 1;
+            const hasMorePosts = data.length === PAGE_LIMIT + 1;
             const newPosts = !hasMorePosts ? data : data.slice(0, -1);
             getPosts(newPosts);
             setHasMore(hasMorePosts);

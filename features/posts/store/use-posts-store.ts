@@ -3,7 +3,7 @@ import { Post } from "../types";
 
 interface State {
   posts: Post[];
-  cursor: number | string | null;
+  cursor: string | null;
 }
 
 interface Action {

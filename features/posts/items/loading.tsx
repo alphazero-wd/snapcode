@@ -15,9 +15,12 @@ export const PostLoading = () => {
         <Skeleton className="w-9 h-9" />
       </CardHeader>
       <CardContent className="w-full overflow-hidden">
-        <Skeleton className="rounded-full w-full mb-1 h-4" />
-        <Skeleton className="rounded-full w-full mb-1 h-4" />
-        <Skeleton className="rounded-full w-32 mb-3 h-4" />
+        <Skeleton className="rounded-full w-full mb-1 h-2" />
+        <Skeleton className="rounded-full w-full mb-1 h-2" />
+        <Skeleton className="rounded-full w-full mb-1 h-2" />
+        <Skeleton className="rounded-full w-full mb-1 h-2" />
+        <Skeleton className="rounded-full w-full mb-1 h-2" />
+        <Skeleton className="rounded-full w-32 mb-3 h-2" />
 
         <Skeleton className="w-full h-20" />
       </CardContent>

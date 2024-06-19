@@ -1,6 +1,6 @@
 "use client";
 import { Post } from "./post";
-import { POSTS_LIMIT } from "@/constants";
+import { PAGE_LIMIT } from "@/constants";
 import { PostLoading } from "./loading";
 import { User } from "@supabase/supabase-js";
 import { usePostsStore } from "../store";
@@ -18,7 +18,7 @@ export const Posts = ({ loading, user }: PostsProps) => {
         <Post user={user} key={post.id} post={post} />
       ))}
       {loading &&
-        Array(POSTS_LIMIT)
+        Array(PAGE_LIMIT)
           .fill(null)
           .map((_, i) => <PostLoading key={i} />)}
     </div>

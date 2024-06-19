@@ -6,3 +6,7 @@ export interface Profile {
   display_name?: string;
   created_at: string;
 }
+
+export interface FollowWithProfile {
+  profiles: Omit<Profile, "bio">;
+}
