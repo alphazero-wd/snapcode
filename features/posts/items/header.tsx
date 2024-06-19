@@ -30,7 +30,7 @@ export const PostHeader = ({
           <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
         </Avatar>
         <div>
-          <ProfileCard username={username} />
+          <ProfileCard userId={user?.id} username={username} />
           <div
             suppressHydrationWarning
             className="text-muted-foreground text-xs line-clamp-1"

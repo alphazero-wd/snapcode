@@ -9,18 +9,21 @@ import {
 import { Skeleton } from "@/features/ui/skeleton";
 import { Profile } from "@/features/users/types";
 import { createClient } from "@/lib/supabase/client";
-import { cn } from "@/lib/utils";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { format } from "date-fns/format";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FollowButton } from "@/features/users/follow/button";
+import { ProfileBasicInfo } from "../../users/profile";
 
 interface ProfileCardProps {
   username: string;
+  userId?: string;
 }
+const content = `Software dev @DavidPatelSF | Java, Python, C++ | Agile, Docker, Kubernetes | Stanford CS alum | Built personal project mgmt tool with React & Node.js | Reading, chess, hiking`;
 
 const supabase = createClient();
-export const ProfileCard = ({ username }: ProfileCardProps) => {
+export const ProfileCard = ({ username, userId }: ProfileCardProps) => {
   const [profile, setProfile] = useState<Profile | null>();
 
   const fetchProfile = async () => {
@@ -28,6 +31,7 @@ export const ProfileCard = ({ username }: ProfileCardProps) => {
       .from("profiles")
       .select(
         `
+        user_id,
         username,
         created_at,
         bio,
@@ -39,8 +43,6 @@ export const ProfileCard = ({ username }: ProfileCardProps) => {
 
     setProfile(data);
   };
-
-  const linesCount = (profile?.bio || "").split("\n").length;
 
   useEffect(() => {
     setTimeout(() => {
@@ -59,15 +61,7 @@ export const ProfileCard = ({ username }: ProfileCardProps) => {
           <Link href={`/user/${username}/profile`}>{username}</Link>
         </Button>
       </HoverCardTrigger>
-      <HoverCardContent
-        className={cn(
-          "max-h-80",
-          "grid overflow-hidden w-[320px] sm:w-[350px] gap-y-3 relative"
-        )}
-      >
-        {linesCount >= 5 && (
-          <div className="absolute rounded-b-xl h-16 bottom-0 w-full bg-gradient-to-b from-transparent to-muted/70 backdrop-blur-sm" />
-        )}
+      <HoverCardContent className="grid w-[320px] md:w-[350px] overflow-hidden gap-y-3 relative">
         <div className="grid gap-y-1">
           <div className="flex items-center justify-between">
             {profile ? (
@@ -75,7 +69,13 @@ export const ProfileCard = ({ username }: ProfileCardProps) => {
                 <Avatar>
                   <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
                 </Avatar>
-                <Button>Follow</Button>
+                {profile.user_id !== userId && (
+                  <FollowButton
+                    profileId={profile.user_id}
+                    username={profile.username}
+                    userId={userId}
+                  />
+                )}
               </>
             ) : (
               <>
@@ -86,14 +86,10 @@ export const ProfileCard = ({ username }: ProfileCardProps) => {
           </div>
           {profile ? (
             <>
-              <div className="flex flex-wrap gap-x-3 items-baseline">
-                <div className="text-xl line-clamp-1 font-semibold text-foreground">
-                  {profile.display_name || username}
-                </div>
-                <div className="text-muted-foreground line-clamp-1 text-sm">
-                  @{username}
-                </div>
-              </div>
+              <ProfileBasicInfo
+                displayName={profile.display_name || username}
+                username={username}
+              />
               <div className="text-muted-foreground flex items-center text-sm gap-x-2">
                 <CalendarDaysIcon className="w-4 h-4" />
                 Joined {format(new Date(profile.created_at), "MMMM y")}
@@ -111,7 +107,7 @@ export const ProfileCard = ({ username }: ProfileCardProps) => {
         </div>
         {profile ? (
           <div className="h-fit">
-            <Markdown content={profile.bio || ""} />
+            <Markdown content={profile.bio || content} />
           </div>
         ) : (
           <div className="space-y-1">

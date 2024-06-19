@@ -1,11 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
 import { Profile } from "@/features/users/types";
 import { redirect } from "next/navigation";
-import { ProfileHeader } from "@/features/users/profile";
+import { ProfileBasicInfo, ProfileHeader } from "@/features/users/profile";
 import { Markdown } from "@/features/common/markdown";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { format } from "date-fns/format";
 import { ProfilePosts } from "@/features/users/posts";
+import { FollowStats } from "@/features/users/follow/stats";
 
 interface ProfilePageParams {
   params: {
@@ -30,20 +31,17 @@ export default async function ProfilePage({
   if (!data) redirect("/not-found");
   return (
     <div className="flex flex-col gap-y-3">
-      <ProfileHeader profile={data} />
-      <div>
-        <span className="text-2xl font-bold tracking-tight text-foreground">
-          {data.display_name || data.username}
-        </span>
-        <span className="text-sm ml-2 text-muted-foreground">
-          @{data.username}
-        </span>
-      </div>
+      <ProfileHeader user={user} profile={data} />
+      <ProfileBasicInfo
+        displayName={data.display_name || data.username}
+        username={data.username}
+      />
       <div className="text-muted-foreground flex items-center text-sm gap-x-2">
         <CalendarDaysIcon className="w-4 h-4" />
         Joined {format(new Date(data.created_at), "MMMM y")}
       </div>
       <Markdown content={content} />
+      <FollowStats profileId={data.user_id} username={data.username} />
 
       <div className="mt-3 grid gap-y-4">
         <h2 className="text-2xl font-bold tracking-tight">Posts</h2>
