@@ -2,10 +2,11 @@
 
 import { Button } from "@/features/ui/button";
 import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useToast } from "@/features/ui/use-toast";
 import { useLoginModal } from "@/features/auth/login";
 import { PostgrestError } from "@supabase/supabase-js";
+import { useFollowsStore } from "./use-store";
 
 const supabase = createClient();
 
@@ -20,7 +21,7 @@ export const FollowButton = ({
   username,
   userId,
 }: FollowButtonProps) => {
-  const [hasFollowed, setHasFollowed] = useState(false);
+  const { follow, unfollow, followingIds } = useFollowsStore();
   const onLoginModalOpen = useLoginModal((state) => state.onOpen);
   const { toast } = useToast();
 
@@ -31,26 +32,28 @@ export const FollowButton = ({
       .select()
       .eq("follower_id", profileId)
       .eq("following_id", userId);
-    setHasFollowed(!!data?.length);
+    if (data?.length) follow(profileId);
   };
 
-  const follow = async () => {
+  const followProfile = async () => {
     const { error } = await supabase.from("followed_following").insert({
       follower_id: profileId,
       following_id: userId,
     });
+    follow(profileId);
     return error;
   };
 
-  const unfollow = async () => {
+  const unfollowProfile = async () => {
     const { error } = await supabase
       .from("followed_following")
       .delete()
       .eq("follower_id", profileId)
       .eq("following_id", userId);
-
+    unfollow(profileId);
     return error;
   };
+  const hasFollowed = followingIds.has(profileId);
 
   const toggleFollowProfile = async () => {
     if (!userId) {
@@ -58,7 +61,7 @@ export const FollowButton = ({
       return;
     }
     let error: PostgrestError | null = null;
-    error = await (hasFollowed ? unfollow() : follow());
+    error = await (hasFollowed ? unfollowProfile() : followProfile());
     if (error)
       toast({
         variant: "error",
@@ -73,13 +76,14 @@ export const FollowButton = ({
           hasFollowed ? "unfollow" : "follow"
         } @${username}`,
       });
-      setHasFollowed(!hasFollowed);
     }
   };
 
   useEffect(() => {
     checkHasFollowedPreviously();
   }, [profileId, userId]);
+
+  if (profileId === userId) return;
 
   return (
     <Button

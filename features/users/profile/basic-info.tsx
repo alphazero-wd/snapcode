@@ -1,5 +1,5 @@
 interface ProfileBasicInfoProps {
-  displayName: string;
+  displayName?: string;
   username: string;
 }
 

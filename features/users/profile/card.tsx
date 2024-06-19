@@ -12,6 +12,7 @@ import { format } from "date-fns/format";
 import { ReactNode, useEffect, useState } from "react";
 import { FollowButton } from "@/features/users/follows/button";
 import { ProfileAvatar, ProfileBasicInfo } from "@/features/users/profile";
+import { FollowStats } from "../follows/stats";
 
 interface ProfileCardProps {
   username: string;
@@ -36,7 +37,8 @@ export const ProfileCard = ({
         username,
         created_at,
         bio,
-        avatar_url
+        avatar_url,
+        display_name
       `
       )
       .eq("username", username)
@@ -63,13 +65,11 @@ export const ProfileCard = ({
                   username={profile.username}
                   imageUrl={profile.avatar_url}
                 />
-                {profile.user_id !== userId && (
-                  <FollowButton
-                    profileId={profile.user_id}
-                    username={profile.username}
-                    userId={userId}
-                  />
-                )}
+                <FollowButton
+                  profileId={profile.user_id}
+                  username={profile.username}
+                  userId={userId}
+                />
               </>
             ) : (
               <>
@@ -82,7 +82,7 @@ export const ProfileCard = ({
             <>
               <div className="flex flex-wrap gap-x-3 items-baseline">
                 <ProfileBasicInfo
-                  displayName={profile.display_name || username}
+                  displayName={profile.display_name}
                   username={username}
                 />
               </div>
@@ -99,6 +99,17 @@ export const ProfileCard = ({
               </div>
               <Skeleton className="h-3 w-32" />
             </>
+          )}
+          {profile ? (
+            <FollowStats
+              profileId={profile.user_id}
+              username={profile.username}
+            />
+          ) : (
+            <div className="flex gap-x-4">
+              <Skeleton className="h-2.5 w-16" />
+              <Skeleton className="h-2.5 w-20" />
+            </div>
           )}
         </div>
         {profile ? (

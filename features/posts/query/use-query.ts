@@ -13,7 +13,7 @@ export const usePostsQuery = ({ tag, profileId }: PostsQueryParams) => {
   const supabase = createClient();
   const getPosts = usePostsStore((state) => state.getPosts);
   const cursor = usePostsStore((state) => state.cursor);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
   const fetchPosts = useCallback(async () => {
     let query = supabase
@@ -26,7 +26,8 @@ export const usePostsQuery = ({ tag, profileId }: PostsQueryParams) => {
           updated_at,
           profiles!inner (
             user_id,
-            username
+            username,
+            display_name
           )
         `
       )
