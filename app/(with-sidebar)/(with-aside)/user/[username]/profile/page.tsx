@@ -1,9 +1,13 @@
 import { createClient } from "@/lib/supabase/server";
 import { Profile } from "@/features/users/types";
 import { redirect } from "next/navigation";
-import { ProfileBasicInfo, ProfileHeader } from "@/features/users/profile";
+import {
+  ProfileBasicInfo,
+  ProfileExtraInfo,
+  ProfileHeader,
+} from "@/features/users/profile";
 import { Markdown } from "@/features/common/markdown";
-import { CalendarDaysIcon } from "@heroicons/react/24/outline";
+import { CalendarDaysIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import { format } from "date-fns/format";
 import { FollowStats } from "@/features/users/follows/stats";
 import { ProfilePosts } from "@/features/users/posts";
@@ -41,10 +45,7 @@ export default async function ProfilePage({
           username={data.username}
         />
       </div>
-      <div className="text-muted-foreground flex items-center text-sm gap-x-2">
-        <CalendarDaysIcon className="w-4 h-4" />
-        Joined {format(new Date(data.created_at), "MMMM y")}
-      </div>
+      <ProfileExtraInfo createdAt={data.created_at} location={data.location} />
       <Markdown content={data.bio || ""} />
       <FollowStats profileId={data.user_id} username={data.username} />
 

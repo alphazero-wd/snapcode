@@ -7,11 +7,13 @@ import {
 import { Skeleton } from "@/features/ui/skeleton";
 import { Profile } from "@/features/users/types";
 import { createClient } from "@/lib/supabase/client";
-import { CalendarDaysIcon } from "@heroicons/react/24/outline";
-import { format } from "date-fns/format";
 import { ReactNode, useEffect, useState } from "react";
 import { FollowButton } from "@/features/users/follows/button";
-import { ProfileAvatar, ProfileBasicInfo } from "@/features/users/profile";
+import {
+  ProfileAvatar,
+  ProfileBasicInfo,
+  ProfileExtraInfo,
+} from "@/features/users/profile";
 import { FollowStats } from "../follows/stats";
 
 interface ProfileCardProps {
@@ -37,8 +39,9 @@ export const ProfileCard = ({
         username,
         created_at,
         bio,
-        avatar_url,
-        display_name
+        avatar,
+        display_name,
+        location
       `
       )
       .eq("username", username)
@@ -63,7 +66,7 @@ export const ProfileCard = ({
               <>
                 <ProfileAvatar
                   username={profile.username}
-                  imageUrl={profile.avatar_url}
+                  imageUrl={profile.avatar}
                 />
                 <FollowButton
                   profileId={profile.user_id}
@@ -86,10 +89,11 @@ export const ProfileCard = ({
                   username={username}
                 />
               </div>
-              <div className="text-muted-foreground flex items-center text-sm gap-x-2">
-                <CalendarDaysIcon className="w-4 h-4" />
-                Joined {format(new Date(profile.created_at), "MMMM y")}
-              </div>
+
+              <ProfileExtraInfo
+                createdAt={profile.created_at}
+                location={profile.location}
+              />
             </>
           ) : (
             <>
