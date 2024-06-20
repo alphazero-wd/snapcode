@@ -12,8 +12,13 @@ import { useContentEditor } from "@/features/common/editor/use-editor";
 
 const supabase = createClient();
 
-export const useEditPost = (id: string, content: string) => {
-  const [user, setUser] = useState<User | null>(null);
+interface EditPostParams {
+  id: string;
+  content: string;
+  user: User | null;
+}
+
+export const useEditPost = ({ id, content, user }: EditPostParams) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -26,16 +31,13 @@ export const useEditPost = (id: string, content: string) => {
   const editor = useContentEditor({
     content,
     onChange: (newValue) => form.setValue("content", newValue),
+    isAuth: !!user,
   });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     form.setValue("content", content, { shouldTouch: true });
   }, [content]);
-
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
-  }, [supabase]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
