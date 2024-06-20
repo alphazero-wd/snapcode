@@ -11,29 +11,38 @@ import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 interface ContentEditor {
   content?: string;
   onChange: (newValue: string) => void;
+  isAuth: boolean;
 }
 
-export const useContentEditor = ({ content, onChange }: ContentEditor) => {
-  const editor = useEditor({
-    extensions: [
-      StarterKit.configure({ codeBlock: false }),
-      Link,
-      Image,
-      Highlight,
-      Underline,
-      CodeBlockLowlight.configure({ lowlight }),
-    ],
-    content,
-    editorProps: {
-      attributes: {
-        class:
-          "relative break-words text-sm min-h-24 p-3 focus:outline-none overflow-hidden rounded-lg border focus-within:ring-1 focus-within:ring-ring markdown",
+export const useContentEditor = ({
+  content,
+  onChange,
+  isAuth,
+}: ContentEditor) => {
+  const editor = useEditor(
+    {
+      extensions: [
+        StarterKit.configure({ codeBlock: false }),
+        Link,
+        Image,
+        Highlight,
+        Underline,
+        CodeBlockLowlight.configure({ lowlight }),
+      ],
+      editable: isAuth,
+      content,
+      editorProps: {
+        attributes: {
+          class:
+            "relative break-words text-sm min-h-24 p-3 focus:outline-none overflow-hidden rounded-lg border focus-within:ring-1 focus-within:ring-ring markdown",
+        },
+      },
+      onUpdate({ editor }) {
+        const newContent = sanitizeContent(editor.getHTML());
+        onChange(newContent);
       },
     },
-    onUpdate({ editor }) {
-      const newContent = sanitizeContent(editor.getHTML());
-      onChange(newContent);
-    },
-  });
+    [isAuth]
+  );
   return editor;
 };

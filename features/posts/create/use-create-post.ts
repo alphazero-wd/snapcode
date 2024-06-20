@@ -12,8 +12,7 @@ import { useContentEditor } from "@/features/common/editor/use-editor";
 
 const supabase = createClient();
 
-export const useCreatePost = () => {
-  const [user, setUser] = useState<User | null>(null);
+export const useCreatePost = (user: User | null) => {
   const { manageTags } = useTags();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -23,14 +22,11 @@ export const useCreatePost = () => {
   });
   const editor = useContentEditor({
     onChange: (newValue) => form.setValue("content", newValue),
+    isAuth: !!user,
   });
   const { toast } = useToast();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
-  }, [supabase]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);

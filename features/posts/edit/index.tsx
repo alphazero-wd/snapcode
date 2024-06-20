@@ -13,7 +13,11 @@ interface EditPostFormProps {
 }
 
 export const EditPostForm = ({ postId, user, content }: EditPostFormProps) => {
-  const { form, loading, onSubmit, editor } = useEditPost(postId, content);
+  const { form, loading, onSubmit, editor } = useEditPost({
+    id: postId,
+    content,
+    user,
+  });
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -22,7 +26,7 @@ export const EditPostForm = ({ postId, user, content }: EditPostFormProps) => {
           name="content"
           render={() => (
             <FormItem>
-              <PostEditor editor={editor} />
+              <PostEditor user={user} editor={editor} />
               <div className="mt-3 flex justify-between w-full">
                 <FormMessage className="flex-1" />
                 <div className="flex mt-3 gap-x-2">
