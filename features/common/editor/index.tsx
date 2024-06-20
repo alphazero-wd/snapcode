@@ -3,12 +3,14 @@
 import { Textarea } from "@/features/ui/textarea";
 import { Editor, EditorContent } from "@tiptap/react";
 import { Toolbar } from "./toolbar";
+import { User } from "@supabase/supabase-js";
 
 interface PostEditorProps {
   editor: Editor | null;
+  user: User | null;
 }
 
-export const PostEditor = ({ editor }: PostEditorProps) => {
+export const PostEditor = ({ editor, user }: PostEditorProps) => {
   if (!editor) return null;
 
   return (
@@ -21,7 +23,7 @@ export const PostEditor = ({ editor }: PostEditorProps) => {
         />
         <EditorContent editor={editor} />
       </div>
-      <Toolbar editor={editor} />
+      {user && <Toolbar editor={editor} />}
     </div>
   );
 };

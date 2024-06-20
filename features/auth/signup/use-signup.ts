@@ -17,7 +17,10 @@ const formSchema = z.object({
     .max(30, {
       message: "Username is too long.",
     })
-    .regex(VALID_USERNAME_REGEX, { message: "Username is invalid" }),
+    .regex(VALID_USERNAME_REGEX, {
+      message:
+        "Username can only contain letters, numbers and underscores or hypens",
+    }),
   email: z.string().email({
     message: "Invalid email provided.",
   }),

@@ -22,7 +22,7 @@ export const SignupForm = () => {
             name="username"
             control={form.control}
             render={({ field }) => (
-              <FormItem className="grid gap-2">
+              <FormItem>
                 <Label htmlFor="username">Username</Label>
                 <Input
                   disabled={loading}
@@ -30,10 +30,11 @@ export const SignupForm = () => {
                   id="username"
                   placeholder="tim-foo"
                 />
+
                 <FormDescription>
-                  Username can only be 30 characters long, contain letters,
-                  numbers and underscores or hypens.
+                  Username cannot be changed upon creation
                 </FormDescription>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -43,7 +44,7 @@ export const SignupForm = () => {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="grid gap-2">
+              <FormItem>
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -62,7 +63,7 @@ export const SignupForm = () => {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="grid gap-2">
+              <FormItem>
                 <Label htmlFor="password">Password</Label>
                 <Input
                   disabled={loading}

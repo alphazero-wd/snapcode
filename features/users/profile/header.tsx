@@ -21,13 +21,11 @@ export const ProfileHeader = ({ profile, user }: ProfileHeaderProps) => {
           imageUrl={profile.avatar_url}
         />
       </div>
-      {user && profile.user_id !== user.id && (
-        <FollowButton
-          profileId={profile.user_id}
-          userId={user.id}
-          username={profile.username}
-        />
-      )}
+      <FollowButton
+        profileId={profile.user_id}
+        userId={user?.id}
+        username={profile.username}
+      />
       {profile.user_id === user?.id && (
         <Button asChild variant="outline">
           <Link href="/settings">Edit profile</Link>
