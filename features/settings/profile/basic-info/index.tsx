@@ -1,4 +1,3 @@
-import { Button } from "@/features/ui/button";
 import {
   Card,
   CardHeader,
@@ -22,9 +21,7 @@ export const ProfileSettingsBasicInfo = (
     <Card>
       <CardHeader>
         <CardTitle>Basic Information</CardTitle>
-        <CardDescription>
-          Your basic information will be available to the public
-        </CardDescription>
+        <CardDescription>Update your name, bio and location</CardDescription>
       </CardHeader>
       <CardContent>
         <BasicInfoForm {...props} />

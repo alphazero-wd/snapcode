@@ -1,3 +1,4 @@
+"use client";
 import { Markdown } from "@/features/common/markdown";
 import {
   HoverCard,
@@ -9,12 +10,11 @@ import { Profile } from "@/features/users/types";
 import { createClient } from "@/lib/supabase/client";
 import { ReactNode, useEffect, useState } from "react";
 import { FollowButton } from "@/features/users/follows/button";
-import {
-  ProfileAvatar,
-  ProfileBasicInfo,
-  ProfileExtraInfo,
-} from "@/features/users/profile";
 import { FollowStats } from "../follows/stats";
+import { getAvatarUrl } from "./get-avatar-url";
+import { ProfileAvatar } from "./avatar";
+import { ProfileBasicInfo } from "./basic-info";
+import { ProfileExtraInfo } from "./extra-info";
 
 interface ProfileCardProps {
   username: string;
@@ -39,9 +39,9 @@ export const ProfileCard = ({
         username,
         created_at,
         bio,
-        avatar,
         display_name,
-        location
+        location,
+        avatar
       `
       )
       .eq("username", username)
@@ -66,7 +66,7 @@ export const ProfileCard = ({
               <>
                 <ProfileAvatar
                   username={profile.username}
-                  imageUrl={profile.avatar}
+                  avatar={getAvatarUrl(supabase, profile.avatar)}
                 />
                 <FollowButton
                   profileId={profile.user_id}

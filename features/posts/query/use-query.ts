@@ -27,7 +27,8 @@ export const usePostsQuery = ({ tag, profileId }: PostsQueryParams) => {
           profiles!inner (
             user_id,
             username,
-            display_name
+            display_name,
+            avatar
           )
         `
       )

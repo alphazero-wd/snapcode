@@ -6,6 +6,7 @@ export interface Post {
   profiles: {
     user_id: string;
     username: string;
+    avatar?: string;
   };
 }
 

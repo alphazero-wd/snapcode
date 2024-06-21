@@ -15,9 +15,11 @@ import { Tag } from "@/features/posts/types";
 import { createClient } from "@/lib/supabase/client";
 import { Highlighter } from "@/features/common/highlighter";
 import { Profile } from "@/features/users/types";
-import { ProfileAvatar, ProfileBasicInfo } from "@/features/users/profile";
 import { FollowButton } from "@/features/users/follows/button";
 import { User } from "@supabase/supabase-js";
+import { ProfileAvatar } from "@/features/users/profile/avatar";
+import { ProfileBasicInfo } from "@/features/users/profile/basic-info";
+import { getAvatarUrl } from "../../users/profile/get-avatar-url";
 
 const supabase = createClient();
 export const Search = ({ user }: { user: User | null }) => {
@@ -117,7 +119,10 @@ export const Search = ({ user }: { user: User | null }) => {
                   className="flex justify-between hover:bg- gap-x-4"
                 >
                   <div className="flex gap-x-2">
-                    <ProfileAvatar username={profile.username} />
+                    <ProfileAvatar
+                      avatar={getAvatarUrl(supabase, profile.avatar)}
+                      username={profile.username}
+                    />
                     <div>
                       <ProfileBasicInfo
                         username={profile.username}

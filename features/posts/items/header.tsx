@@ -1,11 +1,13 @@
 "use client";
 import { formatDistanceToNowStrict } from "date-fns/formatDistanceToNowStrict";
-import { Avatar, AvatarFallback } from "@/features/ui/avatar";
 import { PostOptions } from "./options";
 import { User } from "@supabase/supabase-js";
 import { ProfileCard } from "@/features/users/profile/card";
 import { Button } from "@/features/ui/button";
 import Link from "next/link";
+import { ProfileAvatar } from "@/features/users/profile/avatar";
+import { createClient } from "@/lib/supabase/client";
+import { getAvatarUrl } from "@/features/users/profile/get-avatar-url";
 
 interface PostHeaderProps {
   id: string;
@@ -13,6 +15,7 @@ interface PostHeaderProps {
   created_at: string;
   updated_at: string | null;
   creator_id: string;
+  avatar?: string;
   user: User | null;
 }
 
@@ -20,16 +23,19 @@ export const PostHeader = ({
   id,
   username,
   created_at,
+  avatar,
   updated_at,
   creator_id,
   user,
 }: PostHeaderProps) => {
+  const supabase = createClient();
   return (
     <div className="flex w-full gap-x-4 flex-row justify-between items-center">
       <div className="flex gap-x-4 items-center">
-        <Avatar>
-          <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
-        </Avatar>
+        <ProfileAvatar
+          avatar={getAvatarUrl(supabase, avatar)}
+          username={username}
+        />
         <div>
           <ProfileCard
             renderTrigger={(profile) => (

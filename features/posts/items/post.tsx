@@ -19,6 +19,7 @@ export const Post = ({ post, user }: PostProps) => {
           id={post.id}
           username={post.profiles.username}
           created_at={post.created_at}
+          avatar={post.profiles.avatar}
           updated_at={post.updated_at}
           creator_id={post.profiles.user_id}
         />

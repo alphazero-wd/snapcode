@@ -21,7 +21,7 @@ export const useFollowsQuery = (
         `
         profiles:followed_following_${joinType}_id_fkey!inner (
           user_id,
-          avatar_url,
+          avatar,
           display_name,
           username,
           created_at

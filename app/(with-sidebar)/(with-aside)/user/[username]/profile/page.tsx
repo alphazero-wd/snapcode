@@ -1,16 +1,13 @@
 import { createClient } from "@/lib/supabase/server";
 import { Profile } from "@/features/users/types";
 import { redirect } from "next/navigation";
-import {
-  ProfileBasicInfo,
-  ProfileExtraInfo,
-  ProfileHeader,
-} from "@/features/users/profile";
+
 import { Markdown } from "@/features/common/markdown";
-import { CalendarDaysIcon, MapPinIcon } from "@heroicons/react/24/outline";
-import { format } from "date-fns/format";
 import { FollowStats } from "@/features/users/follows/stats";
 import { ProfilePosts } from "@/features/users/posts";
+import { ProfileHeader } from "@/features/users/profile/header";
+import { ProfileBasicInfo } from "@/features/users/profile/basic-info";
+import { ProfileExtraInfo } from "@/features/users/profile/extra-info";
 
 interface ProfilePageParams {
   params: {
