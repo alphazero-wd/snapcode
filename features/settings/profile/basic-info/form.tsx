@@ -35,7 +35,7 @@ export const BasicInfoForm = (props: BasicInfoFormProps) => {
           control={form.control}
           name="displayName"
           render={({ field }) => (
-            <FormItem className="grid gap-2">
+            <FormItem>
               <Label htmlFor="displayName">Display name</Label>
               <Input
                 id="displayName"
@@ -58,7 +58,7 @@ export const BasicInfoForm = (props: BasicInfoFormProps) => {
           control={form.control}
           name="bio"
           render={({ field }) => (
-            <FormItem className="grid gap-2">
+            <FormItem>
               <Label htmlFor="displayName">Bio</Label>
               <Textarea
                 {...field}
@@ -81,7 +81,7 @@ export const BasicInfoForm = (props: BasicInfoFormProps) => {
           control={form.control}
           name="location"
           render={({ field }) => (
-            <FormItem className="grid gap-2">
+            <FormItem>
               <Label htmlFor="displayName">Location</Label>
               <Input
                 id="displayName"
