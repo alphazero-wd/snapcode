@@ -4,19 +4,16 @@ import { createClient } from "@/lib/supabase/client";
 import { BUCKET_ID } from "@/constants";
 import { useToast } from "@/features/ui/use-toast";
 import { capitalize } from "@/features/common/utils";
-import { useDeleteImage } from "./use-delete";
 import { format } from "date-fns/format";
 import { useRouter } from "next/navigation";
 
 export const useUploadImage = (
   profileId: string,
-  type: "avatar" | "banner",
-  oldImage?: string
+  type: "avatar" | "banner"
 ) => {
   const supabase = createClient();
   const { toast } = useToast();
   const [newImage, setNewImage] = useState<FileWithPreview | null>(null);
-  const deleteImage = useDeleteImage();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -30,18 +27,10 @@ export const useUploadImage = (
     setTimeout(uploadImage, 2000);
   };
 
-  const deleteOldImage = async () => {
-    if (oldImage) {
-      const { error: deleteError } = await deleteImage(oldImage);
-      if (deleteError) throw deleteError;
-    }
-  };
-
   const clearPreviewImage = () => setNewImage(null);
 
   const uploadImage = async () => {
     if (!newImage) return;
-    await deleteOldImage();
     const uploadedAt = format(new Date(), "yMMddHHmmss");
     const path = `${type}s/${uploadedAt}_${profileId}_${newImage.name}`;
     try {

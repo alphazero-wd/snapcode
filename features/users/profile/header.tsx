@@ -6,6 +6,7 @@ import { Button } from "@/features/ui/button";
 import { ProfileAvatar } from "./avatar";
 import { createClient } from "@/lib/supabase/server";
 import { getAvatarUrl } from "./get-avatar-url";
+import { AvatarZoom } from "./avatar-zoom";
 
 interface ProfileHeaderProps {
   profile: Profile;
@@ -16,13 +17,11 @@ export const ProfileHeader = ({ profile, user }: ProfileHeaderProps) => {
   const supabase = createClient();
   return (
     <div className="flex items-center justify-between">
-      <div className="flex gap-x-4 items-center">
-        <ProfileAvatar
-          size="lg"
-          username={profile.username}
-          avatar={getAvatarUrl(supabase, profile.avatar)}
-        />
-      </div>
+      <AvatarZoom
+        username={profile.username}
+        avatar={getAvatarUrl(supabase, profile.avatar, 400)}
+      />
+
       <FollowButton
         profileId={profile.user_id}
         userId={user?.id}

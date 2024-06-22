@@ -1,13 +1,18 @@
 import { Follows } from "@/features/users/follows";
 
-interface UserFollowersParams {
+interface UserFollowingParams {
   params: {
     username: string;
   };
 }
-
-export default async function UserFollowersPage({
+export async function generateMetadata({
   params: { username },
-}: UserFollowersParams) {
+}: UserFollowingParams) {
+  return { title: "@" + username + "/ Following" };
+}
+
+export default async function UserFollowingPage({
+  params: { username },
+}: UserFollowingParams) {
   return <Follows username={username} type="following" />;
 }

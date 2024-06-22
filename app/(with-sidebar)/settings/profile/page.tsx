@@ -4,6 +4,10 @@ import { redirect } from "next/navigation";
 import { Profile } from "@/features/users/types";
 import { ImagesSettings } from "@/features/settings/profile/images";
 
+export const metadata = {
+  title: "Settings / Profile",
+};
+
 export default async function ProfileSettingsPage() {
   const supabase = createClient();
   const {
