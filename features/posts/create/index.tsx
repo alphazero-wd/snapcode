@@ -28,7 +28,7 @@ export const CreatePost = ({ user }: { user: User | null }) => {
                   <FormDescription className="block">
                     {!user ? "Log in to post" : ""}
                   </FormDescription>
-                  <FormMessage className="flex-1 block" />
+                  <FormMessage className="flex-1" />
                 </div>
                 <Button
                   disabled={loading || !user}

@@ -12,6 +12,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { Label } from "@/features/ui/label";
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 const Form = FormProvider;
 
@@ -156,9 +157,13 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn("text-[0.8rem] font-medium text-destructive", className)}
+      className={cn(
+        "text-[0.8rem] flex gap-x-2 font-medium text-destructive",
+        className
+      )}
       {...props}
     >
+      <ExclamationCircleIcon className="w-5 h-5" />
       {body}
     </p>
   );
