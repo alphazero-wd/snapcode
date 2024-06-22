@@ -52,9 +52,9 @@ export const SidebarLinks = ({
   );
   return sidebarLinks.map((link) =>
     isMobile ? (
-      <MobileLink onLoginAction={onOpen} link={link} />
+      <MobileLink key={link.name} onLoginAction={onOpen} link={link} />
     ) : (
-      <DesktopLink onLoginAction={onOpen} link={link} />
+      <DesktopLink key={link.name} onLoginAction={onOpen} link={link} />
     )
   );
 };

@@ -2,8 +2,7 @@ import { ProfileSettingsBasicInfo } from "@/features/settings/profile/basic-info
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { Profile } from "@/features/users/types";
-import { ProfileSettingsImages } from "@/features/settings/profile/images/avatar";
-import { DeleteAvatarModal } from "@/features/settings/profile/images/avatar/delete-modal";
+import { ImagesSettings } from "@/features/settings/profile/images";
 
 export default async function ProfileSettingsPage() {
   const supabase = createClient();
@@ -26,12 +25,11 @@ export default async function ProfileSettingsPage() {
         bio={profile.bio}
         location={profile.location}
       />
-      <ProfileSettingsImages
+      <ImagesSettings
         avatar={profile.avatar}
         profileId={profile.user_id}
         username={profile.username}
       />
-      <DeleteAvatarModal profileId={profile.user_id} />
     </div>
   );
 }

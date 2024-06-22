@@ -1,1 +1,3 @@
-export type FileWithPreview = File & { preview: string };
+export interface FileWithPreview extends File {
+  preview: string;
+}

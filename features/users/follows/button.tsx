@@ -21,7 +21,13 @@ export const FollowButton = ({
   username,
   userId,
 }: FollowButtonProps) => {
-  const { follow, unfollow, followingIds } = useFollowsStore();
+  const {
+    follow,
+    unfollow,
+    followingIds,
+    decrementFollowingCount,
+    incrementFollowingCount,
+  } = useFollowsStore();
   const onLoginModalOpen = useLoginModal((state) => state.onOpen);
   const { toast } = useToast();
 
@@ -41,6 +47,7 @@ export const FollowButton = ({
       following_id: userId,
     });
     follow(profileId);
+    incrementFollowingCount();
     return error;
   };
 
@@ -50,6 +57,7 @@ export const FollowButton = ({
       .delete()
       .eq("follower_id", profileId)
       .eq("following_id", userId);
+    decrementFollowingCount();
     unfollow(profileId);
     return error;
   };

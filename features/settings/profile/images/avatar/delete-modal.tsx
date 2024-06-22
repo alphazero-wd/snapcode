@@ -12,23 +12,28 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/features/ui/use-toast";
 import { useDeleteAvatarModal } from "./use-delete-modal";
-import { AVATARS_FOLDER, BUCKET_ID } from "@/constants";
+import { useDeleteImage } from "../use-delete";
 
 const supabase = createClient();
 
 interface DeleteAvatarModalProps {
+  avatar: string;
   profileId: string;
+  clearPreviewImage: () => void;
 }
 
-export const DeleteAvatarModal = ({ profileId }: DeleteAvatarModalProps) => {
+export const DeleteAvatarModal = ({
+  avatar,
+  profileId,
+  clearPreviewImage,
+}: DeleteAvatarModalProps) => {
   const router = useRouter();
+  const deleteAvatar = useDeleteImage();
   const { toast } = useToast();
   const { isOpen, onClose } = useDeleteAvatarModal();
 
   const onDeletePost = async () => {
-    const { data, error } = await supabase.storage
-      .from(BUCKET_ID)
-      .remove([`${AVATARS_FOLDER}/${profileId}`]);
+    const { data, error } = await deleteAvatar(avatar);
     if (data) {
       const { dismiss } = toast({
         variant: "success",
@@ -45,6 +50,7 @@ export const DeleteAvatarModal = ({ profileId }: DeleteAvatarModalProps) => {
     }
 
     if (error) showError(error.message);
+    clearPreviewImage();
     router.refresh();
     onClose();
   };

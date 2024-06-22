@@ -1,6 +1,6 @@
 import { ProfileCard } from "@/features/users/profile/card";
 import Link from "next/link";
-import { ProfileAvatar } from "../profile";
+import { ProfileAvatar } from "../profile/avatar";
 import { Profile } from "../types";
 import { FollowButton } from "./button";
 
