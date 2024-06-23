@@ -19,7 +19,7 @@ export const MobileSidebar = async () => {
       </SheetTrigger>
       <SheetContent side="left" className="flex flex-col">
         <nav className="grid gap-2 text-lg font-medium">
-          <Link href="/">
+          <Link href="/" className="px-1">
             <DesktopLogo />
           </Link>
           <SidebarLinks profile={profile} />

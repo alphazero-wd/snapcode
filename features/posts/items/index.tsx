@@ -15,16 +15,16 @@ export const Posts = ({ loading, user }: PostsProps) => {
   return (
     <ul className="space-y-4 w-full">
       {posts.map((post) => (
-        <li>
-          <Post user={user} key={post.id} post={post} />
+        <li key={post.id}>
+          <Post user={user} post={post} />
         </li>
       ))}
       {loading &&
         Array(PAGE_LIMIT)
           .fill(null)
           .map((_, i) => (
-            <li>
-              <PostLoading key={i} />
+            <li key={i}>
+              <PostLoading />
             </li>
           ))}
     </ul>
