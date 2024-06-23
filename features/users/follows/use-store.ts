@@ -8,6 +8,8 @@ interface State {
 interface Action {
   follow: (profileId: string) => void;
   unfollow: (profileId: string) => void;
+  incrementFollowingCount: () => void;
+  decrementFollowingCount: () => void;
   reset: () => void;
 }
 
@@ -19,14 +21,17 @@ const initialState: State = {
 export const useFollowsStore = create<State & Action>((set) => ({
   ...initialState,
   follow: (profileId) =>
-    set(({ followingIds, followingCount }) => ({
+    set(({ followingIds }) => ({
       followingIds: followingIds.add(profileId),
-      followingCount: followingCount + 1,
     })),
+  decrementFollowingCount: () =>
+    set(({ followingCount }) => ({ followingCount: followingCount - 1 })),
+  incrementFollowingCount: () =>
+    set(({ followingCount }) => ({ followingCount: followingCount + 1 })),
   unfollow: (profileId) =>
-    set(({ followingIds, followingCount }) => {
+    set(({ followingIds }) => {
       followingIds.delete(profileId);
-      return { followingIds, followingCount: followingCount - 1 };
+      return { followingIds };
     }),
   reset: () => set(initialState),
 }));

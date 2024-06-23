@@ -1,6 +1,6 @@
 import { ProfileCard } from "@/features/users/profile/card";
 import Link from "next/link";
-import { ProfileAvatar } from "../profile";
+import { ProfileAvatar } from "../profile/avatar";
 import { Profile } from "../types";
 import { FollowButton } from "./button";
 
@@ -13,10 +13,7 @@ export const FollowUser = ({ profile, userId }: FollowUserProps) => {
   return (
     <div className="flex gap-x-4 justify-between items-center">
       <div className="flex gap-x-4 items-center">
-        <ProfileAvatar
-          imageUrl={profile.avatar_url}
-          username={profile.username}
-        />
+        <ProfileAvatar avatar={profile.avatar} username={profile.username} />
         <div>
           <ProfileCard
             username={profile.username}

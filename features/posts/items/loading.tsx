@@ -3,13 +3,13 @@ import { Skeleton } from "@/features/ui/skeleton";
 
 export const PostLoading = () => {
   return (
-    <Card className="relative flex flex-col">
+    <Card className="relative w-full">
       <CardHeader className="flex flex-row gap-x-4 justify-between items-center">
         <div className="flex gap-x-4 items-center">
           <Skeleton className="w-10 h-10 rounded-full" />
           <div className="space-y-1">
-            <Skeleton className="h-5 w-40" />
-            <Skeleton className="h-4 w-60" />
+            <Skeleton className="h-3 w-20" />
+            <Skeleton className="h-2 w-32" />
           </div>
         </div>
         <Skeleton className="w-9 h-9" />

@@ -4,6 +4,7 @@ import { Textarea } from "@/features/ui/textarea";
 import { Editor, EditorContent } from "@tiptap/react";
 import { Toolbar } from "./toolbar";
 import { User } from "@supabase/supabase-js";
+import { Skeleton } from "@/features/ui/skeleton";
 
 interface PostEditorProps {
   editor: Editor | null;
@@ -11,11 +12,26 @@ interface PostEditorProps {
 }
 
 export const PostEditor = ({ editor, user }: PostEditorProps) => {
-  if (!editor) return null;
+  if (!editor)
+    return (
+      <div className="flex flex-col gap-y-2">
+        <div className="relative bg-background">
+          <Skeleton className="h-24 w-full" />
+        </div>
+        <div className="flex gap-x-4 flex-wrap">
+          <Skeleton className="w-9 h-9" />
+          <Skeleton className="w-9 h-9" />
+          <Skeleton className="w-9 h-9" />
+          <Skeleton className="w-9 h-9" />
+          <Skeleton className="w-9 h-9" />
+        </div>
+      </div>
+    );
 
   return (
-    <div className="flex flex-col gap-y-2">
-      <div className="relative bg-background">
+    <div className="flex flex-col gap-y-2 w-full overflow-x-hidden">
+      {user && <Toolbar editor={editor} />}
+      <div className="relative mt-8 sm:mt-0 bg-background">
         <Textarea
           readOnly
           placeholder={editor.getHTML() === "<p></p>" ? "Share something" : ""}
@@ -23,7 +39,6 @@ export const PostEditor = ({ editor, user }: PostEditorProps) => {
         />
         <EditorContent editor={editor} />
       </div>
-      {user && <Toolbar editor={editor} />}
     </div>
   );
 };

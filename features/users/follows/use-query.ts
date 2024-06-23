@@ -19,9 +19,9 @@ export const useFollowsQuery = (
       .from("followed_following")
       .select(
         `
-        profiles:followed_following_${joinType}_id_fkey!inner (
+        profiles:fk_${joinType}_id!inner (
           user_id,
-          avatar_url,
+          avatar,
           display_name,
           username,
           created_at

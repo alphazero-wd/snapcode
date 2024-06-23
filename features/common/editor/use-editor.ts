@@ -34,7 +34,7 @@ export const useContentEditor = ({
       editorProps: {
         attributes: {
           class:
-            "relative break-words text-sm min-h-24 p-3 focus:outline-none overflow-hidden rounded-lg border focus-within:ring-1 focus-within:ring-ring markdown",
+            "relative break-words text-sm min-h-24 p-3 focus:outline-none overflow-hidden rounded-lg border focus-within:ring-1 ring-inset focus-within:ring-ring markdown",
         },
       },
       onUpdate({ editor }) {

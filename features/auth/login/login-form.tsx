@@ -17,7 +17,7 @@ export const LoginForm = () => {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="grid gap-2">
+              <FormItem>
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -33,7 +33,7 @@ export const LoginForm = () => {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="grid gap-2">
+              <FormItem>
                 <div className="flex justify-between items-center">
                   <Label htmlFor="password">Password</Label>
                   <Link

@@ -8,7 +8,7 @@ export const DesktopSidebar = async () => {
   const { user, profile } = await getUserWithProfile();
 
   return (
-    <div className="h-screen sticky top-0 hidden border-r bg-muted/40 md:block">
+    <div className="h-screen md:w-[220px] lg:w-[280px] sticky top-0 hidden border-r bg-muted/40 md:block">
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link href="/">

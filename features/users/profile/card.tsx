@@ -1,3 +1,4 @@
+"use client";
 import { Markdown } from "@/features/common/markdown";
 import {
   HoverCard,
@@ -7,12 +8,13 @@ import {
 import { Skeleton } from "@/features/ui/skeleton";
 import { Profile } from "@/features/users/types";
 import { createClient } from "@/lib/supabase/client";
-import { CalendarDaysIcon } from "@heroicons/react/24/outline";
-import { format } from "date-fns/format";
 import { ReactNode, useEffect, useState } from "react";
 import { FollowButton } from "@/features/users/follows/button";
-import { ProfileAvatar, ProfileBasicInfo } from "@/features/users/profile";
 import { FollowStats } from "../follows/stats";
+import { getAvatarUrl } from "./get-avatar-url";
+import { ProfileAvatar } from "./avatar";
+import { ProfileBasicInfo } from "./basic-info";
+import { ProfileExtraInfo } from "./extra-info";
 
 interface ProfileCardProps {
   username: string;
@@ -37,8 +39,9 @@ export const ProfileCard = ({
         username,
         created_at,
         bio,
-        avatar_url,
-        display_name
+        display_name,
+        location,
+        avatar
       `
       )
       .eq("username", username)
@@ -63,7 +66,7 @@ export const ProfileCard = ({
               <>
                 <ProfileAvatar
                   username={profile.username}
-                  imageUrl={profile.avatar_url}
+                  avatar={getAvatarUrl(supabase, profile.avatar)}
                 />
                 <FollowButton
                   profileId={profile.user_id}
@@ -86,10 +89,11 @@ export const ProfileCard = ({
                   username={username}
                 />
               </div>
-              <div className="text-muted-foreground flex items-center text-sm gap-x-2">
-                <CalendarDaysIcon className="w-4 h-4" />
-                Joined {format(new Date(profile.created_at), "MMMM y")}
-              </div>
+
+              <ProfileExtraInfo
+                createdAt={profile.created_at}
+                location={profile.location}
+              />
             </>
           ) : (
             <>

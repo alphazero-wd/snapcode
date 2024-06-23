@@ -23,12 +23,12 @@ export const CreatePost = ({ user }: { user: User | null }) => {
           render={() => (
             <FormItem>
               <PostEditor editor={editor} user={user} />
-              <div className="mt-3 flex justify-between w-full">
+              <div className="mt-3 items-center flex justify-between w-full">
                 <div>
                   <FormDescription className="block">
                     {!user ? "Log in to post" : ""}
                   </FormDescription>
-                  <FormMessage className="flex-1 block" />
+                  <FormMessage className="flex-1" />
                 </div>
                 <Button
                   disabled={loading || !user}

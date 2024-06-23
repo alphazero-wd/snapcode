@@ -28,7 +28,8 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
   updated_at,
   profiles (
     user_id,
-    username
+    username,
+    avatar
   )
 `
     )
@@ -52,6 +53,7 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
         <PostHeader
           user={user}
           id={id}
+          avatar={data.profiles.avatar}
           username={data.profiles.username}
           created_at={data.created_at}
           updated_at={data.updated_at}

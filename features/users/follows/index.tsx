@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Profile } from "../types";
 import { Button } from "@/features/ui/button";
-import { ProfileBasicInfo } from "../profile";
+import { ProfileBasicInfo } from "@/features/users/profile/basic-info";
 import { FollowButton } from "./button";
 import { FollowsClient } from "./client";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
@@ -37,7 +37,7 @@ export const Follows = async ({ username, type }: FollowsServerProps) => {
             <ChevronLeftIcon className="w-4 h-4" />
           </Link>
         </Button>
-        <div className="w-full items-center justify-between gap-x-4">
+        <div className="w-full flex items-center justify-between gap-x-4">
           <div>
             <ProfileBasicInfo
               username={data.username}
