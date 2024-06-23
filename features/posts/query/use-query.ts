@@ -24,7 +24,7 @@ export const usePostsQuery = ({ tag, profileId }: PostsQueryParams) => {
           content,
           created_at,
           updated_at,
-          profiles!inner (
+          profiles:fk_creator_id (
             user_id,
             username,
             display_name,

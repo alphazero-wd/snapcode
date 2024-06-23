@@ -1,5 +1,5 @@
 "use client";
-import { Post } from "./post";
+import { PostItem } from "./post";
 import { PAGE_LIMIT } from "@/constants";
 import { PostLoading } from "./loading";
 import { User } from "@supabase/supabase-js";
@@ -16,7 +16,7 @@ export const Posts = ({ loading, user }: PostsProps) => {
     <ul className="space-y-4 w-full">
       {posts.map((post) => (
         <li key={post.id}>
-          <Post user={user} post={post} />
+          <PostItem user={user} post={post} />
         </li>
       ))}
       {loading &&

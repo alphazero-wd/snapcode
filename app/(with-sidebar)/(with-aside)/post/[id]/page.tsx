@@ -6,6 +6,7 @@ import { Button } from "@/features/ui/button";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Markdown } from "@/features/common/markdown";
+import { VotesButton } from "@/features/votes/button";
 
 interface PostPageParams {
   params: {
@@ -26,7 +27,7 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
   content,
   created_at,
   updated_at,
-  profiles (
+  profiles:fk_creator_id (
     user_id,
     username,
     avatar
@@ -38,7 +39,7 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
   if (!data) redirect("/not-found");
 
   return (
-    <div className="flex flex-col gap-y-5">
+    <div className="flex flex-col relative gap-y-5">
       <div className="flex items-center flex-1 w-full gap-x-4">
         <Button
           size="icon"
@@ -61,8 +62,13 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
         />
       </div>
 
-      <div className="text-foreground sm:ml-12 markdown text-sm">
-        <Markdown content={data.content} />
+      <div className="sm:ml-12 space-y-6">
+        <div className="text-foreground markdown text-sm">
+          <Markdown content={data.content} />
+        </div>
+        <div className="border-t bg-card sticky bottom-0 py-4">
+          <VotesButton postId={data.id} userId={user?.id} />
+        </div>
       </div>
     </div>
   );
