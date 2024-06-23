@@ -13,14 +13,20 @@ interface PostsProps {
 export const Posts = ({ loading, user }: PostsProps) => {
   const posts = usePostsStore((state) => state.posts);
   return (
-    <div className="grid gap-y-4">
+    <ul className="space-y-4 w-full">
       {posts.map((post) => (
-        <Post user={user} key={post.id} post={post} />
+        <li>
+          <Post user={user} key={post.id} post={post} />
+        </li>
       ))}
       {loading &&
         Array(PAGE_LIMIT)
           .fill(null)
-          .map((_, i) => <PostLoading key={i} />)}
-    </div>
+          .map((_, i) => (
+            <li>
+              <PostLoading key={i} />
+            </li>
+          ))}
+    </ul>
   );
 };

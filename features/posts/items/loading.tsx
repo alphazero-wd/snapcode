@@ -3,7 +3,7 @@ import { Skeleton } from "@/features/ui/skeleton";
 
 export const PostLoading = () => {
   return (
-    <Card className="relative flex flex-col">
+    <Card className="relative w-full">
       <CardHeader className="flex flex-row gap-x-4 justify-between items-center">
         <div className="flex gap-x-4 items-center">
           <Skeleton className="w-10 h-10 rounded-full" />

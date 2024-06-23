@@ -54,10 +54,14 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background overflow-x-hidden text-foreground h-screen w-screen;
   }
   .markdown mark {
     @apply px-1 py-0.5 bg-orange-300 text-orange-950 rounded-sm;
+  }
+
+  pre {
+    @apply whitespace-pre overflow-x-auto p-3 !important;
   }
 
   .markdown > p > code {
@@ -210,12 +214,15 @@
 }
 
 @layer utilities {
+  .layout-width {
+    @apply max-w-[calc(100vw-2rem)] sm:max-w-[calc(100vw-3rem)] md:max-w-2xl w-full;
+  }
   .markdown {
     @apply max-w-full leading-5 prose prose-sm dark:prose-invert
       prose-p:my-0 prose-p:whitespace-pre-line prose-p:before:content-none prose-p:after:content-none
-      prose-img:rounded-lg prose-img:max-w-full
+      prose-img:rounded-lg prose-img:max-w-full sm:prose-img:max-w-sm sm:prose-img:mx-auto
       prose-a:text-primary
       prose-code:before:content-none prose-code:after:content-none prose-code:text-sm prose-code:bg-muted
-      prose-pre:leading-4 prose-pre:text-secondary-foreground prose-pre:bg-muted prose-pre:p-3 prose-pre:text-base;
+      prose-pre:overflow-x-auto prose-pre:leading-4 prose-pre:text-secondary-foreground prose-pre:bg-muted prose-pre:text-base;
   }
 }

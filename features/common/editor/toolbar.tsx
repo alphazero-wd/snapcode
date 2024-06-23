@@ -13,7 +13,6 @@ import { useMemo } from "react";
 import { Toggle } from "../../ui/toggle";
 import { LinkInsert } from "./link-insert";
 import { ImageInsert } from "./image-insert";
-import { Separator } from "../../ui/separator";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { CodeBlockInsert } from "./code-block-insert";
 
@@ -91,18 +90,19 @@ export const Toolbar = ({ editor }: ToolbarProps) => {
       ))}
       <LinkInsert editor={editor} />
       <ImageInsert editor={editor} />
-      <Separator orientation="vertical" />
-      {nodes.map((node) => (
-        <Toggle
-          key={node.name}
-          size="sm"
-          pressed={editor.isActive(node.mode)}
-          onPressedChange={() => node.onPress()}
-        >
-          <node.icon className="w-4 h-4" />
-        </Toggle>
-      ))}
-      <CodeBlockInsert editor={editor} />
+      <div className="flex gap-x-2 items-center">
+        {nodes.map((node) => (
+          <Toggle
+            key={node.name}
+            size="sm"
+            pressed={editor.isActive(node.mode)}
+            onPressedChange={() => node.onPress()}
+          >
+            <node.icon className="w-4 h-4" />
+          </Toggle>
+        ))}
+        <CodeBlockInsert editor={editor} />
+      </div>
     </div>
   );
 };
