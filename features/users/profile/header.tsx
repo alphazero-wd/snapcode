@@ -21,7 +21,6 @@ export const ProfileHeader = ({ profile, user }: ProfileHeaderProps) => {
         username={profile.username}
         avatar={getAvatarUrl(supabase, profile.avatar, 400)}
       />
-
       <FollowButton
         profileId={profile.user_id}
         userId={user?.id}
