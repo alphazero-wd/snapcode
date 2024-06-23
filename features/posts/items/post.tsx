@@ -1,18 +1,28 @@
-import { CardHeader, CardContent } from "@/features/ui/card";
+"use client";
+import { useCutContent } from "@/features/common/hooks";
+import { Button } from "@/features/ui/button";
+import { Card, CardContent, CardFooter, CardHeader } from "@/features/ui/card";
+import { cn } from "@/lib/utils";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import React from "react";
 import { PostHeader } from "./header";
-import { PostItem } from "./item";
-import { Post as IPost } from "../types";
+import { Post } from "../types";
 import { User } from "@supabase/supabase-js";
 import { Markdown } from "@/features/common/markdown";
+import { VotesButton } from "@/features/votes/button";
 
-interface PostProps {
-  post: IPost;
+interface PostItemProps {
+  post: Post;
   user: User | null;
 }
 
-export const Post = ({ post, user }: PostProps) => {
+const MAX_HEIGHT = 300;
+
+export const PostItem = ({ post, user }: PostItemProps) => {
+  const { ref, shouldCut, unCut } = useCutContent(MAX_HEIGHT);
+
   return (
-    <PostItem>
+    <Card className="relative flex flex-col">
       <CardHeader>
         <PostHeader
           user={user}
@@ -24,9 +34,32 @@ export const Post = ({ post, user }: PostProps) => {
           creator_id={post.profiles.user_id}
         />
       </CardHeader>
-      <CardContent className="text-foreground max-w-full text-sm">
-        <Markdown content={post.content} />
+      <CardContent
+        ref={ref}
+        className={cn(
+          shouldCut && "max-h-80 overflow-hidden",
+          "text-foreground relative p-0 max-w-full text-sm"
+        )}
+      >
+        <div className="p-6">
+          <Markdown content={post.content} />
+        </div>
+        {shouldCut && (
+          <div className="flex w-full h-full justify-center">
+            <div className="absolute h-32 bottom-0 w-full bg-gradient-to-b from-transparent to-muted/70 backdrop-blur-sm" />
+            <Button
+              variant="outline"
+              className="absolute bottom-4 gap-x-2"
+              onClick={unCut}
+            >
+              Read more <ChevronDownIcon className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
       </CardContent>
-    </PostItem>
+      <CardFooter className="w-full py-4 border-t bg-card rounded-b-xl sticky bottom-0">
+        <VotesButton userId={user?.id} postId={post.id} />
+      </CardFooter>
+    </Card>
   );
 };

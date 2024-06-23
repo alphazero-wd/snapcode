@@ -15,15 +15,15 @@ export const PostEditor = ({ editor, user }: PostEditorProps) => {
   if (!editor)
     return (
       <div className="flex flex-col gap-y-2">
-        <div className="relative bg-background">
-          <Skeleton className="h-24 w-full" />
-        </div>
         <div className="flex gap-x-4 flex-wrap">
           <Skeleton className="w-9 h-9" />
           <Skeleton className="w-9 h-9" />
           <Skeleton className="w-9 h-9" />
           <Skeleton className="w-9 h-9" />
           <Skeleton className="w-9 h-9" />
+        </div>
+        <div className="relative bg-background">
+          <Skeleton className="h-24 w-full" />
         </div>
       </div>
     );
