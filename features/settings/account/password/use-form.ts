@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createClient } from "@/lib/supabase/client";
 import { useState } from "react";
-import { useToast } from "../../../ui/use-toast";
+import { useToast } from "@/features/ui/use-toast";
 
 const formSchema = z
   .object({
