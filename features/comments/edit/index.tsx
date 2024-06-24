@@ -2,19 +2,23 @@
 import { Button } from "@/features/ui/button";
 import { Form, FormField, FormItem, FormMessage } from "@/features/ui/form";
 import { User } from "@supabase/supabase-js";
-import { PostEditor } from "../editor";
+import { CommentEditor } from "../editor";
 import { CancelEditModal } from "./cancel-modal";
-import { useEditPost } from "./use-edit-post";
+import { useEditComment } from "./use-edit";
 
-interface EditPostFormProps {
+interface EditCommentFormProps {
   user: User | null;
   content: string;
-  postId: string;
+  commentId: string;
 }
 
-export const EditPostForm = ({ postId, user, content }: EditPostFormProps) => {
-  const { form, loading, onSubmit, editor } = useEditPost({
-    id: postId,
+export const EditCommentForm = ({
+  commentId,
+  user,
+  content,
+}: EditCommentFormProps) => {
+  const { form, loading, onSubmit, editor } = useEditComment({
+    id: commentId,
     content,
     user,
   });
@@ -26,7 +30,7 @@ export const EditPostForm = ({ postId, user, content }: EditPostFormProps) => {
           name="content"
           render={() => (
             <FormItem>
-              <PostEditor user={user} editor={editor} />
+              <CommentEditor user={user} editor={editor} />
               <div className="mt-3 flex justify-between w-full">
                 <FormMessage className="flex-1" />
                 <div className="flex mt-3 gap-x-2">

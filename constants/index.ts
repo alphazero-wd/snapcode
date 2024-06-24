@@ -9,5 +9,3 @@ export const PAGE_LIMIT = 10;
 export const NAME_MAX_LENGTH = 30;
 export const BIO_MAX_LENGTH = 200;
 export const LOCATION_MAX_LENGTH = 100;
-
-export const CONFIRM_TEXT = "delete me";

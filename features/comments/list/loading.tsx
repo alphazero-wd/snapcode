@@ -1,4 +1,4 @@
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "@/features/ui/skeleton";
 
 export const CommentLoading = () => (
   <div className="relative flex gap-x-4 w-full">

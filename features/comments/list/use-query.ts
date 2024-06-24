@@ -1,9 +1,9 @@
 import { createClient } from "@/lib/supabase/client";
 import { useCallback, useEffect, useState } from "react";
-import { Comment } from "./types";
+import { Comment } from "../types";
 import { usePagination } from "@/features/common/pagination";
 import { PAGE_LIMIT } from "@/constants";
-import { useCommentsStore } from "./use-store";
+import { useCommentsStore } from "../use-store";
 
 export const useCommentsQuery = (postId: string) => {
   const supabase = createClient();
@@ -25,6 +25,7 @@ export const useCommentsQuery = (postId: string) => {
         content,
         created_at,
         updated_at,
+        commenter_id,
         profiles:comments_commenter_id_fkey(
           display_name,
           username,

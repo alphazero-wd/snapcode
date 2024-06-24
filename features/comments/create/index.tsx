@@ -9,7 +9,7 @@ import {
 import { Button } from "@/features/ui/button";
 import { User } from "@supabase/supabase-js";
 import { useCreateComment } from "./use-create";
-import { CommentEditor } from "./editor";
+import { CommentEditor } from "../editor";
 
 interface CommentFormProps {
   postId: string;
