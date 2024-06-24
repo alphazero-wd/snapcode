@@ -58,7 +58,7 @@ export const PostItem = ({ post, user }: PostItemProps) => {
         )}
       </CardContent>
       <CardFooter className="w-full py-4 border-t bg-card rounded-b-xl sticky bottom-0">
-        <VotesButton userId={user?.id} postId={post.id} />
+        <VotesButton type="post" userId={user?.id} id={post.id} />
       </CardFooter>
     </Card>
   );

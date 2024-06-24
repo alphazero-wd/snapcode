@@ -73,7 +73,7 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
             <Markdown content={data.content} />
           </div>
           <div className="border-t bg-card sticky bottom-0 py-4">
-            <VotesButton postId={data.id} userId={user?.id} />
+            <VotesButton type="post" id={data.id} userId={user?.id} />
           </div>
 
           <div className="space-y-6">

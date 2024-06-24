@@ -7,6 +7,7 @@ import { User } from "@supabase/supabase-js";
 import { ProfileCard } from "../../users/profile/card";
 import { Button } from "../../ui/button";
 import Link from "next/link";
+import { VotesButton } from "../../votes/button";
 
 interface CommentItem {
   comment: Comment;
@@ -63,6 +64,7 @@ export const CommentItem = ({ comment, user }: CommentItem) => {
           user={user}
           commentId={comment.id}
         />
+        <VotesButton id={comment.id} type="comment" userId={user?.id} />
       </div>
     </div>
   );

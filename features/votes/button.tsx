@@ -11,14 +11,15 @@ import { ArrowUpOutline, ArrowUpSolid } from "./icons";
 import { useEffect, useState } from "react";
 import { createClient } from "../../lib/supabase/client";
 import { useLoginModal } from "../auth/login";
-import { PostVote, Vote } from "./types";
+import { CommentVote, PostVote, Vote } from "./types";
 
 interface VotesButtonProps {
-  postId: string;
+  id: string;
   userId?: string;
+  type: "post" | "comment";
 }
 
-export const VotesButton = ({ postId, userId }: VotesButtonProps) => {
+export const VotesButton = ({ id, userId, type }: VotesButtonProps) => {
   const onLoginModalOpen = useLoginModal((state) => state.onOpen);
   const supabase = createClient();
   const [upvotes, setUpvotes] = useState(0);
@@ -26,32 +27,31 @@ export const VotesButton = ({ postId, userId }: VotesButtonProps) => {
 
   useEffect(() => {
     getUpvotes();
-  }, [postId, userId]);
+  }, [id, userId]);
 
   useEffect(() => {
     checkHasPreviouslyVoted();
-  }, [userId, postId]);
+  }, [userId, id]);
 
   const checkHasPreviouslyVoted = async () => {
     if (!userId) setVotedType(null);
     else {
       const { data } = await supabase
-        .from("posts_votes")
+        .from(`${type}s_votes`)
         .select("vote")
-        .eq("post_id", postId)
+        .eq(type + "_id", id)
         .eq("voter_id", userId)
-        .maybeSingle<PostVote>();
+        .maybeSingle<PostVote | CommentVote>();
 
       setVotedType(data?.vote || null);
     }
   };
 
   const getUpvotes = async () => {
-    const { data } = await supabase.rpc("get_post_upvotes", {
-      id: postId,
+    const { data } = await supabase.rpc(`get_${type}_upvotes`, {
+      id,
     });
-
-    setUpvotes(data || 0);
+    setUpvotes(data);
   };
 
   const castVote = async (vote: Vote | null) => {
@@ -61,17 +61,17 @@ export const VotesButton = ({ postId, userId }: VotesButtonProps) => {
     }
     const prevVotedType = votedType;
     if (vote) {
-      await supabase.from("posts_votes").upsert({
-        post_id: postId,
+      await supabase.from(`${type}s_votes`).upsert({
+        [`${type}_id`]: id,
         voter_id: userId,
         vote,
       });
       setVotedType(vote);
     } else {
       await supabase
-        .from("posts_votes")
+        .from(`${type}s_votes`)
         .delete()
-        .eq("post_id", postId)
+        .eq(type + "_id", id)
         .eq("voter_id", userId);
       setVotedType(null);
     }
