@@ -1,5 +1,4 @@
 import { Follows } from "@/features/users/follows";
-import { Metadata } from "next";
 
 interface UserFollowingParams {
   params: {

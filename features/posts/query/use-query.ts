@@ -32,7 +32,7 @@ export const usePostsQuery = ({ tag, profileId }: PostsQueryParams) => {
           content,
           created_at,
           updated_at,
-          profiles:fk_creator_id (
+          profiles:fk_creator_id(
             user_id,
             username,
             display_name,
@@ -44,7 +44,7 @@ export const usePostsQuery = ({ tag, profileId }: PostsQueryParams) => {
       .lt("created_at", cursor || new Date().toISOString());
 
     if (tag) query = query.ilike("content", `%#${tag}%`);
-    if (profileId) query = query.filter("profiles.user_id", "eq", profileId);
+    if (profileId) query = query.eq("creator_id", profileId);
     const { data } = await query
       .order("created_at", { ascending: false })
       .returns<Post[]>();

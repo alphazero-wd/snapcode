@@ -21,7 +21,7 @@ interface ProfilePageParams {
 export async function generateMetadata({
   params: { username },
 }: ProfilePageParams) {
-  return { title: "@" + username + "/ Profile" };
+  return { title: "@" + username + " / Profile" };
 }
 
 export default async function ProfilePage({

@@ -8,7 +8,7 @@ interface UserFollowingParams {
 export async function generateMetadata({
   params: { username },
 }: UserFollowingParams) {
-  return { title: "@" + username + "/ Following" };
+  return { title: "@" + username + " / Following" };
 }
 
 export default async function UserFollowingPage({
