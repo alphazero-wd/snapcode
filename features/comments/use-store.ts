@@ -1,0 +1,52 @@
+import { create } from "zustand";
+import { Comment, EditData } from "./types";
+
+interface State {
+  comments: Comment[];
+  editData: EditData | null;
+  cursor: string | null;
+}
+
+interface Action {
+  getComments: (newComments: Comment[]) => void;
+  updateCursor: () => void;
+  addComment: (newComment: Comment) => void;
+  enableEditComment: (id: string) => void;
+  editComment: (id: string, content: string) => void;
+  cancelEditComment: () => void;
+  deleteComment: (id: string) => void;
+  reset: () => void;
+}
+
+const initialState: State = {
+  comments: [],
+  editData: null,
+  cursor: null,
+};
+
+export const useCommentsStore = create<State & Action>((set) => ({
+  ...initialState,
+  getComments: (newComments) =>
+    set(({ comments }) => ({ comments: [...comments, ...newComments] })),
+  addComment: (newComment) =>
+    set(({ comments }) => ({ comments: [newComment, ...comments] })),
+  enableEditComment: (id) =>
+    set(({ comments }) => {
+      const commentToEdit = comments.find((c) => c.id === id);
+      if (!commentToEdit) return { editData: null };
+      return { editData: { id, content: commentToEdit.content } };
+    }),
+  cancelEditComment: () => set({ editData: null }),
+  editComment: (id, content) =>
+    set(({ comments }) => ({
+      comments: comments.map((c) => (c.id === id ? { ...c, content } : c)),
+      editData: null,
+    })),
+  updateCursor: () =>
+    set(({ comments }) => ({ cursor: comments.at(-1)?.created_at })),
+  deleteComment: (id) =>
+    set(({ comments }) => ({
+      comments: comments.filter((p) => p.id !== id),
+    })),
+  reset: () => set(initialState),
+}));

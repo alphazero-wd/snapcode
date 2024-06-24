@@ -1,17 +1,17 @@
 "use client";
 
 import { Textarea } from "@/features/ui/textarea";
-import { Editor, EditorContent } from "@tiptap/react";
+import { Editor as TiptapEditor, EditorContent } from "@tiptap/react";
 import { Toolbar } from "./toolbar";
 import { User } from "@supabase/supabase-js";
 import { Skeleton } from "@/features/ui/skeleton";
 
-interface PostEditorProps {
-  editor: Editor | null;
+interface EditorProps {
+  editor: TiptapEditor | null;
   user: User | null;
 }
 
-export const PostEditor = ({ editor, user }: PostEditorProps) => {
+export const Editor = ({ editor, user }: EditorProps) => {
   if (!editor)
     return (
       <div className="flex flex-col gap-y-2">

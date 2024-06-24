@@ -15,11 +15,7 @@ export const FollowsClient = ({
   userId,
   type,
 }: FollowsClientProps) => {
-  const { loading, hasMore, follows, updateCursor } = useFollowsQuery(
-    type,
-    profileId
-  );
-  usePagination({ loading, hasMore, updateCursor, items: follows });
+  const { loading, follows } = useFollowsQuery(type, profileId);
 
   if (!loading && follows.length === 0)
     return (

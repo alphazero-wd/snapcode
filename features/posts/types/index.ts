@@ -8,6 +8,11 @@ export interface Post {
     username: string;
     avatar?: string;
   };
+  comments: [
+    {
+      count: number;
+    }
+  ];
 }
 
 export interface Tag {
