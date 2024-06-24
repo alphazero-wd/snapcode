@@ -7,6 +7,8 @@ import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Markdown } from "@/features/common/markdown";
 import { VotesButton } from "@/features/votes/button";
+import { Comments } from "@/features/comments";
+import { CommentForm } from "../../../../../features/comments/form";
 
 interface PostPageParams {
   params: {
@@ -31,11 +33,13 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
     user_id,
     username,
     avatar
-  )
+  ),
+  comments(count)
 `
     )
     .eq("id", id)
     .single<Post>();
+
   if (!data) redirect("/not-found");
 
   return (
@@ -68,6 +72,14 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
         </div>
         <div className="border-t bg-card sticky bottom-0 py-4">
           <VotesButton postId={data.id} userId={user?.id} />
+        </div>
+
+        <div className="space-y-6">
+          <h2 className="text-lg font-bold tracking-tight">
+            Comments ({data.comments[0].count})
+          </h2>
+          <CommentForm postId={data.id} user={user} />
+          <Comments postId={data.id} />
         </div>
       </div>
     </div>

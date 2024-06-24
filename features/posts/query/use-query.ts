@@ -3,6 +3,7 @@ import { useState, useCallback, useEffect } from "react";
 import { PAGE_LIMIT } from "@/constants";
 import { usePostsStore } from "../store";
 import { Post } from "../types";
+import { usePagination } from "../../common/pagination";
 
 interface PostsQueryParams {
   tag?: string;
@@ -11,10 +12,17 @@ interface PostsQueryParams {
 
 export const usePostsQuery = ({ tag, profileId }: PostsQueryParams) => {
   const supabase = createClient();
+  const { reset, posts, updateCursor } = usePostsStore();
   const getPosts = usePostsStore((state) => state.getPosts);
   const cursor = usePostsStore((state) => state.cursor);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
+  usePagination({ hasMore, loading, items: posts, updateCursor });
+
+  useEffect(() => {
+    reset();
+  }, []);
+
   const fetchPosts = useCallback(async () => {
     let query = supabase
       .from("posts")
@@ -61,5 +69,5 @@ export const usePostsQuery = ({ tag, profileId }: PostsQueryParams) => {
     );
   }, [fetchPosts, hasMore]);
 
-  return { loading, hasMore };
+  return { loading };
 };

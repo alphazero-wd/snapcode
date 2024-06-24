@@ -3,8 +3,15 @@ export enum Vote {
   Down = "down",
 }
 
-export interface Updoot {
+export interface PostVote extends IVote {
   post_id: string;
+}
+
+interface IVote {
   voter_id: string;
   vote: Vote;
+}
+
+export interface CommentVote extends IVote {
+  comment_id: string;
 }

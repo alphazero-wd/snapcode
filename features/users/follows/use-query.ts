@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
 import { FollowWithProfile } from "../types";
 import { PAGE_LIMIT } from "@/constants";
+import { usePagination } from "../../common/pagination";
 
 export const useFollowsQuery = (
   type: "follower" | "following",
@@ -47,6 +48,8 @@ export const useFollowsQuery = (
   const updateCursor = () => {
     setCursor(follows.at(-1)?.profiles.created_at || null);
   };
+
+  usePagination({ loading, hasMore, updateCursor, items: follows });
 
   useEffect(() => {
     setLoading(true);

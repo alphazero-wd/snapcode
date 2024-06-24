@@ -2,10 +2,8 @@
 
 import { User } from "@supabase/supabase-js";
 import { Posts } from "../items";
-import { usePagination } from "@/features/common/pagination";
 import { usePostsQuery } from "../query";
 import { usePostsStore } from "../store";
-import { useEffect } from "react";
 import { Empty } from "../../common/empty";
 
 interface PostsViewProps {
@@ -14,13 +12,8 @@ interface PostsViewProps {
 }
 
 export const PostsView = ({ tag, user }: PostsViewProps) => {
-  const { hasMore, loading } = usePostsQuery({ tag });
-  const { reset, posts, updateCursor } = usePostsStore();
-  usePagination({ hasMore, loading, items: posts, updateCursor });
-
-  useEffect(() => {
-    reset();
-  }, []);
+  const { loading } = usePostsQuery({ tag });
+  const posts = usePostsStore((state) => state.posts);
 
   if (!loading && posts.length === 0)
     return (

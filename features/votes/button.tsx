@@ -11,7 +11,7 @@ import { ArrowUpOutline, ArrowUpSolid } from "./icons";
 import { useEffect, useState } from "react";
 import { createClient } from "../../lib/supabase/client";
 import { useLoginModal } from "../auth/login";
-import { Updoot, Vote } from "./types";
+import { PostVote, Vote } from "./types";
 
 interface VotesButtonProps {
   postId: string;
@@ -40,7 +40,7 @@ export const VotesButton = ({ postId, userId }: VotesButtonProps) => {
         .select("vote")
         .eq("post_id", postId)
         .eq("voter_id", userId)
-        .maybeSingle<Updoot>();
+        .maybeSingle<PostVote>();
 
       setVotedType(data?.vote || null);
     }
