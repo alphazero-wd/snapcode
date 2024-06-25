@@ -15,6 +15,7 @@ interface EditCommentParams {
   id: string;
   content: string;
   user: User | null;
+  editComment: (id: string, content: string, updatedAt: string) => void;
 }
 
 const formSchema = z.object({
@@ -23,14 +24,18 @@ const formSchema = z.object({
   }),
 });
 
-export const useEditComment = ({ id, content, user }: EditCommentParams) => {
+export const useEditComment = ({
+  id,
+  content,
+  user,
+  editComment,
+}: EditCommentParams) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       content: "",
     },
   });
-  const editComment = useCommentsStore((state) => state.editComment);
   const { toast } = useToast();
   const editor = useContentEditor({
     content,
@@ -48,12 +53,14 @@ export const useEditComment = ({ id, content, user }: EditCommentParams) => {
     if (!user) return;
     setTimeout(async () => {
       try {
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from("comments")
           .update({
             content: values.content,
           })
-          .eq("id", id);
+          .eq("id", id)
+          .select("updated_at")
+          .single<{ updated_at: string }>();
 
         if (error) throw new Error(error.message);
 
@@ -62,7 +69,7 @@ export const useEditComment = ({ id, content, user }: EditCommentParams) => {
           title: "Edit comment successfully!",
         });
         setTimeout(dismiss, 2000);
-        editComment(id, values.content);
+        editComment(id, values.content, data.updated_at);
         form.reset();
         editor?.commands.clearContent();
       } catch (error: any) {

@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@supabase/supabase-js";
 import { useContentEditor } from "@/features/common/editor/use-editor";
-import { useCommentsStore } from "../use-store";
 import { Comment } from "../types";
 
 const supabase = createClient();
@@ -18,8 +17,21 @@ const formSchema = z.object({
   }),
 });
 
-export const useCreateComment = (postId: string, user: User | null) => {
-  const addComment = useCommentsStore((state) => state.addComment);
+interface CreateCommentPayload {
+  postId: string;
+  user: User | null;
+  addComment: (newComment: Comment) => void;
+  disableReply?: () => void;
+  repliedToId?: string;
+}
+
+export const useCreateComment = ({
+  postId,
+  user,
+  disableReply,
+  addComment,
+  repliedToId,
+}: CreateCommentPayload) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,7 +43,6 @@ export const useCreateComment = (postId: string, user: User | null) => {
     isAuth: !!user,
   });
   const { toast } = useToast();
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -45,6 +56,7 @@ export const useCreateComment = (postId: string, user: User | null) => {
             content: values.content,
             commenter_id: user.id,
             post_id: postId,
+            replied_to_id: repliedToId,
           })
           .select(
             `
@@ -56,11 +68,11 @@ export const useCreateComment = (postId: string, user: User | null) => {
                 display_name,
                 username,
                 avatar
-              )
+              ),
+              comments(count)
             `
           )
           .single<Comment>();
-        addComment(data!);
 
         if (error) throw new Error(error.message);
 
@@ -68,10 +80,11 @@ export const useCreateComment = (postId: string, user: User | null) => {
           variant: "success",
           title: "Create comment successfully!",
         });
+        disableReply?.();
+        addComment(data!);
         setTimeout(dismiss, 2000);
         form.reset();
         editor?.commands.clearContent();
-        router.refresh();
       } catch (error: any) {
         const { dismiss } = toast({
           variant: "error",

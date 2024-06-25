@@ -38,7 +38,6 @@ export const CommentContent = ({ content }: { content: string }) => {
       .slice(0, truncatedLineIndex)
       .join("")
       .slice(0, truncatedCharIndex);
-    console.log({ result });
 
     return result;
   }, [lines, content, shouldTruncate]);

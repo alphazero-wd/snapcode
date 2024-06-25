@@ -9,7 +9,7 @@ import {
 import { useCreatePost } from "./use-create-post";
 import { Button } from "@/features/ui/button";
 import { User } from "@supabase/supabase-js";
-import { PostEditor } from "../editor";
+import { Editor } from "@/features/common/editor";
 
 export const CreatePost = ({ user }: { user: User | null }) => {
   const { form, loading, onSubmit, editor } = useCreatePost(user);
@@ -22,7 +22,7 @@ export const CreatePost = ({ user }: { user: User | null }) => {
           name="content"
           render={() => (
             <FormItem>
-              <PostEditor editor={editor} user={user} />
+              <Editor editor={editor} user={user} />
               <div className="mt-3 items-center flex justify-between w-full">
                 <div>
                   <FormDescription className="block">

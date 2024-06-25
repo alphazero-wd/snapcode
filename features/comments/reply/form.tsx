@@ -7,22 +7,31 @@ import {
   FormMessage,
 } from "@/features/ui/form";
 import { Button } from "@/features/ui/button";
-import { User } from "@supabase/supabase-js";
-import { useCreateComment } from "./use-create";
+import { useCreateComment } from "../create/use-create";
 import { Editor } from "@/features/common/editor";
-import { useCommentsStore } from "../use-store";
+import { User } from "@supabase/supabase-js";
+import { useRepliesContext } from "./use-context";
 
-interface CommentFormProps {
+interface ReplyFormProps {
+  commentId: string;
   postId: string;
   user: User | null;
+  disableReply: () => void;
 }
 
-export const CommentForm = ({ user, postId }: CommentFormProps) => {
-  const addComment = useCommentsStore((state) => state.addComment);
+export const ReplyForm = ({
+  commentId,
+  postId,
+  user,
+  disableReply,
+}: ReplyFormProps) => {
+  const { addReply } = useRepliesContext();
   const { form, loading, onSubmit, editor } = useCreateComment({
     postId,
     user,
-    addComment,
+    addComment: addReply,
+    disableReply,
+    repliedToId: commentId,
   });
 
   return (
@@ -37,17 +46,22 @@ export const CommentForm = ({ user, postId }: CommentFormProps) => {
               <div className="mt-3 items-center flex justify-between w-full">
                 <div>
                   <FormDescription className="block">
-                    {!user ? "Log in to comment" : ""}
+                    {!user ? "Log in to reply" : ""}
                   </FormDescription>
                   <FormMessage className="flex-1" />
                 </div>
-                <Button
-                  disabled={loading || !user}
-                  className="w-fit justify-self-end"
-                  type="submit"
-                >
-                  Comment
-                </Button>
+                <div className="flex mt-3 gap-x-2">
+                  <Button onClick={disableReply} variant="outline">
+                    Cancel
+                  </Button>
+                  <Button
+                    disabled={loading || !user}
+                    className="w-fit justify-self-end"
+                    type="submit"
+                  >
+                    Reply
+                  </Button>
+                </div>
               </div>
             </FormItem>
           )}

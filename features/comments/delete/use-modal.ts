@@ -6,13 +6,15 @@ interface State {
 }
 
 interface Action {
-  onOpen: (id: string) => void;
+  onOpen: (id: string, deleteComment: (id: string) => void) => void;
   onClose: () => void;
+  deleteComment: ((id: string) => void) | null;
 }
 
 export const useDeleteCommentModal = create<State & Action>((set) => ({
   isOpen: false,
   id: null,
-  onOpen: (id) => set({ id, isOpen: true }),
+  deleteComment: null,
+  onOpen: (id, deleteComment) => set({ id, deleteComment, isOpen: true }),
   onClose: () => set({ id: null, isOpen: false }),
 }));

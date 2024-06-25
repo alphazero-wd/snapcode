@@ -2,7 +2,7 @@
 import { Button } from "@/features/ui/button";
 import { Form, FormField, FormItem, FormMessage } from "@/features/ui/form";
 import { User } from "@supabase/supabase-js";
-import { CommentEditor } from "../editor";
+import { Editor } from "@/features/common/editor";
 import { CancelEditModal } from "./cancel-modal";
 import { useEditComment } from "./use-edit";
 
@@ -10,17 +10,22 @@ interface EditCommentFormProps {
   user: User | null;
   content: string;
   commentId: string;
+  cancelEdit: () => void;
+  editComment: (id: string, content: string, updatedAt: string) => void;
 }
 
 export const EditCommentForm = ({
   commentId,
   user,
   content,
+  cancelEdit,
+  editComment,
 }: EditCommentFormProps) => {
   const { form, loading, onSubmit, editor } = useEditComment({
     id: commentId,
     content,
     user,
+    editComment,
   });
   return (
     <Form {...form}>
@@ -30,12 +35,13 @@ export const EditCommentForm = ({
           name="content"
           render={() => (
             <FormItem>
-              <CommentEditor user={user} editor={editor} />
-              <div className="mt-3 flex justify-between w-full">
+              <Editor user={user} editor={editor} />
+              <div className="flex justify-between w-full">
                 <FormMessage className="flex-1" />
-                <div className="flex mt-3 gap-x-2">
+                <div className="flex justify-end w-full gap-x-2">
                   <CancelEditModal
                     hasChanged={content !== form.getValues("content")}
+                    cancelEdit={cancelEdit}
                   />
                   <Button
                     disabled={

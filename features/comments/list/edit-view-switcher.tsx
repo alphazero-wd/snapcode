@@ -2,24 +2,34 @@
 import { User } from "@supabase/supabase-js";
 import { EditCommentForm } from "../edit";
 import { CommentContent } from "./content";
-import { useCommentsStore } from "../use-store";
+import { EditData } from "../types";
 
 interface EditViewSwitcherProps {
   user: User | null;
   content: string;
   commentId: string;
+  editData: EditData | null;
+  cancelEdit: () => void;
+  editComment: (id: string, content: string, updatedAt: string) => void;
 }
 
 export const EditViewSwitcher = ({
   user,
   content,
   commentId,
+  editData,
+  cancelEdit,
+  editComment,
 }: EditViewSwitcherProps) => {
-  const editData = useCommentsStore((state) => state.editData);
-
-  if (editData)
+  if (editData && commentId === editData.id)
     return (
-      <EditCommentForm user={user} content={content} commentId={commentId} />
+      <EditCommentForm
+        editComment={editComment}
+        cancelEdit={cancelEdit}
+        user={user}
+        content={content}
+        commentId={commentId}
+      />
     );
 
   return <CommentContent content={content} />;

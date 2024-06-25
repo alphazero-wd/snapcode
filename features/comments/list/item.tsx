@@ -1,23 +1,44 @@
 import { formatDistanceToNowStrict } from "date-fns/formatDistanceToNowStrict";
-import { ProfileAvatar } from "../../users/profile/avatar";
+import { ProfileAvatar } from "@/features/users/profile/avatar";
 import { CommentOptions } from "./options";
-import { Comment } from "../types";
+import { Comment, EditData } from "../types";
 import { EditViewSwitcher } from "./edit-view-switcher";
 import { User } from "@supabase/supabase-js";
-import { ProfileCard } from "../../users/profile/card";
-import { Button } from "../../ui/button";
+import { ProfileCard } from "@/features/users/profile/card";
+import { Button } from "@/features/ui/button";
 import Link from "next/link";
-import { VotesButton } from "../../votes/button";
+import { VotesReplySwitcher } from "./votes-reply-switcher";
+import { createClient } from "@/lib/supabase/client";
+import { getAvatarUrl } from "@/features/users/profile/get-avatar-url";
+import { Replies } from "../reply/list";
+import { RepliesContextProvider } from "../reply/use-context";
 
 interface CommentItem {
   comment: Comment;
   user: User | null;
+  editData: EditData | null;
+  enableEditComment: (id: string) => void;
+  deleteComment: (id: string) => void;
+  cancelEdit: () => void;
+  editComment: (id: string, content: string, updatedAt: string) => void;
 }
 
-export const CommentItem = ({ comment, user }: CommentItem) => {
+export const CommentItem = ({
+  comment,
+  user,
+  editData,
+  enableEditComment,
+  deleteComment,
+  cancelEdit,
+  editComment,
+}: CommentItem) => {
+  const supabase = createClient();
   return (
     <div className="relative flex gap-x-4 w-full">
-      <ProfileAvatar username={comment.profiles.username} />
+      <ProfileAvatar
+        avatar={getAvatarUrl(supabase, comment.profiles.avatar)}
+        username={comment.profiles.username}
+      />
       <div className="space-y-3 w-full">
         <div className="flex flex-row gap-x-4 justify-between items-center">
           <div>
@@ -55,16 +76,33 @@ export const CommentItem = ({ comment, user }: CommentItem) => {
           </div>
           <CommentOptions
             userId={user?.id}
+            deleteComment={deleteComment}
             id={comment.id}
             commenterId={comment.commenter_id}
+            enableEditComment={enableEditComment}
           />
         </div>
-        <EditViewSwitcher
-          content={comment.content}
-          user={user}
+        <RepliesContextProvider
           commentId={comment.id}
-        />
-        <VotesButton id={comment.id} type="comment" userId={user?.id} />
+          count={comment.comments[0].count}
+        >
+          <EditViewSwitcher
+            editComment={editComment}
+            cancelEdit={cancelEdit}
+            editData={editData}
+            content={comment.content}
+            user={user}
+            commentId={comment.id}
+          />
+          {!editData && (
+            <VotesReplySwitcher
+              user={user}
+              postId={comment.post_id}
+              commentId={comment.id}
+            />
+          )}
+          <Replies user={user} />
+        </RepliesContextProvider>
       </div>
     </div>
   );

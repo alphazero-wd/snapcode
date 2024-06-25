@@ -51,7 +51,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border scroll-smooth;
   }
   body {
     @apply bg-background overflow-x-hidden text-foreground h-screen w-screen;
@@ -220,7 +220,7 @@
   .markdown {
     @apply max-w-full leading-5 prose prose-sm dark:prose-invert
       prose-p:my-0 prose-p:whitespace-pre-line prose-p:before:content-none prose-p:after:content-none
-      prose-img:rounded-lg prose-img:max-w-full sm:prose-img:max-w-xl prose-img:mx-auto
+      prose-img:rounded-lg prose-img:max-w-full sm:prose-img:max-h-[400px] prose-img:mx-auto
       prose-a:text-primary
       prose-code:before:content-none prose-code:after:content-none prose-code:text-sm prose-code:bg-muted
       prose-pre:overflow-x-auto prose-pre:leading-4 prose-pre:text-secondary-foreground prose-pre:bg-muted prose-pre:text-base;

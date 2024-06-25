@@ -1,22 +1,31 @@
 import { createClient } from "@/lib/supabase/client";
 import { useCallback, useEffect, useState } from "react";
 import { Comment } from "../types";
-import { usePagination } from "@/features/common/pagination";
 import { PAGE_LIMIT } from "@/constants";
-import { useCommentsStore } from "../use-store";
 
-export const useCommentsQuery = (postId: string) => {
+interface RepliesQueryPayload {
+  count: number;
+  commentId: string;
+  replies: Comment[];
+  appendReplies: (newReplies: Comment[]) => void;
+}
+
+export const useRepliesQuery = ({
+  count,
+  commentId,
+  replies,
+  appendReplies,
+}: RepliesQueryPayload) => {
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const { comments, getComments, cursor, reset, updateCursor } =
-    useCommentsStore();
+  const [cursor, setCursor] = useState<string | null>(null);
 
   useEffect(() => {
-    reset();
-  }, [postId]);
+    setHasMore(count > 0);
+  }, [count]);
 
-  const fetchComments = useCallback(async () => {
+  const fetchReplies = useCallback(async () => {
     const { data } = await supabase
       .from("comments")
       .select(
@@ -35,23 +44,23 @@ export const useCommentsQuery = (postId: string) => {
       `
       )
       .limit(PAGE_LIMIT + 1)
-      .is("replied_to_id", null)
-      .eq("post_id", postId)
+      .eq("replied_to_id", commentId)
       .order("created_at", { ascending: false })
       .lt("created_at", cursor || new Date().toISOString())
       .returns<Comment[]>();
+    appendReplies(data || []);
     setHasMore(data?.length === PAGE_LIMIT + 1);
-    getComments(data || []);
     setLoading(false);
-  }, [supabase, postId, cursor]);
+  }, [supabase, commentId, cursor]);
 
-  useEffect(() => {
+  const updateCursor = () => setCursor(replies.at(-1)?.created_at || null);
+
+  const fetchMoreReplies = () => {
     if (!hasMore) return;
+    updateCursor();
     setLoading(true);
-    setTimeout(fetchComments, 2000);
-  }, [fetchComments, hasMore]);
+    setTimeout(fetchReplies, 2000);
+  };
 
-  usePagination({ updateCursor, loading, items: comments, hasMore });
-
-  return { loading };
+  return { loading, fetchMoreReplies, hasMore };
 };

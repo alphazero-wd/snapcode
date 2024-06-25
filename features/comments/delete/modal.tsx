@@ -10,17 +10,13 @@ import {
 } from "@/features/ui/dialog";
 import { createClient } from "@/lib/supabase/client";
 import { useToast } from "@/features/ui/use-toast";
-import { useCommentsStore } from "../use-store";
 import { useDeleteCommentModal } from "./use-modal";
-import { useRouter } from "next/navigation";
 
 const supabase = createClient();
 
 export const DeleteCommentModal = () => {
-  const { id, isOpen, onClose } = useDeleteCommentModal();
+  const { id, isOpen, onClose, deleteComment } = useDeleteCommentModal();
   const { toast } = useToast();
-  const router = useRouter();
-  const deleteComment = useCommentsStore((state) => state.deleteComment);
 
   const onDeletePost = async () => {
     if (!id) return;
@@ -30,8 +26,7 @@ export const DeleteCommentModal = () => {
       title: "Delete comment successfully!",
     });
     setTimeout(dismiss, 2000);
-    deleteComment(id);
-    router.refresh();
+    if (deleteComment) deleteComment(id);
     onClose();
   };
 
