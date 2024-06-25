@@ -16,3 +16,10 @@ export interface EditData {
   id: string;
   content: string;
 }
+
+export interface EditPayload {
+  id: string;
+  content: string;
+  updatedAt: string;
+  commenterId: string;
+}

@@ -12,19 +12,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/features/ui/dropdown-menu";
-import { useCommentsStore } from "../use-store";
 import { useDeleteCommentModal } from "../delete/use-modal";
 
 interface CommentOptionsProps {
   id: string;
   commenterId: string;
   userId?: string;
+  deleteComment: (id: string) => void;
   enableEditComment: (id: string) => void;
 }
 export const CommentOptions = ({
   id,
   commenterId,
   userId,
+  deleteComment,
   enableEditComment,
 }: CommentOptionsProps) => {
   const onOpenDeleteModal = useDeleteCommentModal((state) => state.onOpen);
@@ -49,7 +50,7 @@ export const CommentOptions = ({
               Edit
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => onOpenDeleteModal(id)}
+              onClick={() => onOpenDeleteModal(id, deleteComment)}
               className="flex gap-x-2 text-sm text-destructive group"
             >
               <TrashIcon className="w-4 h-4 group-hover:text-destructive" />

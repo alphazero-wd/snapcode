@@ -15,6 +15,8 @@ interface CommentsProps {
   editData: EditData | null;
   enableEditComment: (id: string) => void;
   cancelEdit: () => void;
+  deleteComment: (id: string) => void;
+  editComment: (id: string, content: string, updatedAt: string) => void;
 }
 
 export const Comments = ({
@@ -24,12 +26,16 @@ export const Comments = ({
   editData,
   enableEditComment,
   cancelEdit,
+  deleteComment,
+  editComment,
 }: CommentsProps) => {
   return (
     <ul className="space-y-8 w-full">
       {comments.map((comment) => (
         <li key={comment.id}>
           <CommentItem
+            editComment={editComment}
+            deleteComment={deleteComment}
             cancelEdit={cancelEdit}
             editData={editData}
             enableEditComment={enableEditComment}

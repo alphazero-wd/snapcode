@@ -20,9 +20,13 @@ export const CommentsList = ({ postId, user }: CommentsListProps) => {
   const cancelEditComment = useCommentsStore(
     (state) => state.cancelEditComment
   );
+  const deleteComment = useCommentsStore((state) => state.deleteComment);
+  const editComment = useCommentsStore((state) => state.editComment);
 
   return (
     <Comments
+      editComment={editComment}
+      deleteComment={deleteComment}
       cancelEdit={cancelEditComment}
       enableEditComment={enableEditComment}
       editData={editData}

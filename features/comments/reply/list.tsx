@@ -17,11 +17,15 @@ export const Replies = ({ user }: RepliesProps) => {
     editData,
     enableEditReply,
     cancelEditReply,
+    deleteReply,
+    editReply,
   } = useRepliesContext();
 
   return (
-    <div className="space-y-4">
+    <div>
       <Comments
+        editComment={editReply}
+        deleteComment={deleteReply}
         editData={editData}
         cancelEdit={cancelEditReply}
         enableEditComment={enableEditReply}

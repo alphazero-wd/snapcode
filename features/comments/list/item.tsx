@@ -18,7 +18,9 @@ interface CommentItem {
   user: User | null;
   editData: EditData | null;
   enableEditComment: (id: string) => void;
+  deleteComment: (id: string) => void;
   cancelEdit: () => void;
+  editComment: (id: string, content: string, updatedAt: string) => void;
 }
 
 export const CommentItem = ({
@@ -26,7 +28,9 @@ export const CommentItem = ({
   user,
   editData,
   enableEditComment,
+  deleteComment,
   cancelEdit,
+  editComment,
 }: CommentItem) => {
   const supabase = createClient();
   return (
@@ -72,31 +76,33 @@ export const CommentItem = ({
           </div>
           <CommentOptions
             userId={user?.id}
+            deleteComment={deleteComment}
             id={comment.id}
             commenterId={comment.commenter_id}
             enableEditComment={enableEditComment}
           />
         </div>
-        <EditViewSwitcher
-          cancelEdit={cancelEdit}
-          editData={editData}
-          content={comment.content}
-          user={user}
+        <RepliesContextProvider
           commentId={comment.id}
-        />
-        <VotesReplySwitcher
-          user={user}
-          postId={comment.post_id}
-          commentId={comment.id}
-        />
-        {comment.comments[0].count > 0 && (
-          <RepliesContextProvider
+          count={comment.comments[0].count}
+        >
+          <EditViewSwitcher
+            editComment={editComment}
+            cancelEdit={cancelEdit}
+            editData={editData}
+            content={comment.content}
+            user={user}
             commentId={comment.id}
-            count={comment.comments[0].count}
-          >
-            <Replies user={user} />
-          </RepliesContextProvider>
-        )}
+          />
+          {!editData && (
+            <VotesReplySwitcher
+              user={user}
+              postId={comment.post_id}
+              commentId={comment.id}
+            />
+          )}
+          <Replies user={user} />
+        </RepliesContextProvider>
       </div>
     </div>
   );

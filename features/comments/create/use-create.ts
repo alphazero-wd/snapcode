@@ -17,12 +17,21 @@ const formSchema = z.object({
   }),
 });
 
-export const useCreateComment = (
-  postId: string,
-  user: User | null,
-  addComment: (newComment: Comment) => void,
-  repliedToId: string | null = null
-) => {
+interface CreateCommentPayload {
+  postId: string;
+  user: User | null;
+  addComment: (newComment: Comment) => void;
+  disableReply?: () => void;
+  repliedToId?: string;
+}
+
+export const useCreateComment = ({
+  postId,
+  user,
+  disableReply,
+  addComment,
+  repliedToId,
+}: CreateCommentPayload) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,7 +43,6 @@ export const useCreateComment = (
     isAuth: !!user,
   });
   const { toast } = useToast();
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -60,11 +68,11 @@ export const useCreateComment = (
                 display_name,
                 username,
                 avatar
-              )
+              ),
+              comments(count)
             `
           )
           .single<Comment>();
-        if (!repliedToId) addComment(data!);
 
         if (error) throw new Error(error.message);
 
@@ -72,10 +80,11 @@ export const useCreateComment = (
           variant: "success",
           title: "Create comment successfully!",
         });
+        disableReply?.();
+        addComment(data!);
         setTimeout(dismiss, 2000);
         form.reset();
         editor?.commands.clearContent();
-        router.refresh();
       } catch (error: any) {
         const { dismiss } = toast({
           variant: "error",

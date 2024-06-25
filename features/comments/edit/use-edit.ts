@@ -15,6 +15,7 @@ interface EditCommentParams {
   id: string;
   content: string;
   user: User | null;
+  editComment: (id: string, content: string, updatedAt: string) => void;
 }
 
 const formSchema = z.object({
@@ -23,14 +24,18 @@ const formSchema = z.object({
   }),
 });
 
-export const useEditComment = ({ id, content, user }: EditCommentParams) => {
+export const useEditComment = ({
+  id,
+  content,
+  user,
+  editComment,
+}: EditCommentParams) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       content: "",
     },
   });
-  const editComment = useCommentsStore((state) => state.editComment);
   const { toast } = useToast();
   const editor = useContentEditor({
     content,

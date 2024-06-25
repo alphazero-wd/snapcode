@@ -28,6 +28,7 @@ export const CancelEditModal = ({
       variant: "success",
       title: "Edit comment cancelled!",
     });
+    cancelEdit();
     setIsOpen(false);
   };
 

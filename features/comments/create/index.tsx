@@ -19,11 +19,11 @@ interface CommentFormProps {
 
 export const CommentForm = ({ user, postId }: CommentFormProps) => {
   const addComment = useCommentsStore((state) => state.addComment);
-  const { form, loading, onSubmit, editor } = useCreateComment(
+  const { form, loading, onSubmit, editor } = useCreateComment({
     postId,
     user,
-    addComment
-  );
+    addComment,
+  });
 
   return (
     <Form {...form}>

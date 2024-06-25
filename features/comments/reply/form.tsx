@@ -10,7 +10,6 @@ import { Button } from "@/features/ui/button";
 import { useCreateComment } from "../create/use-create";
 import { Editor } from "@/features/common/editor";
 import { User } from "@supabase/supabase-js";
-import { FormEventHandler } from "react";
 import { useRepliesContext } from "./use-context";
 
 interface ReplyFormProps {
@@ -27,20 +26,17 @@ export const ReplyForm = ({
   disableReply,
 }: ReplyFormProps) => {
   const { addReply } = useRepliesContext();
-  const { form, loading, onSubmit, editor } = useCreateComment(
+  const { form, loading, onSubmit, editor } = useCreateComment({
     postId,
     user,
-    addReply,
-    commentId
-  );
-
-  const onCreateReply: FormEventHandler<HTMLFormElement> = (e) => {
-    form.handleSubmit(onSubmit)(e).then(disableReply);
-  };
+    addComment: addReply,
+    disableReply,
+    repliedToId: commentId,
+  });
 
   return (
     <Form {...form}>
-      <form onSubmit={onCreateReply}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="content"
@@ -50,7 +46,7 @@ export const ReplyForm = ({
               <div className="mt-3 items-center flex justify-between w-full">
                 <div>
                   <FormDescription className="block">
-                    {!user ? "Log in to comment" : ""}
+                    {!user ? "Log in to reply" : ""}
                   </FormDescription>
                   <FormMessage className="flex-1" />
                 </div>

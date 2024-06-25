@@ -10,6 +10,7 @@ interface EditViewSwitcherProps {
   commentId: string;
   editData: EditData | null;
   cancelEdit: () => void;
+  editComment: (id: string, content: string, updatedAt: string) => void;
 }
 
 export const EditViewSwitcher = ({
@@ -18,10 +19,12 @@ export const EditViewSwitcher = ({
   commentId,
   editData,
   cancelEdit,
+  editComment,
 }: EditViewSwitcherProps) => {
-  if (editData)
+  if (editData && commentId === editData.id)
     return (
       <EditCommentForm
+        editComment={editComment}
         cancelEdit={cancelEdit}
         user={user}
         content={content}

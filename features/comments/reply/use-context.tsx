@@ -63,7 +63,9 @@ export const RepliesContextProvider = ({
     setReplies(replies.filter((r) => r.id !== id));
   };
 
-  const cancelEditReply = () => setEditData(null);
+  const cancelEditReply = () => {
+    setEditData(null);
+  };
 
   const editReply = (id: string, content: string, updatedAt: string) => {
     setReplies(
