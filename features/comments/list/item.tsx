@@ -1,13 +1,13 @@
 import { formatDistanceToNowStrict } from "date-fns/formatDistanceToNowStrict";
-import { ProfileAvatar } from "../../users/profile/avatar";
+import { ProfileAvatar } from "@/features/users/profile/avatar";
 import { CommentOptions } from "./options";
 import { Comment } from "../types";
 import { EditViewSwitcher } from "./edit-view-switcher";
 import { User } from "@supabase/supabase-js";
-import { ProfileCard } from "../../users/profile/card";
-import { Button } from "../../ui/button";
+import { ProfileCard } from "@/features/users/profile/card";
+import { Button } from "@/features/ui/button";
 import Link from "next/link";
-import { VotesButton } from "../../votes/button";
+import { VotesReplySwitcher } from "./votes-reply-switcher";
 
 interface CommentItem {
   comment: Comment;
@@ -64,7 +64,11 @@ export const CommentItem = ({ comment, user }: CommentItem) => {
           user={user}
           commentId={comment.id}
         />
-        <VotesButton id={comment.id} type="comment" userId={user?.id} />
+        <VotesReplySwitcher
+          user={user}
+          postId={comment.post_id}
+          commentId={comment.id}
+        />
       </div>
     </div>
   );

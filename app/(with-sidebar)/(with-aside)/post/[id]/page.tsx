@@ -3,7 +3,10 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { PostHeader } from "@/features/posts/items/header";
 import { Button } from "@/features/ui/button";
-import { ChevronLeftIcon } from "@heroicons/react/24/outline";
+import {
+  ChatBubbleOvalLeftIcon,
+  ChevronLeftIcon,
+} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Markdown } from "@/features/common/markdown";
 import { VotesButton } from "@/features/votes/button";
@@ -34,14 +37,17 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
     user_id,
     username,
     avatar
-  ),
-  comments(count)
+  )
 `
     )
     .eq("id", id)
     .single<Post>();
 
   if (!data) redirect("/not-found");
+
+  const { data: count, error } = await supabase.rpc("get_comments_count", {
+    pid: id,
+  });
 
   return (
     <>
@@ -72,17 +78,27 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
           <div className="text-foreground markdown text-sm">
             <Markdown content={data.content} />
           </div>
-          <div className="border-t bg-card sticky bottom-0 py-4">
+          <div className="border-t flex gap-x-4 items-center bg-card sticky bottom-0 py-4">
             <VotesButton type="post" id={data.id} userId={user?.id} />
+            <Button
+              asChild
+              variant="link"
+              className="text-muted-foreground gap-x-2 p-0 w-fit h-fit"
+            >
+              <Link href="#comments">
+                <ChatBubbleOvalLeftIcon className="w-5 h-5" />
+                {count}
+              </Link>
+            </Button>
           </div>
 
-          <div className="space-y-6">
+          <section id="comments" className="space-y-6">
             <h2 className="text-lg font-bold tracking-tight">
-              Comments ({data.comments[0].count})
+              Comments ({count})
             </h2>
             <CommentForm postId={data.id} user={user} />
             <Comments user={user} postId={data.id} />
-          </div>
+          </section>
         </div>
       </div>
       <DeleteCommentModal />

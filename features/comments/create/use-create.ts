@@ -18,7 +18,11 @@ const formSchema = z.object({
   }),
 });
 
-export const useCreateComment = (postId: string, user: User | null) => {
+export const useCreateComment = (
+  postId: string,
+  user: User | null,
+  repliedToId: string | null = null
+) => {
   const addComment = useCommentsStore((state) => state.addComment);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,6 +49,7 @@ export const useCreateComment = (postId: string, user: User | null) => {
             content: values.content,
             commenter_id: user.id,
             post_id: postId,
+            replied_to_id: repliedToId,
           })
           .select(
             `
@@ -60,7 +65,7 @@ export const useCreateComment = (postId: string, user: User | null) => {
             `
           )
           .single<Comment>();
-        addComment(data!);
+        if (!repliedToId) addComment(data!);
 
         if (error) throw new Error(error.message);
 
