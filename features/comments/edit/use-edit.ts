@@ -48,12 +48,14 @@ export const useEditComment = ({ id, content, user }: EditCommentParams) => {
     if (!user) return;
     setTimeout(async () => {
       try {
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from("comments")
           .update({
             content: values.content,
           })
-          .eq("id", id);
+          .eq("id", id)
+          .select("updated_at")
+          .single<{ updated_at: string }>();
 
         if (error) throw new Error(error.message);
 
@@ -62,7 +64,7 @@ export const useEditComment = ({ id, content, user }: EditCommentParams) => {
           title: "Edit comment successfully!",
         });
         setTimeout(dismiss, 2000);
-        editComment(id, values.content);
+        editComment(id, values.content, data.updated_at);
         form.reset();
         editor?.commands.clearContent();
       } catch (error: any) {

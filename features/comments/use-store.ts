@@ -12,7 +12,7 @@ interface Action {
   updateCursor: () => void;
   addComment: (newComment: Comment) => void;
   enableEditComment: (id: string) => void;
-  editComment: (id: string, content: string) => void;
+  editComment: (id: string, content: string, updatedAt: string) => void;
   cancelEditComment: () => void;
   deleteComment: (id: string) => void;
   reset: () => void;
@@ -37,9 +37,11 @@ export const useCommentsStore = create<State & Action>((set) => ({
       return { editData: { id, content: commentToEdit.content } };
     }),
   cancelEditComment: () => set({ editData: null }),
-  editComment: (id, content) =>
+  editComment: (id, content, updatedAt) =>
     set(({ comments }) => ({
-      comments: comments.map((c) => (c.id === id ? { ...c, content } : c)),
+      comments: comments.map((c) =>
+        c.id === id ? { ...c, content, updated_at: updatedAt } : c
+      ),
       editData: null,
     })),
   updateCursor: () =>
