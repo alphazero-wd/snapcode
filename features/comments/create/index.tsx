@@ -9,7 +9,7 @@ import {
 import { Button } from "@/features/ui/button";
 import { User } from "@supabase/supabase-js";
 import { useCreateComment } from "./use-create";
-import { CommentEditor } from "../editor";
+import { Editor } from "@/features/common/editor";
 
 interface CommentFormProps {
   postId: string;
@@ -27,7 +27,7 @@ export const CommentForm = ({ user, postId }: CommentFormProps) => {
           name="content"
           render={() => (
             <FormItem>
-              <CommentEditor editor={editor} user={user} />
+              <Editor editor={editor} user={user} />
               <div className="mt-3 items-center flex justify-between w-full">
                 <div>
                   <FormDescription className="block">

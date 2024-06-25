@@ -9,13 +9,11 @@ import {
 } from "@/features/ui/dialog";
 import { Button } from "@/features/ui/button";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useToast } from "@/features/ui/use-toast";
 import { useCommentsStore } from "../use-store";
 
 export const CancelEditModal = ({ hasChanged }: { hasChanged: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
   const cancelEditComment = useCommentsStore(
     (state) => state.cancelEditComment
   );
@@ -23,7 +21,7 @@ export const CancelEditModal = ({ hasChanged }: { hasChanged: boolean }) => {
   const onCancelEdit = () => {
     toast({
       variant: "success",
-      title: "Edit post cancelled!",
+      title: "Edit comment cancelled!",
     });
     setIsOpen(false);
   };
