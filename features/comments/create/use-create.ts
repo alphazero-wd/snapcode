@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@supabase/supabase-js";
 import { useContentEditor } from "@/features/common/editor/use-editor";
-import { useCommentsStore } from "../use-store";
 import { Comment } from "../types";
 
 const supabase = createClient();
@@ -21,9 +20,9 @@ const formSchema = z.object({
 export const useCreateComment = (
   postId: string,
   user: User | null,
+  addComment: (newComment: Comment) => void,
   repliedToId: string | null = null
 ) => {
-  const addComment = useCommentsStore((state) => state.addComment);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

@@ -10,6 +10,7 @@ import { Button } from "@/features/ui/button";
 import { User } from "@supabase/supabase-js";
 import { useCreateComment } from "./use-create";
 import { Editor } from "@/features/common/editor";
+import { useCommentsStore } from "../use-store";
 
 interface CommentFormProps {
   postId: string;
@@ -17,7 +18,12 @@ interface CommentFormProps {
 }
 
 export const CommentForm = ({ user, postId }: CommentFormProps) => {
-  const { form, loading, onSubmit, editor } = useCreateComment(postId, user);
+  const addComment = useCommentsStore((state) => state.addComment);
+  const { form, loading, onSubmit, editor } = useCreateComment(
+    postId,
+    user,
+    addComment
+  );
 
   return (
     <Form {...form}>

@@ -3,11 +3,22 @@ import { useCallback, useEffect, useState } from "react";
 import { Comment } from "../types";
 import { PAGE_LIMIT } from "@/constants";
 
-export const useRepliesQuery = (count: number, commentId: string) => {
+interface RepliesQueryPayload {
+  count: number;
+  commentId: string;
+  replies: Comment[];
+  appendReplies: (newReplies: Comment[]) => void;
+}
+
+export const useRepliesQuery = ({
+  count,
+  commentId,
+  replies,
+  appendReplies,
+}: RepliesQueryPayload) => {
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [replies, setReplies] = useState<Comment[]>([]);
   const [cursor, setCursor] = useState<string | null>(null);
 
   useEffect(() => {
@@ -37,7 +48,7 @@ export const useRepliesQuery = (count: number, commentId: string) => {
       .order("created_at", { ascending: false })
       .lt("created_at", cursor || new Date().toISOString())
       .returns<Comment[]>();
-    setReplies(data || []);
+    appendReplies(data || []);
     setHasMore(data?.length === PAGE_LIMIT + 1);
     setLoading(false);
   }, [supabase, commentId, cursor]);
@@ -46,9 +57,10 @@ export const useRepliesQuery = (count: number, commentId: string) => {
 
   const fetchMoreReplies = () => {
     if (!hasMore) return;
+    updateCursor();
     setLoading(true);
     setTimeout(fetchReplies, 2000);
   };
 
-  return { loading, replies, updateCursor, fetchMoreReplies, hasMore };
+  return { loading, fetchMoreReplies, hasMore };
 };

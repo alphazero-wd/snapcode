@@ -10,12 +10,14 @@ interface EditCommentFormProps {
   user: User | null;
   content: string;
   commentId: string;
+  cancelEdit: () => void;
 }
 
 export const EditCommentForm = ({
   commentId,
   user,
   content,
+  cancelEdit,
 }: EditCommentFormProps) => {
   const { form, loading, onSubmit, editor } = useEditComment({
     id: commentId,
@@ -31,11 +33,12 @@ export const EditCommentForm = ({
           render={() => (
             <FormItem>
               <Editor user={user} editor={editor} />
-              <div className="mt-3 flex justify-between w-full">
+              <div className="flex justify-between w-full">
                 <FormMessage className="flex-1" />
-                <div className="flex mt-3 gap-x-2">
+                <div className="flex gap-x-2">
                   <CancelEditModal
                     hasChanged={content !== form.getValues("content")}
+                    cancelEdit={cancelEdit}
                   />
                   <Button
                     disabled={

@@ -10,7 +10,6 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/features/ui/dropdown-menu";
 import { useCommentsStore } from "../use-store";
@@ -20,16 +19,14 @@ interface CommentOptionsProps {
   id: string;
   commenterId: string;
   userId?: string;
+  enableEditComment: (id: string) => void;
 }
 export const CommentOptions = ({
   id,
   commenterId,
   userId,
+  enableEditComment,
 }: CommentOptionsProps) => {
-  const enableEditComment = useCommentsStore(
-    (state) => state.enableEditComment
-  );
-
   const onOpenDeleteModal = useDeleteCommentModal((state) => state.onOpen);
 
   if (userId !== commenterId) return null;
@@ -43,25 +40,22 @@ export const CommentOptions = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {commenterId === userId && (
-          <>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem
-                onClick={() => enableEditComment(id)}
-                className="flex gap-x-2 text-sm"
-              >
-                <PencilIcon className="w-4 h-4 text-muted-foreground" />
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => onOpenDeleteModal(id)}
-                className="flex gap-x-2 text-sm text-destructive group"
-              >
-                <TrashIcon className="w-4 h-4 group-hover:text-destructive" />
-                <span className="group-hover:text-destructive">Delete</span>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </>
+          <DropdownMenuGroup>
+            <DropdownMenuItem
+              onClick={() => enableEditComment(id)}
+              className="flex gap-x-2 text-sm"
+            >
+              <PencilIcon className="w-4 h-4 text-muted-foreground" />
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => onOpenDeleteModal(id)}
+              className="flex gap-x-2 text-sm text-destructive group"
+            >
+              <TrashIcon className="w-4 h-4 group-hover:text-destructive" />
+              <span className="group-hover:text-destructive">Delete</span>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
         )}
       </DropdownMenuContent>
     </DropdownMenu>

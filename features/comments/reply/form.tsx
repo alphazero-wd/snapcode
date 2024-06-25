@@ -11,6 +11,7 @@ import { useCreateComment } from "../create/use-create";
 import { Editor } from "@/features/common/editor";
 import { User } from "@supabase/supabase-js";
 import { FormEventHandler } from "react";
+import { useRepliesContext } from "./use-context";
 
 interface ReplyFormProps {
   commentId: string;
@@ -25,9 +26,11 @@ export const ReplyForm = ({
   user,
   disableReply,
 }: ReplyFormProps) => {
+  const { addReply } = useRepliesContext();
   const { form, loading, onSubmit, editor } = useCreateComment(
     postId,
     user,
+    addReply,
     commentId
   );
 

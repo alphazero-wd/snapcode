@@ -6,20 +6,36 @@ import { useCommentsQuery } from "./use-query";
 import { useCommentsStore } from "../use-store";
 import { CommentItem } from "./item";
 import { User } from "@supabase/supabase-js";
-import { Comment } from "../types";
+import { Comment, EditData } from "../types";
 
 interface CommentsProps {
   user: User | null;
   comments: Comment[];
   loading: boolean;
+  editData: EditData | null;
+  enableEditComment: (id: string) => void;
+  cancelEdit: () => void;
 }
 
-export const Comments = ({ loading, comments, user }: CommentsProps) => {
+export const Comments = ({
+  loading,
+  comments,
+  user,
+  editData,
+  enableEditComment,
+  cancelEdit,
+}: CommentsProps) => {
   return (
     <ul className="space-y-8 w-full">
       {comments.map((comment) => (
         <li key={comment.id}>
-          <CommentItem user={user} comment={comment} />
+          <CommentItem
+            cancelEdit={cancelEdit}
+            editData={editData}
+            enableEditComment={enableEditComment}
+            user={user}
+            comment={comment}
+          />
         </li>
       ))}
       {loading &&

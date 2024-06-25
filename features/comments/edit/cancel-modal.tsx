@@ -12,11 +12,16 @@ import { useState } from "react";
 import { useToast } from "@/features/ui/use-toast";
 import { useCommentsStore } from "../use-store";
 
-export const CancelEditModal = ({ hasChanged }: { hasChanged: boolean }) => {
+interface CancelEditModalProps {
+  hasChanged: boolean;
+  cancelEdit: () => void;
+}
+
+export const CancelEditModal = ({
+  hasChanged,
+  cancelEdit,
+}: CancelEditModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const cancelEditComment = useCommentsStore(
-    (state) => state.cancelEditComment
-  );
   const { toast } = useToast();
   const onCancelEdit = () => {
     toast({
@@ -27,12 +32,12 @@ export const CancelEditModal = ({ hasChanged }: { hasChanged: boolean }) => {
   };
 
   return (
-    <Dialog open={isOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button
           onClick={() => {
             if (hasChanged) setIsOpen(true);
-            else cancelEditComment();
+            else cancelEdit();
           }}
           variant="outline"
         >

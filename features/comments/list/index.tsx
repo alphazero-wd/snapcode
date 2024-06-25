@@ -13,6 +13,22 @@ interface CommentsListProps {
 export const CommentsList = ({ postId, user }: CommentsListProps) => {
   const { loading } = useCommentsQuery(postId);
   const comments = useCommentsStore((state) => state.comments);
+  const editData = useCommentsStore((state) => state.editData);
+  const enableEditComment = useCommentsStore(
+    (state) => state.enableEditComment
+  );
+  const cancelEditComment = useCommentsStore(
+    (state) => state.cancelEditComment
+  );
 
-  return <Comments comments={comments} loading={loading} user={user} />;
+  return (
+    <Comments
+      cancelEdit={cancelEditComment}
+      enableEditComment={enableEditComment}
+      editData={editData}
+      comments={comments}
+      loading={loading}
+      user={user}
+    />
+  );
 };
