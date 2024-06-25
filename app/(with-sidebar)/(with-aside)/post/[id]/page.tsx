@@ -10,7 +10,7 @@ import {
 import Link from "next/link";
 import { Markdown } from "@/features/common/markdown";
 import { VotesButton } from "@/features/votes/button";
-import { Comments } from "@/features/comments/list";
+import { CommentsList } from "@/features/comments/list";
 import { CommentForm } from "@/features/comments/create";
 import { DeleteCommentModal } from "@/features/comments/delete/modal";
 
@@ -97,7 +97,7 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
               Comments ({count})
             </h2>
             <CommentForm postId={data.id} user={user} />
-            <Comments user={user} postId={data.id} />
+            <CommentsList user={user} postId={data.id} />
           </section>
         </div>
       </div>

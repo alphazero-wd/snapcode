@@ -9,7 +9,7 @@ export interface Comment {
   updated_at?: string;
   replied_to_id?: string;
   profiles: Profile;
-  comments: Comment[];
+  comments: [{ count: number }];
 }
 
 export interface EditData {

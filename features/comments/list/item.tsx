@@ -8,6 +8,9 @@ import { ProfileCard } from "@/features/users/profile/card";
 import { Button } from "@/features/ui/button";
 import Link from "next/link";
 import { VotesReplySwitcher } from "./votes-reply-switcher";
+import { createClient } from "@/lib/supabase/client";
+import { getAvatarUrl } from "@/features/users/profile/get-avatar-url";
+import { Replies } from "../reply/list";
 
 interface CommentItem {
   comment: Comment;
@@ -15,9 +18,13 @@ interface CommentItem {
 }
 
 export const CommentItem = ({ comment, user }: CommentItem) => {
+  const supabase = createClient();
   return (
     <div className="relative flex gap-x-4 w-full">
-      <ProfileAvatar username={comment.profiles.username} />
+      <ProfileAvatar
+        avatar={getAvatarUrl(supabase, comment.profiles.avatar)}
+        username={comment.profiles.username}
+      />
       <div className="space-y-3 w-full">
         <div className="flex flex-row gap-x-4 justify-between items-center">
           <div>
@@ -69,6 +76,13 @@ export const CommentItem = ({ comment, user }: CommentItem) => {
           postId={comment.post_id}
           commentId={comment.id}
         />
+        {comment.comments[0].count > 0 && (
+          <Replies
+            user={user}
+            commentId={comment.id}
+            count={comment.comments[0].count}
+          />
+        )}
       </div>
     </div>
   );
