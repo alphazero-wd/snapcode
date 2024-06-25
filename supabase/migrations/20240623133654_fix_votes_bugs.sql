@@ -12,8 +12,3 @@ END;
 $$ LANGUAGE plpgsql;
 
 drop policy "Authenticated users can vote others' posts" on posts_votes;
-
-create policy "Authenticated users can vote posts"
-on posts_votes for insert
-to authenticated
-with check (true);
