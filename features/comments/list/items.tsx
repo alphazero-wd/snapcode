@@ -2,8 +2,6 @@
 
 import { PAGE_LIMIT } from "@/constants";
 import { CommentLoading } from "./loading";
-import { useCommentsQuery } from "./use-query";
-import { useCommentsStore } from "../use-store";
 import { CommentItem } from "./item";
 import { User } from "@supabase/supabase-js";
 import { Comment, EditData } from "../types";

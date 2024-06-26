@@ -39,7 +39,7 @@ export const CommentItem = ({
         avatar={getAvatarUrl(supabase, comment.profiles.avatar)}
         username={comment.profiles.username}
       />
-      <div className="space-y-3 w-full">
+      <div className="space-y-3 w-[calc(100%-3.5rem)]">
         <div className="flex flex-row gap-x-4 justify-between items-center">
           <div>
             <ProfileCard

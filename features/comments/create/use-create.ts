@@ -64,6 +64,7 @@ export const useCreateComment = ({
               content,
               created_at,
               updated_at,
+              commenter_id,
               profiles:comments_commenter_id_fkey(
                 display_name,
                 username,

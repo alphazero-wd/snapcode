@@ -1,8 +1,8 @@
 "use client";
 import { User } from "@supabase/supabase-js";
 import { EditCommentForm } from "../edit";
-import { CommentContent } from "./content";
 import { EditData } from "../types";
+import { Markdown } from "@/features/common/markdown";
 
 interface EditViewSwitcherProps {
   user: User | null;
@@ -32,5 +32,5 @@ export const EditViewSwitcher = ({
       />
     );
 
-  return <CommentContent content={content} />;
+  return <Markdown content={content} />;
 };

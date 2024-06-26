@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    SERVICE_ROLE_KEY: process.env.SERVICE_ROLE_KEY,
+  },
   reactStrictMode: false,
   images: {
     remotePatterns: [
