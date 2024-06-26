@@ -52,14 +52,16 @@ export const AvatarSettings = ({
           className: "relative w-24 h-24 group rounded-full",
         })}
       >
-        <Button
-          size="icon"
-          className="absolute opacity-0 group-hover:opacity-100 transition-opacity top-0 -right-3 z-50 bg-destructive rounded-full"
-          onClick={onDeleteAvatarModalOpen}
-          variant="destructive"
-        >
-          <XMarkIcon className="w-5 h-5" />
-        </Button>
+        {avatar && (
+          <Button
+            size="icon"
+            className="absolute opacity-0 group-hover:opacity-100 transition-opacity top-0 -right-3 z-50 bg-destructive rounded-full"
+            onClick={onDeleteAvatarModalOpen}
+            variant="destructive"
+          >
+            <XMarkIcon className="w-5 h-5" />
+          </Button>
+        )}
         <ImageDropzone
           isDragActive={isDragActive}
           getInputProps={getInputProps}
