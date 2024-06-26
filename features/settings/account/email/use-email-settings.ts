@@ -13,10 +13,7 @@ const formSchema = z.object({
 export const useEmailSettings = (email: string) => {
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
-  const [oldEmail, setOldEmail] = useState("");
   const { toast } = useToast();
-  const [isBeingVerified, setIsBeingVerified] = useState(false);
-  const [hasSubmitted, setHasSubmitted] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -24,22 +21,16 @@ export const useEmailSettings = (email: string) => {
     },
   });
 
-  const startVerifying = () => setIsBeingVerified(true);
-  const resetSubmissionState = () => setHasSubmitted(false);
-  const goBack = () => setIsBeingVerified(false);
-
   useEffect(() => {
     form.setValue("email", email);
-    setOldEmail(email);
   }, [email]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
-    setHasSubmitted(true);
     setTimeout(() => sendVerifyEmail(values.email), 2000);
   };
 
-  const sendVerifyEmail = async (email: string) => {
+  const sendVerifyEmail = async (newEmail: string) => {
     const { data, error } = await supabase.auth.updateUser({
       email,
     });
@@ -54,10 +45,12 @@ export const useEmailSettings = (email: string) => {
       toast({
         variant: "info",
         title: "Verify your email",
-        description: "An email has been sent to " + truncateEmail(email),
+        description:
+          "Click on the links sent to " +
+          truncateEmail(email) +
+          " and " +
+          truncateEmail(newEmail),
       });
-      setOldEmail(email);
-      startVerifying();
     }
     setLoading(false);
   };
@@ -66,11 +59,5 @@ export const useEmailSettings = (email: string) => {
     onSubmit,
     loading,
     form,
-    isBeingVerified,
-    goBack,
-    oldEmail,
-    hasSubmitted,
-    startVerifying,
-    resetSubmissionState,
   };
 };

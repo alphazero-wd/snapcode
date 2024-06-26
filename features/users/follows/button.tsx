@@ -2,7 +2,7 @@
 
 import { Button } from "@/features/ui/button";
 import { createClient } from "@/lib/supabase/client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { useToast } from "@/features/ui/use-toast";
 import { useLoginModal } from "@/features/auth/login";
 import { PostgrestError } from "@supabase/supabase-js";

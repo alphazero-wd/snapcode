@@ -11,7 +11,7 @@ interface ImageButtonProps {
 }
 
 export const ImageInsert = ({ editor }: ImageButtonProps) => {
-  const { isOpen, onImageChange, onOpenChange, avatar, addImage } =
+  const { isOpen, onImageChange, onOpenChange, imageUrl, addImage } =
     useImage(editor);
 
   return (
@@ -30,7 +30,7 @@ export const ImageInsert = ({ editor }: ImageButtonProps) => {
         <Input
           className="border-none focus:outline-none"
           placeholder="Enter image URL..."
-          value={avatar}
+          value={imageUrl}
           onChange={onImageChange}
         />
         <Button type="button" onMouseDown={addImage} size="sm">

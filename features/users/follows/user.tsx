@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ProfileAvatar } from "../profile/avatar";
 import { Profile } from "../types";
 import { FollowButton } from "./button";
+import { createClient } from "@/lib/supabase/client";
+import { getAvatarUrl } from "../profile/get-avatar-url";
 
 interface FollowUserProps {
   profile: Profile;
@@ -10,10 +12,15 @@ interface FollowUserProps {
 }
 
 export const FollowUser = ({ profile, userId }: FollowUserProps) => {
+  const supabase = createClient();
+
   return (
     <div className="flex gap-x-4 justify-between items-center">
       <div className="flex gap-x-4 items-center">
-        <ProfileAvatar avatar={profile.avatar} username={profile.username} />
+        <ProfileAvatar
+          avatar={getAvatarUrl(supabase, profile.avatar)}
+          username={profile.username}
+        />
         <div>
           <ProfileCard
             username={profile.username}
