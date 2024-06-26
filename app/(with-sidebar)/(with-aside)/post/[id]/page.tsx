@@ -10,9 +10,9 @@ import {
 import Link from "next/link";
 import { Markdown } from "@/features/common/markdown";
 import { VotesButton } from "@/features/votes/button";
-import { CommentsList } from "@/features/comments/list";
-import { CommentForm } from "@/features/comments/create";
 import { DeleteCommentModal } from "@/features/comments/delete/modal";
+import { CommentsSectionLink } from "@/features/comments/section/link";
+import { CommentsSection } from "../../../../../features/comments/section";
 
 interface PostPageParams {
   params: {
@@ -45,7 +45,7 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
 
   if (!data) redirect("/not-found");
 
-  const { data: count, error } = await supabase.rpc("get_comments_count", {
+  const { data: count } = await supabase.rpc("get_comments_count", {
     pid: id,
   });
 
@@ -80,25 +80,10 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
           </div>
           <div className="border-t flex gap-x-4 items-center bg-card sticky bottom-0 py-4">
             <VotesButton type="post" id={data.id} userId={user?.id} />
-            <Button
-              asChild
-              variant="link"
-              className="text-muted-foreground gap-x-2 p-0 w-fit h-fit"
-            >
-              <Link href="#comments">
-                <ChatBubbleOvalLeftIcon className="w-5 h-5" />
-                {count}
-              </Link>
-            </Button>
+            <CommentsSectionLink />
           </div>
 
-          <section id="comments" className="space-y-6">
-            <h2 className="text-lg font-bold tracking-tight">
-              Comments ({count})
-            </h2>
-            <CommentForm postId={data.id} user={user} />
-            <CommentsList user={user} postId={data.id} />
-          </section>
+          <CommentsSection postId={data.id} user={user} count={count} />
         </div>
       </div>
       <DeleteCommentModal />

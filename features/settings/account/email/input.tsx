@@ -15,18 +15,14 @@ interface EmailInputFormProps {
     any,
     undefined
   >;
-  email: string;
-  hasSubmitted: boolean;
-  startVerifying: () => void;
+  hasChanged: boolean;
 }
 
 export const EmailInputForm = ({
   form,
   loading,
+  hasChanged,
   onSubmit,
-  email,
-  hasSubmitted,
-  startVerifying,
 }: EmailInputFormProps) => {
   return (
     <Form {...form}>
@@ -50,20 +46,11 @@ export const EmailInputForm = ({
         <div className="py-4 border-t flex items-center gap-x-4">
           <Button
             type="submit"
-            disabled={
-              loading ||
-              !form.getValues("email") ||
-              form.getValues("email") === email
-            }
+            disabled={loading || !form.getValues("email") || !hasChanged}
             className="w-fit"
           >
             {loading && <Spinner />} {loading ? "Updating..." : "Update"}
           </Button>
-          {hasSubmitted && form.getValues("email") === email && (
-            <Button variant="outline" onClick={startVerifying}>
-              Continue
-            </Button>
-          )}
         </div>
       </form>
     </Form>

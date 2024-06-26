@@ -1,6 +1,5 @@
 "use client";
 import { Empty } from "@/features/common/empty";
-import { usePagination } from "@/features/common/pagination";
 import { useFollowsQuery } from "./use-query";
 import { FollowUsers } from "./users";
 

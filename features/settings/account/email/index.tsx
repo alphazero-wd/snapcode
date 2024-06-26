@@ -1,7 +1,6 @@
 "use client";
 
 import { EmailInputForm } from "./input";
-import { InputOTPForm } from "./otp-input";
 import { useEmailSettings } from "./use-email-settings";
 import {
   Card,
@@ -16,17 +15,7 @@ interface EmailSettingsProps {
 }
 
 export const EmailSettings = ({ email }: EmailSettingsProps) => {
-  const {
-    form,
-    loading,
-    onSubmit,
-    isBeingVerified,
-    goBack,
-    oldEmail,
-    hasSubmitted,
-    startVerifying,
-    resetSubmissionState,
-  } = useEmailSettings(email);
+  const { form, loading, onSubmit } = useEmailSettings(email);
 
   return (
     <Card>
@@ -37,23 +26,12 @@ export const EmailSettings = ({ email }: EmailSettingsProps) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {isBeingVerified ? (
-          <InputOTPForm
-            resetSubmissionState={resetSubmissionState}
-            goBack={goBack}
-            newEmail={form.getValues("email")}
-            oldEmail={email}
-          />
-        ) : (
-          <EmailInputForm
-            email={oldEmail}
-            form={form}
-            loading={loading}
-            onSubmit={onSubmit}
-            hasSubmitted={hasSubmitted}
-            startVerifying={startVerifying}
-          />
-        )}
+        <EmailInputForm
+          hasChanged={form.getValues("email") !== email}
+          form={form}
+          loading={loading}
+          onSubmit={onSubmit}
+        />
       </CardContent>
     </Card>
   );

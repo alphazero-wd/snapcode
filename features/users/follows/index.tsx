@@ -53,7 +53,7 @@ export const Follows = async ({ username, type }: FollowsServerProps) => {
       </div>
       <div className="mt-4">
         <h2 className="text-xl font-bold tracking-tight mb-4">
-          {type === "follower" ? "People followed you" : "People following you"}
+          {type === "follower" ? "Followers" : "Following"}
         </h2>
         <FollowsClient userId={user?.id} profileId={data.user_id} type={type} />
       </div>

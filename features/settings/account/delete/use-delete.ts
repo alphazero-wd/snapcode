@@ -47,14 +47,15 @@ export const useDeleteAccount = () => {
         title: "Delete account failed!",
         description: error.message,
       });
-    else
+    else {
       toast({
         variant: "success",
         title: "Delete account successfully",
       });
-    form.reset();
-    router.replace("/");
-    router.refresh();
+      form.reset();
+      router.replace("/");
+      router.refresh();
+    }
     setLoading(false);
   };
 

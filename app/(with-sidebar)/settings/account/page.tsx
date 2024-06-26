@@ -4,6 +4,10 @@ import { redirect } from "next/navigation";
 import { PasswordSettings } from "@/features/settings/account/password";
 import { DeleteAccount } from "@/features/settings/account/delete";
 
+export const metadata = {
+  title: "Settings / Account",
+};
+
 export default async function AccountSettings() {
   const supabase = createClient();
   const {
