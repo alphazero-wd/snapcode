@@ -12,7 +12,8 @@ const nextConfig = {
       {
         hostname: "refmmxlfcecreajixruk.supabase.co",
         protocol: "https",
-        pathname: "/storage/v1/render/image/public/snapcode/**",
+        port: "",
+        pathname: "/storage/v1/object/public/snapcode/**",
       },
     ],
   },
