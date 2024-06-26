@@ -15,7 +15,7 @@ export const metadata = {
 
 export default async function PostPage({ params: { id } }: PostPageParams) {
   const supabase = createClient();
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("posts")
     .select(
       `
@@ -23,7 +23,7 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
   content,
   created_at,
   updated_at,
-  profiles (
+  profiles!fk_creator_id (
     user_id,
     username
   )
@@ -34,6 +34,7 @@ export default async function PostPage({ params: { id } }: PostPageParams) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
   if (!data) redirect("/not-found");
 
   return <EditPostForm content={data.content} postId={data.id} user={user} />;

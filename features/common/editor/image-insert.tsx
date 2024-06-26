@@ -11,7 +11,7 @@ interface ImageButtonProps {
 }
 
 export const ImageInsert = ({ editor }: ImageButtonProps) => {
-  const { isOpen, onImageChange, onOpenChange, imageUrl, addImage } =
+  const { isOpen, onImageChange, imageUrl, onOpenChange, addImage } =
     useImage(editor);
 
   return (
