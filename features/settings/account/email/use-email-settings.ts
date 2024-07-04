@@ -27,12 +27,12 @@ export const useEmailSettings = (email: string) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
-    setTimeout(() => sendVerifyEmail(values.email), 2000);
+    setTimeout(async () => await sendVerifyEmail(values.email), 2000);
   };
 
   const sendVerifyEmail = async (newEmail: string) => {
     const { data, error } = await supabase.auth.updateUser({
-      email,
+      email: newEmail,
     });
 
     if (error)
